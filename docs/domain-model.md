@@ -34,6 +34,7 @@ entity it maps to.
 | **Tag** | A free-form, filterable label such as `nocturnal` or `arboreal`. Always lowercase-kebab. | `ProductTag` |
 | **Care Sheet** | An external URL with husbandry guidance for a Product. | `product.metadata.care_sheet_url` |
 | **Video** | An external video URL shown on the product page. | `product.metadata.video_urls` |
+| **Care Guides** | The storefront page that collects every Live Animal's Care Sheet and Videos by Animal Type. It is a view of existing data, not a separate thing. | — (reads `Product`) |
 | **SKU** | The staff-facing stock code of a Variant, e.g. `la-001`. | `ProductVariant.sku` |
 | **Handle** | The URL slug of a Product, e.g. `crested-gecko`. | `Product.handle` |
 
