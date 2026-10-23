@@ -159,6 +159,34 @@ Next.js storefront  →  Medusa backend (Node.js, REST API)  →  PostgreSQL
 - **Staff use Medusa Admin**, not a custom dashboard.
 - **Search uses Medusa's built-in Store API search.** No external search
   engine.
+- **Testing is layered, and CI gates it.** Use the layers below and don't
+  add other test frameworks without asking.
+
+  | Layer | Tool | Scope |
+  |---|---|---|
+  | Static | TypeScript strict + ESLint | Everything |
+  | Unit | Vitest (`storefront/`), Jest (`backend/`, as Medusa expects) | Pure helpers, formatters, filter-param builders |
+  | Backend integration | `medusaIntegrationTestRunner` (`@medusajs/test-utils`) + real Postgres | Workflows, subscribers, API routes, inventory rules |
+  | Storefront component | Vitest + React Testing Library | Interactive client components (cart, filters) |
+  | API mocking | MSW at the Medusa SDK boundary | `storefront/lib/data/` and components without a live backend |
+  | E2E | Playwright against the Docker Compose stack | A few critical journeys |
+
+  - **Priority coverage:** (1) inventory guards: a live animal can't be
+    oversold and cart quantity can't exceed stock; (2) guest checkout with
+    the manual payment provider; (3) search and filter by category, animal
+    type, and tags.
+  - **Tests read, never recompute.** Tests touching checkout, totals, or
+    pricing assert on values Medusa returns. They must not reimplement
+    that logic (see the no-duplicated-commerce-logic rule).
+  - **Test data:** tests use only throwaway dev/test databases, never
+    production credentials (see non-negotiable rule 2).
+  - **CI (GitHub Actions):** every PR runs lint → typecheck → unit →
+    integration, with Postgres and Redis as service containers. E2E runs on
+    `main` or nightly because it is the slowest layer.
+  - **Coverage:** enforce a threshold on custom code in `backend/` only,
+    never on Medusa internals. Don't write low-value tests just to hit it.
+  - **Deferred:** visual regression, accessibility (`axe-core`), and API
+    contract checks wait until the Plycss design settles.
 
 ## Out of scope (defer unless asked)
 
