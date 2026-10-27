@@ -1,0 +1,6 @@
+# Env files hold secrets and are never committed. Only .env.example is tracked.
+.env
+.env.*
+!.env.example
+
+node_modules/

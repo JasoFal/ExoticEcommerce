@@ -74,6 +74,8 @@ GitHub Codespace (dev container, Node 24 LTS)
 | `redis` | `redis:7-alpine` | 6379 | none needed | `redis-cli ping` |
 
 - Pin **major versions**. Never use `latest`.
+- Ports are published on `127.0.0.1` only, so nothing outside the machine
+  can reach the dev database.
 - CI (GitHub Actions) uses the **same images** as service containers, so
   dev, CI, and tests run against the same versions.
 - `docker compose down` keeps data. `docker compose down -v` deletes the
@@ -241,12 +243,23 @@ Compose, and CI together.
 
 ## 11. Next branch checklist
 
-The next branch implements this document, in this order:
+Done on branch `infra/local-services`:
 
-1. Root `.gitignore` covering `.env`, `.env.local`, and `node_modules`.
-   This comes first, before anything can create an env file.
-2. `docker-compose.yml` (project `capstone`, the services in section 3).
-3. `.devcontainer/` (Node 24 LTS, docker-in-docker, port forwarding for
-   3000 and 9000).
-4. `.env.example` files matching section 6.
-5. `.nvmrc` / `engines` set to Node 24.
+1. [x] Root `.gitignore` ignoring `.env` and `.env.*` (except
+   `.env.example`) and `node_modules/`.
+2. [x] `docker-compose.yml` (project `capstone`, the services in section 3).
+3. [x] `.devcontainer/` (Node 24 LTS image, docker-in-docker, ports 3000 and
+   9000 forwarded, 5432 and 6379 not auto-forwarded, 4-core minimum,
+   `docker compose up -d` on start).
+4. [x] Root `.env.example` with the Compose variables from section 6.
+5. [x] `.nvmrc` set to `24`.
+
+Deferred to the scaffold branches, because `backend/` and `storefront/` don't
+exist yet:
+
+- `backend/.env.example` and `storefront/.env.example` (section 6), once
+  the exact variables are confirmed.
+- `engines` (`"node": ">=24 <25"`) in each app's `package.json`.
+- A dev container `postCreateCommand` running `npm ci` in each app.
+- Build output ignores (`.medusa/`, `.next/`, Playwright output) in each
+  app's own `.gitignore`.
