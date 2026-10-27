@@ -28,10 +28,10 @@ public GitHub repo. Production deployment is listed as a later decision
 | Item | State |
 |---|---|
 | `backend/`, `storefront/`, any `package.json` | **Not created yet** |
-| `docker-compose.yml`, `.devcontainer/`, `.nvmrc` | **Not created yet**. Planned in [`local-infrastructure.md` §11](local-infrastructure.md#11-next-branch-checklist) |
+| `docker-compose.yml`, `.devcontainer/`, `.nvmrc`, root `.env.example` | **Created** (see [`local-infrastructure.md` §11](local-infrastructure.md#11-next-branch-checklist)). Per-app `.env.example` files and `engines` come with each scaffold |
 | `.github/` (workflows, Dependabot config) | **None** |
 | Test config and tests | **None** |
-| `.gitignore` | **None.** An env file could be committed today |
+| `.gitignore` | **Root file created.** Covers env files and `node_modules`. Build output ignores come with each scaffold |
 | Seed script, `db:reset` | **Planned only** ([`local-infrastructure.md` §8](local-infrastructure.md#8-migrations-and-resets)). Seed data is [`ProductData.json`](../ProductData.json) |
 | Repo visibility | **Public** (`JasoFal/ExoticEcommerce`) |
 | Secret scanning + push protection | **Already enabled** |
@@ -567,10 +567,12 @@ Each phase is one branch and one PR, sized for one sitting.
 
 ### Phase 0: Prerequisites (not CI, but CI needs them)
 
-- [ ] Root `.gitignore` covering `.env`, `.env.local`, `node_modules`,
-      `.next`, Playwright output. Run the checks in 5.4
-- [ ] `docker-compose.yml`, `.devcontainer/`, `.nvmrc`, `.env.example` files
-      ([`local-infrastructure.md` §11](local-infrastructure.md#11-next-branch-checklist))
+- [x] Root `.gitignore` covering `.env`, `.env.*`, and `node_modules`. Run
+      the checks in 5.4. `.next` and Playwright output are ignored by the
+      storefront's own `.gitignore` when it is scaffolded
+- [x] `docker-compose.yml`, `.devcontainer/`, `.nvmrc`, root `.env.example`
+      ([`local-infrastructure.md` §11](local-infrastructure.md#11-next-branch-checklist)).
+      `backend/.env.example` and `storefront/.env.example` come with each scaffold
 - [ ] Scaffold `backend/` and `storefront/`, each with `lint`, `typecheck`,
       `test` (unit), and `build` scripts and **one real test** each
 - [ ] Decide the package manager (open question 1)
