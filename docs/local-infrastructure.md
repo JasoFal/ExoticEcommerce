@@ -104,8 +104,10 @@ GitHub Codespace (dev container, Node 24 LTS)
   databases**. The Postgres user therefore needs the `CREATEDB` permission.
 - Tests **never** use the `medusa_dev` database name. Running the test
   suite must never change dev data.
-- Confirm the exact env vars the test runner reads when the backend is
-  scaffolded, and record them in `backend/.env.example`.
+- The test runner reads `DB_HOST`, `DB_PORT`, `DB_USERNAME`, and
+  `DB_PASSWORD` (confirmed in `@medusajs/test-utils` 2.22). They are listed
+  in `backend/.env.example`. `backend/jest.config.js` loads them from
+  `backend/.env.test` or the shell environment.
 
 ---
 
@@ -209,8 +211,10 @@ Still requires asking a human first:
 
 ### Commands
 
-These npm scripts are added to `backend/package.json` when the backend is
-scaffolded:
+These npm scripts are added to `backend/package.json` together with the seed
+script. They are **not written yet**: the scaffold's demo seed (sample
+clothing products) was removed, and the `ProductData.json` seed is its own
+branch.
 
 | Script | Does |
 |---|---|
@@ -228,7 +232,7 @@ scaffolded:
 | Stop services and delete data | `docker compose down -v` |
 | Reset the dev database | `npm run db:reset` in `backend/` |
 | Seed only | `npm run seed` in `backend/` |
-| Run backend integration tests | the backend's integration test script (defined at scaffold time) |
+| Run backend integration tests | `npm run test:integration:http` in `backend/` (and `test:integration:modules` once custom modules exist) |
 
 ---
 
@@ -254,12 +258,13 @@ Done on branch `infra/local-services`:
 4. [x] Root `.env.example` with the Compose variables from section 6.
 5. [x] `.nvmrc` set to `24`.
 
-Deferred to the scaffold branches, because `backend/` and `storefront/` don't
-exist yet:
+Done on branch `infra/app-scaffold`:
 
-- `backend/.env.example` and `storefront/.env.example` (section 6), once
-  the exact variables are confirmed.
-- `engines` (`"node": ">=24 <25"`) in each app's `package.json`.
-- A dev container `postCreateCommand` running `npm ci` in each app.
-- Build output ignores (`.medusa/`, `.next/`, Playwright output) in each
-  app's own `.gitignore`.
+6. [x] `backend/.env.example` and `storefront/.env.example` (section 6),
+   with the confirmed variables.
+7. [x] `engines` (`"node": ">=24 <25"`) in each app's `package.json`.
+8. [x] Dev container `postCreateCommand` running `npm ci` in each app.
+9. [x] Build output ignores (`.medusa/`, `.next/`, Playwright output) in each
+   app's own `.gitignore`.
+
+Still open: the `seed` and `db:reset` scripts (section 8).

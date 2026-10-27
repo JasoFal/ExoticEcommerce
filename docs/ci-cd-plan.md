@@ -23,23 +23,24 @@ public GitHub repo. Production deployment is listed as a later decision
 
 ## 0. Repo state and conflicts
 
-### What exists today (checked 2026-10-26)
+### What exists today (checked 2026-10-27)
 
 | Item | State |
 |---|---|
-| `backend/`, `storefront/`, any `package.json` | **Not created yet** |
-| `docker-compose.yml`, `.devcontainer/`, `.nvmrc`, root `.env.example` | **Created** (see [`local-infrastructure.md` §11](local-infrastructure.md#11-next-branch-checklist)). Per-app `.env.example` files and `engines` come with each scaffold |
+| `backend/` | **Created.** Medusa 2.22.1 from `medusa-starter-default`, npm, own lockfile. Scripts: `lint` (`medusa lint`), `typecheck`, `test` (unit), `build`, `test:integration:http`, `test:integration:modules` |
+| `storefront/` | **Created.** Next.js 16 App Router, no Tailwind, npm, own lockfile. Scripts: `lint`, `typecheck`, `test` (Vitest), `build` |
+| `docker-compose.yml`, `.devcontainer/`, `.nvmrc`, `.env.example` files | **Created** (see [`local-infrastructure.md` §11](local-infrastructure.md#11-next-branch-checklist)) |
 | `.github/` (workflows, Dependabot config) | **None** |
-| Test config and tests | **None** |
-| `.gitignore` | **Root file created.** Covers env files and `node_modules`. Build output ignores come with each scaffold |
+| Test config and tests | Vitest: one unit test file (`storefront/lib/format-price.test.ts`). Jest: config plus the scaffold's HTTP health integration test. No backend unit tests yet |
+| `.gitignore` | Root file plus one per app covering build output |
 | Seed script, `db:reset` | **Planned only** ([`local-infrastructure.md` §8](local-infrastructure.md#8-migrations-and-resets)). Seed data is [`ProductData.json`](../ProductData.json) |
 | Repo visibility | **Public** (`JasoFal/ExoticEcommerce`) |
 | Secret scanning + push protection | **Already enabled** |
 | Dependabot security updates | Disabled |
 | Branch protection / rulesets on `main` | None |
 
-Every tool version and script name in this plan therefore comes from the
-written plans (`CLAUDE.md`, `local-infrastructure.md`), not from code.
+Script names and test-runner env vars below are now confirmed against the
+scaffolds. **[Inferred]** markers that remain are still unconfirmed.
 
 ### Conflicts and how they are resolved
 
@@ -127,9 +128,9 @@ run once they do.
 | Redis | Service container `redis:7-alpine`. Healthcheck `redis-cli ping` |
 | Credentials | Fake, throwaway literals in the workflow. These are not secrets: the database only lives for the run |
 | Test databases | `medusaIntegrationTestRunner` creates and drops its own database per run. The official Postgres image's user is a superuser, so it has `CREATEDB` |
-| Env vars the runner reads | **[Inferred]** `DB_HOST`, `DB_USERNAME`, `DB_PASSWORD`. Confirm at scaffold and record them in `backend/.env.example` |
+| Env vars the runner reads | `DB_HOST`, `DB_PORT`, `DB_USERNAME`, `DB_PASSWORD` (confirmed, listed in `backend/.env.example`) |
 | Redis in tests | **[Inferred]** the runner may use in-memory modules by default. If locking or no-overselling tests need real Redis, point the test config at `REDIS_URL` |
-| Script | **[Inferred]** Medusa's scaffold adds `test:integration:http` (Jest, `--runInBand`). Confirm at scaffold |
+| Script | `test:integration:http` (Jest, `--runInBand`), confirmed in `backend/package.json` |
 
 **Keeping it small.** `--runInBand` runs test files one after another, and
 each file boots a Medusa app. So:
@@ -191,14 +192,13 @@ Write these first. Don't write tests to raise a coverage number.
 
 ### 3.5 Gaps today
 
-- No tests, test config, or test scripts in either package (neither package
-  exists).
+- No backend unit tests: there is no custom backend code yet, so
+  `backend`'s `test` script runs Jest with `--passWithNoTests`. Remove that
+  flag when the first custom helper and its test land.
 - The seed script doesn't exist. It must also create the publishable key and
   the Supply Shipping Option (3.3).
 - The Live Animal checkout block (domain-model rule 5) needs a test once the
   cart notice exists. It must assert only on what Medusa returns.
-- No decision yet on the package manager (open question 1), which affects
-  every cache key.
 
 ---
 
@@ -573,9 +573,11 @@ Each phase is one branch and one PR, sized for one sitting.
 - [x] `docker-compose.yml`, `.devcontainer/`, `.nvmrc`, root `.env.example`
       ([`local-infrastructure.md` §11](local-infrastructure.md#11-next-branch-checklist)).
       `backend/.env.example` and `storefront/.env.example` come with each scaffold
-- [ ] Scaffold `backend/` and `storefront/`, each with `lint`, `typecheck`,
-      `test` (unit), and `build` scripts and **one real test** each
-- [ ] Decide the package manager (open question 1)
+- [x] Scaffold `backend/` and `storefront/`, each with `lint`, `typecheck`,
+      `test` (unit), and `build` scripts. The storefront has one real test.
+      The backend has none yet (see 3.5)
+- [x] Decide the package manager (open question 1): npm, one lockfile per
+      package
 
 **Success:** all four scripts pass in a fresh Codespace, and the 5.4 checks
 are clean.
@@ -662,9 +664,8 @@ have caught. This feeds the Smart Tests check (4.3).
 
 ## 13. Open questions
 
-1. **Package manager and layout.** npm with a separate lockfile per package
-   (matches `CLAUDE.md`'s separate `package.json` files), or workspaces?
-   This affects every cache key and install step.
+1. ~~**Package manager and layout.**~~ **Resolved (2026-10-27):** npm with a
+   separate lockfile per package. No workspaces.
 2. **Seed bootstrap for CI.** How does the seed create the publishable key
    and the Supply Shipping Option, and how does it hand the key to the
    storefront in the E2E job?
