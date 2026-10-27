@@ -14,5 +14,6 @@
     "5432": { "label": "Postgres", "onAutoForward": "ignore" },
     "6379": { "label": "Redis", "onAutoForward": "ignore" }
   },
+  "postCreateCommand": "npm ci --prefix backend && npm ci --prefix storefront",
   "postStartCommand": "docker compose up -d"
 }
