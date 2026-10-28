@@ -30,7 +30,7 @@ public GitHub repo. Production deployment is listed as a later decision
 | `backend/` | **Created.** Medusa 2.22.1 from `medusa-starter-default`, npm, own lockfile. Scripts: `lint` (`medusa lint`), `typecheck`, `test` (unit), `build`, `test:integration:http`, `test:integration:modules` |
 | `storefront/` | **Created.** Next.js 16 App Router, no Tailwind, npm, own lockfile. Scripts: `lint`, `typecheck`, `test` (Vitest), `build` |
 | `docker-compose.yml`, `.devcontainer/`, `.nvmrc`, `.env.example` files | **Created** (see [`local-infrastructure.md` §11](local-infrastructure.md#11-next-branch-checklist)) |
-| `.github/` (workflows, Dependabot config) | **None** |
+| `.github/` (workflows, Dependabot config) | **CI workflow** (`.github/workflows/ci.yml`, Phase 1). No Dependabot config yet |
 | Test config and tests | Vitest: one unit test file (`storefront/lib/format-price.test.ts`). Jest: config plus the scaffold's HTTP health integration test. No backend unit tests yet |
 | `.gitignore` | Root file plus one per app covering build output |
 | Seed script, `db:reset` | **Planned only** ([`local-infrastructure.md` §8](local-infrastructure.md#8-migrations-and-resets)). Seed data is [`ProductData.json`](../ProductData.json) |
@@ -584,12 +584,13 @@ are clean.
 
 ### Phase 1: Basic PR checks
 
-- [ ] CI workflow: `lint`, `typecheck`, `unit`, `build`, as a matrix over
+- [x] CI workflow: `lint`, `typecheck`, `unit`, `build`, as a matrix over
       both packages, with npm caching, concurrency cancel, and a read-only
-      token
-- [ ] Install the CodeRabbit GitHub App
-- [ ] Create the `main` ruleset (section 7) with the Phase 1 checks required
-- [ ] Start the metrics log (section 12)
+      token (`.github/workflows/ci.yml`). Actions use major-version tags;
+      SHA pinning waits for Phase 3
+- [x] Install the CodeRabbit GitHub App
+- [x] Create the `main` ruleset (section 7) with the Phase 1 checks required
+- [x] Start the metrics log (section 12): [`ci-metrics.md`](ci-metrics.md)
 
 **Success:** a PR shows 8 green checks in **under 10 minutes**, and a PR with
 a deliberate lint error **can't be merged**.
@@ -647,7 +648,7 @@ a simulated fork PR (no secret) still passes with the full suite.
 ## 12. Metrics from day one
 
 Record these from Phase 1, weekly, in a small table in
-`docs/ci-metrics.md` (proposed). Use the `gh` CLI, which costs nothing. No
+[`ci-metrics.md`](ci-metrics.md). Use the `gh` CLI, which costs nothing. No
 dashboards yet.
 
 | Metric | Definition | Source |
