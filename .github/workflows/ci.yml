@@ -1,7 +1,8 @@
-# Basic PR checks (docs/ci-cd-plan.md, Phase 1).
-# Each job is a matrix over both packages, so checks appear as
-# "lint (backend)", "lint (storefront)", and so on. These names are the
-# required status checks on the main ruleset (ci-cd-plan.md section 7).
+# PR checks (docs/ci-cd-plan.md, Phases 1 and 2).
+# Most jobs are a matrix over both packages, so checks appear as
+# "lint (backend)", "lint (storefront)", and so on. "integration-backend" is a
+# single job. These names are the required status checks on the main ruleset
+# (ci-cd-plan.md section 7).
 name: CI
 
 on:
@@ -109,3 +110,71 @@ jobs:
           cache-dependency-path: ${{ matrix.package }}/package-lock.json
       - run: npm ci
       - run: npm run build
+
+  # Backend integration tests (docs/ci-cd-plan.md section 3.1). The credentials
+  # below are throwaway literals: the services only live for this run.
+  integration-backend:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: backend
+    services:
+      postgres:
+        image: postgres:17-alpine
+        env:
+          POSTGRES_USER: medusa
+          POSTGRES_PASSWORD: medusa
+          POSTGRES_DB: medusa_ci
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U medusa"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+      redis:
+        image: redis:7-alpine
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      DB_HOST: localhost
+      DB_PORT: "5432"
+      DB_USERNAME: medusa
+      DB_PASSWORD: medusa
+      REDIS_URL: redis://localhost:6379
+      JWT_SECRET: ci-only-jwt-secret
+      COOKIE_SECRET: ci-only-cookie-secret
+      STORE_CORS: http://localhost:3000
+      ADMIN_CORS: http://localhost:9000
+      AUTH_CORS: http://localhost:3000,http://localhost:9000
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+          cache-dependency-path: backend/package-lock.json
+      - run: npm ci
+      - run: npm run test:integration:http
+      # The runner creates and drops its own temporary databases
+      # (medusa-<id>-integration-<n>). None should be left behind.
+      - name: Check no test databases remain
+        if: always()
+        env:
+          PGPASSWORD: medusa
+        run: |
+          left=$(psql -h localhost -U medusa -d postgres -Atc \
+            "select datname from pg_database where datname like 'medusa-%-integration-%'")
+          if [ -n "$left" ]; then
+            echo "Leftover test databases:"
+            echo "$left"
+            exit 1
+          fi

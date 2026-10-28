@@ -252,6 +252,11 @@ These need a human decision before they are modeled.
 - **Morphs and sizes as Variants.** Ball Python and Pastel Ball Python, or
   Small and Large Dubia, are separate Products today. Should any be grouped
   into one Product with Variants later?
+- **Inventory flags set by staff.** Rule 1 relies on every Variant having
+  `manage_inventory` on and `allow_backorder` off. Nothing stops a Staff User
+  from creating a Variant in Admin with those flags wrong, and the integration
+  tests only prove Medusa enforces the rule for correctly flagged Variants.
+  Does the rule need an enforcing hook?
 - **Staff roles.** Does any Staff User need restricted access? Changing that
   touches auth and needs sign-off.
 - **Product images.** Seed `imageUrl`s are hotlinked from Wikimedia, and
