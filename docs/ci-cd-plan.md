@@ -602,8 +602,7 @@ a deliberate lint error **can't be merged**.
 - [x] `integration-backend` job with Postgres and Redis service containers
       (Redis modules wired in `backend/medusa-config.ts`)
 - [x] First tests: inventory guards (3.4, #1), then guest cart → order (#2)
-- [ ] Add `integration-backend` to the required checks (manual, after the
-      first green run)
+- [x] Add `integration-backend` to the required checks
 
 **Success:** green on PRs in **under 5 minutes**, and no test database is
 left behind in the container after the run.
