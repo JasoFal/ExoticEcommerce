@@ -107,7 +107,12 @@ GitHub Codespace (dev container, Node 24 LTS)
 - The test runner reads `DB_HOST`, `DB_PORT`, `DB_USERNAME`, and
   `DB_PASSWORD` (confirmed in `@medusajs/test-utils` 2.22). They are listed
   in `backend/.env.example`. `backend/jest.config.js` loads them from
-  `backend/.env.test` or the shell environment.
+  `backend/.env.test` or the shell environment. The dev container's
+  `postCreateCommand` creates `backend/.env.test` from the `DB_*` and
+  `REDIS_URL` lines of `backend/.env.example` if it doesn't exist. Without
+  it the runner fails with "client password must be a string" and Redis falls
+  back to a fake in-memory instance. On an existing Codespace, create the
+  file by hand with the same command.
 
 ---
 

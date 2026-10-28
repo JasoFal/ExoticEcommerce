@@ -14,6 +14,6 @@
     "5432": { "label": "Postgres", "onAutoForward": "ignore" },
     "6379": { "label": "Redis", "onAutoForward": "ignore" }
   },
-  "postCreateCommand": "npm ci --prefix backend && npm ci --prefix storefront",
+  "postCreateCommand": "npm ci --prefix backend && npm ci --prefix storefront && ([ -f backend/.env.test ] || grep -E '^(DB_|REDIS_URL)' backend/.env.example > backend/.env.test)",
   "postStartCommand": "docker compose up -d"
 }
