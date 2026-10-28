@@ -30,8 +30,8 @@ public GitHub repo. Production deployment is listed as a later decision
 | `backend/` | **Created.** Medusa 2.22.1 from `medusa-starter-default`, npm, own lockfile. Scripts: `lint` (`medusa lint`), `typecheck`, `test` (unit), `build`, `test:integration:http`, `test:integration:modules` |
 | `storefront/` | **Created.** Next.js 16 App Router, no Tailwind, npm, own lockfile. Scripts: `lint`, `typecheck`, `test` (Vitest), `build` |
 | `docker-compose.yml`, `.devcontainer/`, `.nvmrc`, `.env.example` files | **Created** (see [`local-infrastructure.md` §11](local-infrastructure.md#11-next-branch-checklist)) |
-| `.github/` (workflows, Dependabot config) | **CI workflow** (`.github/workflows/ci.yml`, Phase 1). No Dependabot config yet |
-| Test config and tests | Vitest: one unit test file (`storefront/lib/format-price.test.ts`). Jest: config plus the scaffold's HTTP health integration test. No backend unit tests yet |
+| `.github/` (workflows, Dependabot config) | **CI workflow** (`.github/workflows/ci.yml`, Phases 1 and 2). No Dependabot config yet |
+| Test config and tests | Vitest: one unit test file (`storefront/lib/format-price.test.ts`). Jest: config, the scaffold's HTTP health test, and the Phase 2 integration specs (`inventory`, `guest-checkout`). No backend unit tests yet |
 | `.gitignore` | Root file plus one per app covering build output |
 | Seed script, `db:reset` | **Planned only** ([`local-infrastructure.md` §8](local-infrastructure.md#8-migrations-and-resets)). Seed data is [`ProductData.json`](../ProductData.json) |
 | Repo visibility | **Public** (`JasoFal/ExoticEcommerce`) |
@@ -129,7 +129,9 @@ run once they do.
 | Credentials | Fake, throwaway literals in the workflow. These are not secrets: the database only lives for the run |
 | Test databases | `medusaIntegrationTestRunner` creates and drops its own database per run. The official Postgres image's user is a superuser, so it has `CREATEDB` |
 | Env vars the runner reads | `DB_HOST`, `DB_PORT`, `DB_USERNAME`, `DB_PASSWORD` (confirmed, listed in `backend/.env.example`) |
-| Redis in tests | **[Inferred]** the runner may use in-memory modules by default. If locking or no-overselling tests need real Redis, point the test config at `REDIS_URL` |
+| Redis in tests | `backend/medusa-config.ts` moves the event bus, workflow engine, and locking to Redis whenever `REDIS_URL` is set, and the runner loads that config, so CI exercises Redis-backed locking. Without `REDIS_URL` it falls back to in-memory, but boot fails if `NODE_ENV=production`. Caching stays unwired: each test file gets a fresh database but would share one Redis, so a cached read could leak across files |
+| Test data | `backend/integration-tests/fixtures.ts` builds a Region, Sales Channel, Stock Location, publishable key, flat Shipping Option, and one Live Animal and one Supply through Medusa workflows. The real seed waits for Phase 4 |
+| Leftover databases | A final `if: always()` step lists databases named `medusa-%-integration-%` and fails if any remain |
 | Script | `test:integration:http` (Jest, `--runInBand`), confirmed in `backend/package.json` |
 
 **Keeping it small.** `--runInBand` runs test files one after another, and
@@ -597,9 +599,11 @@ a deliberate lint error **can't be merged**.
 
 ### Phase 2: Integration tests with service containers
 
-- [ ] `integration-backend` job with Postgres and Redis service containers
-- [ ] First tests: inventory guards (3.4, #1), then guest cart → order (#2)
-- [ ] Add `integration-backend` to the required checks
+- [x] `integration-backend` job with Postgres and Redis service containers
+      (Redis modules wired in `backend/medusa-config.ts`)
+- [x] First tests: inventory guards (3.4, #1), then guest cart → order (#2)
+- [ ] Add `integration-backend` to the required checks (manual, after the
+      first green run)
 
 **Success:** green on PRs in **under 5 minutes**, and no test database is
 left behind in the container after the run.
