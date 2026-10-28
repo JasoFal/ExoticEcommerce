@@ -16,7 +16,7 @@ week):
 
 ```sh
 gh pr list --state merged --base main --search "merged:2026-11-02..2026-11-08" \
-  --json number,createdAt,mergedAt
+  --json number,createdAt,mergedAt --limit 200
 ```
 
 **Pipeline duration and failure rate** (CI workflow only, split into PR and
@@ -34,7 +34,8 @@ gh run list --workflow CI --branch main --event push --created 2026-11-02..2026-
 
 - **Duration** is `updatedAt − createdAt` per run. Record the median and the
   slowest. Leave out `cancelled` runs, which are superseded PR pushes.
-- **Failure rate** is `failure` runs ÷ (`success` + `failure`) runs.
+- **Failure rate** is (`failure` + `timed_out`) runs ÷ (`success` + `failure`
+  + `timed_out`) runs. Exclude `cancelled` runs.
 
 **Time to fix a red build**: from the main runs above, take each first
 `failure` and the next `success` after it. Record the gap.

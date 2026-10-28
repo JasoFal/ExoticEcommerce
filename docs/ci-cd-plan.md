@@ -588,8 +588,8 @@ are clean.
       both packages, with npm caching, concurrency cancel, and a read-only
       token (`.github/workflows/ci.yml`). Actions use major-version tags;
       SHA pinning waits for Phase 3
-- [ ] Install the CodeRabbit GitHub App
-- [ ] Create the `main` ruleset (section 7) with the Phase 1 checks required
+- [x] Install the CodeRabbit GitHub App
+- [x] Create the `main` ruleset (section 7) with the Phase 1 checks required
 - [x] Start the metrics log (section 12): [`ci-metrics.md`](ci-metrics.md)
 
 **Success:** a PR shows 8 green checks in **under 10 minutes**, and a PR with

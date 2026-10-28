@@ -18,7 +18,7 @@ permissions:
 # Cancel superseded PR runs. Runs on main always finish, so every main commit
 # has a complete record for docs/ci-metrics.md.
 concurrency:
-  group: ci-${{ github.ref }}
+  group: ci-${{ github.event_name == 'pull_request' && github.ref || github.run_id }}
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
@@ -34,6 +34,8 @@ jobs:
         working-directory: ${{ matrix.package }}
     steps:
       - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
       - uses: actions/setup-node@v7
         with:
           node-version-file: .nvmrc
@@ -54,6 +56,8 @@ jobs:
         working-directory: ${{ matrix.package }}
     steps:
       - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
       - uses: actions/setup-node@v7
         with:
           node-version-file: .nvmrc
@@ -74,6 +78,8 @@ jobs:
         working-directory: ${{ matrix.package }}
     steps:
       - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
       - uses: actions/setup-node@v7
         with:
           node-version-file: .nvmrc
@@ -94,6 +100,8 @@ jobs:
         working-directory: ${{ matrix.package }}
     steps:
       - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
       - uses: actions/setup-node@v7
         with:
           node-version-file: .nvmrc
