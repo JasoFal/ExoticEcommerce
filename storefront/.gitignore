@@ -40,6 +40,9 @@ yarn-error.log*
 /blob-report/
 /playwright/.cache/
 
+# JUnit reports from CI runs (Vitest and Playwright)
+/reports/
+
 # vercel
 .vercel
 

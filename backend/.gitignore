@@ -24,3 +24,6 @@ build
 !.yarn/versions
 
 .medusa
+
+# JUnit reports from CI runs
+/reports/

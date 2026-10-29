@@ -8,6 +8,11 @@ export default defineConfig({
   forbidOnly: !!process.env.CI,
   // A flaky test is a failing test (docs/ci-cd-plan.md Phase 4).
   retries: 0,
+  // JUnit XML for CI (docs/ci-cd-plan.md section 4.1). JUnit merges retried
+  // runs of a test, which is fine while retries stay at 0.
+  reporter: process.env.CI
+    ? [["dot"], ["junit", { outputFile: "reports/junit/playwright.xml" }]]
+    : "list",
   use: {
     baseURL: process.env.STOREFRONT_URL ?? "http://localhost:3000",
     trace: "retain-on-failure",

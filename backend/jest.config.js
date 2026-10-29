@@ -25,3 +25,22 @@ if (process.env.TEST_TYPE === "integration:http") {
 } else if (process.env.TEST_TYPE === "unit") {
   module.exports.testMatch = ["**/src/**/__tests__/**/*.unit.spec.[jt]s"];
 }
+
+// JUnit XML for CI (docs/ci-cd-plan.md section 4.1): unit.xml or
+// integration-http.xml. The templates are the ones Smart Tests' jest profile
+// expects.
+if (process.env.CI) {
+  module.exports.reporters = [
+    "default",
+    [
+      "jest-junit",
+      {
+        outputDirectory: "reports/junit",
+        outputName: `${(process.env.TEST_TYPE ?? "jest").replace(":", "-")}.xml`,
+        suiteNameTemplate: "{filepath}",
+        classNameTemplate: "{classname}",
+        titleTemplate: "{title}",
+      },
+    ],
+  ];
+}

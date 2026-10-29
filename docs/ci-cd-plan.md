@@ -216,6 +216,14 @@ needs. Add it **only after Phase 4 is stable** (section 11).
 | Vitest | `storefront/` unit + component | JUnit XML via Vitest's built-in `junit` reporter | No new package |
 | Playwright | E2E | JUnit XML via Playwright's built-in `junit` reporter | No new package |
 
+Each config turns its JUnit reporter on only when `CI` is set, so local runs
+are unchanged. Reports land in `<package>/reports/junit/` (gitignored):
+`backend/reports/junit/unit.xml` and `integration-http.xml`, and
+`storefront/reports/junit/vitest.xml` and `playwright.xml`. Each test job
+uploads its folder as a `junit-*` artifact, kept for 7 days. Playwright uses
+JUnit, not its JSON report: JUnit merges retried runs of a test, which doesn't
+matter while `retries` is 0.
+
 **[Verify]** the CLI's name and install method (historically the Python
 `launchable` CLI, which also needed Java), and its per-runner profile names,
 on CloudBees' docs.
@@ -662,7 +670,7 @@ happy-path test above is still open.
 ### Phase 5: Smart Tests, recording only
 
 - [ ] Confirm the free tier and CLI requirements on CloudBees' page (4.6)
-- [ ] JUnit reports from Jest, Vitest, and Playwright
+- [x] JUnit reports from Jest, Vitest, and Playwright (4.1)
 - [ ] Token as an Actions secret. Steps skip on fork PRs and never fail the job
 - [ ] Record on `main` and same-repo PRs. No subsetting
 
@@ -709,8 +717,9 @@ have caught. This feeds the Smart Tests check (4.3).
 4. ~~**CodeQL block level and bypass.**~~ **Resolved (2026-10-28):** High
    and above security alerts, plus Error alerts, block merges. The `main`
    bypass list stays empty.
-5. **Smart Tests timing.** Start recording in Phase 5 regardless, or wait
-   until PR test time nears 10 minutes? This depends on the free tier.
+5. ~~**Smart Tests timing.**~~ **Resolved (2026-10-28):** start recording
+   (phase A) in Phase 5. Recording is cheap and builds history early. The
+   CloudBees Unify Free plan covers it; subsetting still waits for 4.3.
 6. **Hosting timeline.** When will hosting be chosen? That decides whether
    `docker-build` is needed.
 7. **E2E on PRs.** Should a label let you run `e2e` on a PR that touches

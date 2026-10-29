@@ -1,4 +1,4 @@
-# PR checks (docs/ci-cd-plan.md, Phases 1-3).
+# PR checks (docs/ci-cd-plan.md, Phases 1-3; JUnit reports from Phase 5).
 # Most jobs are a matrix over both packages, so checks appear as
 # "lint (backend)", "lint (storefront)", and so on. "integration-backend" is a
 # single job. These names are the required status checks on the main ruleset
@@ -81,6 +81,15 @@ jobs:
         with:
           package: ${{ matrix.package }}
       - run: npm test
+      # JUnit XML from the test configs (CI only, docs/ci-cd-plan.md Phase 5).
+      - name: Upload JUnit report
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: junit-unit-${{ matrix.package }}
+          path: ${{ matrix.package }}/reports/junit/
+          if-no-files-found: warn
+          retention-days: 7
 
   build:
     runs-on: ubuntu-latest
@@ -151,6 +160,14 @@ jobs:
         with:
           package: backend
       - run: npm run test:integration:http
+      - name: Upload JUnit report
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: junit-integration-backend
+          path: backend/reports/junit/
+          if-no-files-found: warn
+          retention-days: 7
       # The runner creates and drops its own temporary databases
       # (medusa-<id>-integration-<n>). None should be left behind.
       - name: Check no test databases remain
