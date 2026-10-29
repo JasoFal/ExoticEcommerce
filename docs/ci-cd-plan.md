@@ -30,9 +30,9 @@ public GitHub repo. Production deployment is listed as a later decision
 | `backend/` | **Created.** Medusa 2.22.1 from `medusa-starter-default`, npm, own lockfile. Scripts: `lint` (`medusa lint`), `typecheck`, `test` (unit), `build`, `test:integration:http`, `test:integration:modules` |
 | `storefront/` | **Created.** Next.js 16 App Router, no Tailwind, npm, own lockfile. Scripts: `lint`, `typecheck`, `test` (Vitest), `build` |
 | `docker-compose.yml`, `.devcontainer/`, `.nvmrc`, `.env.example` files | **Created** (see [`local-infrastructure.md` §11](local-infrastructure.md#11-next-branch-checklist)) |
-| `.github/` (workflows, Dependabot config) | **CI workflow** (`.github/workflows/ci.yml`, Phases 1–3), with shared setup in `.github/actions/setup-package`. **E2E workflow** (`.github/workflows/e2e.yml`, Phase 4). **Dependabot config** (`.github/dependabot.yml`) |
+| `.github/` (workflows, Dependabot config) | **CI workflow** (`.github/workflows/ci.yml`, Phases 1–3), with shared setup in `.github/actions/setup-package`. **E2E workflow** (`.github/workflows/e2e.yml`, Phase 4). **Smart Tests recording** in both (`.github/actions/smart-tests-record`, Phase 5). **Dependabot config** (`.github/dependabot.yml`) |
 | Test config and tests | Vitest: one unit test file (`storefront/lib/format-price.test.ts`). Jest: config, the scaffold's HTTP health test, the Phase 2 integration specs (`inventory`, `guest-checkout`), and the seed mapping unit tests (`backend/src/lib/seed/__tests__`). Playwright: config and the smoke specs (`storefront/e2e/`) |
-| `.gitignore` | Root file plus one per app covering build output |
+| `.gitignore` | Root file plus one per app covering build output and CI JUnit reports (`reports/`) |
 | Seed script, `db:reset` | **Created** (Phase 4): `npm run seed` and `npm run db:reset` in `backend/` load [`ProductData.json`](../ProductData.json) ([`local-infrastructure.md` §8](local-infrastructure.md#8-migrations-and-resets)) |
 | Repo visibility | **Public** (`JasoFal/ExoticEcommerce`) |
 | Secret scanning + push protection | **Already enabled** |
@@ -686,11 +686,19 @@ happy-path test above is still open.
 - [x] Confirm the free tier and CLI requirements on CloudBees' page (4.1,
       4.6)
 - [x] JUnit reports from Jest, Vitest, and Playwright (4.1)
-- [ ] Token as an Actions secret. Steps skip on fork PRs and never fail the job
-- [ ] Record on `main` and same-repo PRs. No subsetting
+- [x] Token as an Actions secret. Steps skip on fork PRs and never fail the job
+- [x] Record on `main` and same-repo PRs. No subsetting
 
 **Success:** test sessions from all three runners appear in Smart Tests, and
 a simulated fork PR (no secret) still passes with the full suite.
+
+**Met (2026-10-29):**
+- Jest and Vitest sessions were recorded from PR #32, and the Playwright
+  session from the `e2e` run on `main` after the merge.
+- For the no-secret run, the secret was removed and CI was run by hand on
+  `main` ([run 40840896877](https://github.com/JasoFal/ExoticEcommerce/actions/runs/40840896877)).
+  All jobs passed, and the Smart Tests steps were skipped. The secret was
+  then re-added with a new key.
 
 ### Later
 
