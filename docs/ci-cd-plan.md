@@ -30,7 +30,7 @@ public GitHub repo. Production deployment is listed as a later decision
 | `backend/` | **Created.** Medusa 2.22.1 from `medusa-starter-default`, npm, own lockfile. Scripts: `lint` (`medusa lint`), `typecheck`, `test` (unit), `build`, `test:integration:http`, `test:integration:modules` |
 | `storefront/` | **Created.** Next.js 16 App Router, no Tailwind, npm, own lockfile. Scripts: `lint`, `typecheck`, `test` (Vitest), `build` |
 | `docker-compose.yml`, `.devcontainer/`, `.nvmrc`, `.env.example` files | **Created** (see [`local-infrastructure.md` §11](local-infrastructure.md#11-next-branch-checklist)) |
-| `.github/` (workflows, Dependabot config) | **CI workflow** (`.github/workflows/ci.yml`, Phases 1 and 2). No Dependabot config yet |
+| `.github/` (workflows, Dependabot config) | **CI workflow** (`.github/workflows/ci.yml`, Phases 1–3), with shared setup in `.github/actions/setup-package`. **Dependabot config** (`.github/dependabot.yml`) |
 | Test config and tests | Vitest: one unit test file (`storefront/lib/format-price.test.ts`). Jest: config, the scaffold's HTTP health test, and the Phase 2 integration specs (`inventory`, `guest-checkout`). No backend unit tests yet |
 | `.gitignore` | Root file plus one per app covering build output |
 | Seed script, `db:reset` | **Planned only** ([`local-infrastructure.md` §8](local-infrastructure.md#8-migrations-and-resets)). Seed data is [`ProductData.json`](../ProductData.json) |
@@ -300,14 +300,16 @@ wait.
 
 | Setting | Plan |
 |---|---|
-| Ecosystems | npm in `/backend`, npm in `/storefront`, `github-actions` in `/`, plus `devcontainers` and `docker-compose` **[Verify ecosystem support]** |
+| Ecosystems | npm in `/backend`, npm in `/storefront`, `github-actions` in `/` and `/.github/actions/*` |
+| Not covered | Container images (dev container, Compose, CI services). They change in all three places **in one PR**, by hand (section 8.3), so Dependabot can't split them |
 | Schedule | **Weekly** (Monday) for version updates. Security updates arrive right away regardless |
 | Open-PR limit | 5 per ecosystem |
 | Group `medusa` | All `@medusajs/*` packages in **one PR, always**. Medusa packages must stay on the same version |
-| Group `next-react` | `next`, `react`, `react-dom`, `eslint-config-next` |
+| Group `next-react` | `next`, `react`, `react-dom`, `eslint-config-next` in the storefront, majors included |
 | Group `minor-patch` | All other minor and patch updates, one PR per directory |
+| Group `github-actions` | All action pin updates in one PR |
 | Majors | Separate PRs, never auto-merged |
-| Ignored | Major bumps of the Node, Postgres, and Redis images. These change in the dev container, Compose, and CI **in one PR**, by hand (section 8.3) |
+| Ignored | React majors in `backend/`. Medusa Admin decides that version, so it moves with a Medusa upgrade |
 
 ### 5.3 GitHub Actions hardening
 
@@ -501,7 +503,7 @@ seed must always be one command.
 
 - When a version changes, it changes in **the dev container, Compose, and CI
   in one PR** ([`local-infrastructure.md` §10](local-infrastructure.md#10-ci-parity)).
-  Dependabot ignores those majors (5.2) so it can't split them.
+  Dependabot doesn't watch images (5.2), so it can't split them.
 - Use a **4-core** Codespace. It uses up the monthly core-hour quota twice as
   fast as 2-core, so stop it when you're not using it. Quota: **[Verify]**
   on GitHub's Codespaces billing page.
@@ -610,10 +612,12 @@ left behind in the container after the run.
 ### Phase 3: Security
 
 - [ ] CodeQL default setup (JavaScript/TypeScript, GitHub Actions)
-- [ ] Turn on Dependabot alerts and security updates. Add `dependabot.yml`
-      (5.2)
+- [ ] Turn on Dependabot alerts and security updates
+- [x] Add `dependabot.yml` (5.2)
 - [ ] Confirm secret scanning and push protection are still on
-- [ ] Actions hardening (5.3) and SHA-pin existing actions
+- [ ] Actions hardening settings (5.3)
+- [x] SHA-pin existing actions, with shared setup moved to
+      `.github/actions/setup-package` so each pin appears once per action
 - [ ] Add "Require code scanning results" to the ruleset
 
 **Success:** the first CodeQL scan finishes with no High or Critical alerts,
@@ -675,8 +679,9 @@ have caught. This feeds the Smart Tests check (4.3).
    storefront in the E2E job?
 3. **Coverage threshold.** `CLAUDE.md` requires one on custom backend code.
    When is it switched on, and at what level, without chasing numbers?
-4. **CodeQL block level and bypass.** Is "High and above" right? Do you keep
-   an emergency admin bypass on `main`?
+4. ~~**CodeQL block level and bypass.**~~ **Resolved (2026-10-28):** High
+   and above security alerts, plus Error alerts, block merges. The `main`
+   bypass list stays empty.
 5. **Smart Tests timing.** Start recording in Phase 5 regardless, or wait
    until PR test time nears 10 minutes? This depends on the free tier.
 6. **Hosting timeline.** When will hosting be chosen? That decides whether
