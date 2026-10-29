@@ -57,4 +57,4 @@ Smart Tests escaped-defect check ([`ci-cd-plan.md` §4.3](ci-cd-plan.md#43-rollo
 
 | Date found | PR that introduced it | What broke | Test that should have caught it |
 |---|---|---|---|
-| | | | |
+| 2026-10-29 | #28 | The seed failed on a migrated database: `medusa db:migrate` already creates a Default Shipping Profile, and every boot creates a Sales Channel and publishable key. Fixed in #29 | `integration-backend` can't: its runner doesn't run migration scripts. Caught by the first `E2E` run on `main`. `E2E` is off PRs, so run it with "Run workflow" on branches that touch the seed |

@@ -653,6 +653,12 @@ moves to the branch that builds them.
 **Success:** **3 green consecutive runs** on `main` with no retries or flakes
 (smoke tests now, the happy path once it exists).
 
+**Met (2026-10-29)** for the smoke tests: 4 consecutive green `E2E` runs on
+`main` (merge of #29, two manual dispatches, and the first nightly), each
+2.5–3 minutes. The run before them failed on a seed bug from #28, fixed in
+#29 (see the escaped defects in [`ci-metrics.md`](ci-metrics.md)). The
+happy-path test above is still open.
+
 ### Phase 5: Smart Tests, recording only
 
 - [ ] Confirm the free tier and CLI requirements on CloudBees' page (4.6)
