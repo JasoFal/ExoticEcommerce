@@ -222,7 +222,7 @@ These npm scripts live in `backend/package.json`. The seed itself is
 | Script | Does |
 |---|---|
 | `db:reset` | Drop and recreate `medusa_dev` in the Compose Postgres container, run Medusa's migrations, and seed. Needs `docker compose up -d` first. |
-| `seed` | Create the store setup (Region, Sales Channel, Stock Location, Shipping Options, publishable key) and load the catalogue from [`ProductData.json`](../ProductData.json) as mapped in [`domain-model.md`](domain-model.md). Logs the publishable key. Refuses to run on a database that is already seeded. |
+| `seed` | Create the store setup (Region, Stock Location, Shipping Options; it reuses the Sales Channel, publishable key, and default Shipping Profile Medusa creates itself) and load the catalogue from [`ProductData.json`](../ProductData.json) as mapped in [`domain-model.md`](domain-model.md). Logs the publishable key. Refuses to run on a database that is already seeded. |
 
 `db:reset` doesn't use `medusa db:setup`: that command reads `DATABASE_URL`
 only from `.env` and rewrites `backend/.env`.
