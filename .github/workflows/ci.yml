@@ -1,4 +1,5 @@
-# PR checks (docs/ci-cd-plan.md, Phases 1-3; JUnit reports from Phase 5).
+# PR checks (docs/ci-cd-plan.md, Phases 1-3; JUnit reports and Smart Tests
+# recording from Phase 5).
 # Most jobs are a matrix over both packages, so checks appear as
 # "lint (backend)", "lint (storefront)", and so on. "integration-backend" is a
 # single job. These names are the required status checks on the main ruleset
@@ -73,10 +74,16 @@ jobs:
     defaults:
       run:
         working-directory: ${{ matrix.package }}
+    # Only whether the token exists, so the secret itself reaches the Smart
+    # Tests step alone. Empty on fork and Dependabot PRs.
+    env:
+      HAS_SMART_TESTS_TOKEN: ${{ secrets.SMART_TESTS_TOKEN != '' }}
     steps:
+      # Full history for Smart Tests' commit collection.
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
+          fetch-depth: 0
       - uses: ./.github/actions/setup-package
         with:
           package: ${{ matrix.package }}
@@ -90,6 +97,17 @@ jobs:
           path: ${{ matrix.package }}/reports/junit/
           if-no-files-found: warn
           retention-days: 7
+      # Profile and report come from expressions, not matrix keys, so the
+      # required check names stay "unit (backend)" and "unit (storefront)".
+      - name: Record in Smart Tests
+        if: ${{ !cancelled() && env.HAS_SMART_TESTS_TOKEN == 'true' }}
+        continue-on-error: true
+        uses: ./.github/actions/smart-tests-record
+        with:
+          profile: ${{ matrix.package == 'backend' && 'jest' || 'vitest' }}
+          test-suite: unit-${{ matrix.package }}
+          report: ${{ matrix.package }}/reports/junit/${{ matrix.package == 'backend' && 'unit' || 'vitest' }}.xml
+          token: ${{ secrets.SMART_TESTS_TOKEN }}
 
   build:
     runs-on: ubuntu-latest
@@ -152,10 +170,12 @@ jobs:
       STORE_CORS: http://localhost:3000
       ADMIN_CORS: http://localhost:9000
       AUTH_CORS: http://localhost:3000,http://localhost:9000
+      HAS_SMART_TESTS_TOKEN: ${{ secrets.SMART_TESTS_TOKEN != '' }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
+          fetch-depth: 0
       - uses: ./.github/actions/setup-package
         with:
           package: backend
@@ -168,6 +188,15 @@ jobs:
           path: backend/reports/junit/
           if-no-files-found: warn
           retention-days: 7
+      - name: Record in Smart Tests
+        if: ${{ !cancelled() && env.HAS_SMART_TESTS_TOKEN == 'true' }}
+        continue-on-error: true
+        uses: ./.github/actions/smart-tests-record
+        with:
+          profile: jest
+          test-suite: integration-backend
+          report: backend/reports/junit/integration-http.xml
+          token: ${{ secrets.SMART_TESTS_TOKEN }}
       # The runner creates and drops its own temporary databases
       # (medusa-<id>-integration-<n>). None should be left behind.
       - name: Check no test databases remain

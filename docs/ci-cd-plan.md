@@ -224,17 +224,28 @@ uploads its folder as a `junit-*` artifact, kept for 7 days. Playwright uses
 JUnit, not its JSON report: JUnit merges retried runs of a test, which doesn't
 matter while `retries` is 0.
 
-**[Verify]** the CLI's name and install method (historically the Python
-`launchable` CLI, which also needed Java), and its per-runner profile names,
-on CloudBees' docs.
+**CLI (verified 2026-10-29):** the v2 CLI is the Python package
+`smart-tests-cli` (command `smart-tests`; v1 was `launchable`). It needs
+Python 3.13+, which `uv` installs, and Java 8+, which the runner image has.
+Each runner has its own profile: `jest`, `vitest`, and `playwright`. The
+shared steps live in `.github/actions/smart-tests-record`, pinned to an exact
+CLI version. Each job records its own build
+(`<sha7>-<run_id>-<attempt>-<suite>`) and one session, with test suites
+`unit-backend`, `unit-storefront`, `integration-backend`, and `e2e`. Jobs
+that record check out full history (`fetch-depth: 0`) for commit collection.
 
 ### 4.2 Token and fork PRs
 
-- Store the API token as a **GitHub Actions repository secret**. The
-  env var name is **[Verify]** (historically `LAUNCHABLE_TOKEN`).
+- Store the API token as the **GitHub Actions repository secret**
+  `SMART_TESTS_TOKEN` (the CLI's env var name; it still reads
+  `LAUNCHABLE_TOKEN` as a fallback). Only the Smart Tests step receives it.
+  The rest of the job sees just `HAS_SMART_TESTS_TOKEN`, a true/false flag.
 - **Fork PRs get no secrets.** On those runs, every Smart Tests step is
   skipped and the **full suite runs**. Nothing is recorded, and nothing fails
-  because of it.
+  because of it. Dependabot PRs get no Actions secrets either, so they behave
+  the same way.
+- Keyless GitHub OIDC auth exists, but it needs `id-token: write` on every
+  recording job, so the token secret is used instead.
 - Never switch to `pull_request_target` to get secrets onto fork PRs
   (section 5.5).
 - Smart Tests steps are allowed to fail without failing the job. If
@@ -275,8 +286,11 @@ wait.
 
 ### 4.6 Pricing and fallback
 
-- Free tier, plan limits, and open-source eligibility: **[Verify on
-  CloudBees' page]**.
+- **Confirmed 2026-10-28:** the CloudBees Unify **Free** plan ($0, no card,
+  up to 5 users) can create a Smart Tests workspace and API key. Its feature
+  list doesn't name Smart Tests, and it shows 1-week log retention.
+  **[Verify]** that recorded history outlives a week before relying on it
+  for phase B.
 - **Fallback if there is no usable free tier:** use the runners' own
   changed-file selection **on PRs only**, with the full suite on `main`:
   - Jest: `--changedSince=origin/main` (unit only, not integration)
@@ -669,7 +683,8 @@ happy-path test above is still open.
 
 ### Phase 5: Smart Tests, recording only
 
-- [ ] Confirm the free tier and CLI requirements on CloudBees' page (4.6)
+- [x] Confirm the free tier and CLI requirements on CloudBees' page (4.1,
+      4.6)
 - [x] JUnit reports from Jest, Vitest, and Playwright (4.1)
 - [ ] Token as an Actions secret. Steps skip on fork PRs and never fail the job
 - [ ] Record on `main` and same-repo PRs. No subsetting
