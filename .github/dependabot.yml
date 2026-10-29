@@ -1,0 +1,54 @@
+# Version updates (docs/ci-cd-plan.md section 5.2). Security updates arrive
+# right away regardless of this schedule.
+# Container images (dev container, Compose, CI services) are not listed: they
+# are bumped by hand in one PR so the three never drift apart (section 8.3).
+version: 2
+
+updates:
+  - package-ecosystem: npm
+    directory: /backend
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    # A dependency joins the first group it matches. Majors outside the first
+    # two groups get their own PR.
+    groups:
+      medusa: # All @medusajs packages must stay on the same version.
+        patterns: ["@medusajs/*"]
+      minor-patch:
+        patterns: ["*"]
+        update-types: [minor, patch]
+    # Medusa Admin decides the backend's React major. Move it with a Medusa
+    # upgrade, not on its own.
+    ignore:
+      - dependency-name: react
+        update-types: [version-update:semver-major]
+      - dependency-name: react-dom
+        update-types: [version-update:semver-major]
+
+  - package-ecosystem: npm
+    directory: /storefront
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    groups:
+      medusa:
+        patterns: ["@medusajs/*"]
+      next-react: # Next.js and React releases are tested against each other.
+        patterns: [next, react, react-dom, eslint-config-next]
+      minor-patch:
+        patterns: ["*"]
+        update-types: [minor, patch]
+
+  # Covers the workflows and the local composite action's own pins.
+  - package-ecosystem: github-actions
+    directories: [/, /.github/actions/*]
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    groups:
+      github-actions:
+        patterns: ["*"]

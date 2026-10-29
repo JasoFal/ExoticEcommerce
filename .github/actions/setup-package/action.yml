@@ -1,0 +1,22 @@
+# Shared setup for CI jobs: Node from .nvmrc, the npm cache, and `npm ci` for
+# one package. Keeping it here means the setup-node pin lives in one place.
+# Callers check out the repo first: a local action can't run before checkout.
+name: Set up package
+description: Install Node and one package's npm dependencies, with npm caching.
+
+inputs:
+  package:
+    description: Package directory to install (backend or storefront).
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+      with:
+        node-version-file: .nvmrc
+        cache: npm
+        cache-dependency-path: ${{ inputs.package }}/package-lock.json
+    - run: npm ci
+      shell: bash
+      working-directory: ${{ inputs.package }}
