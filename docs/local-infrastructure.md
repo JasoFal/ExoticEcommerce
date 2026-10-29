@@ -174,7 +174,7 @@ values needed when the backend is scaffolded.
 | Variable | Dev value | Notes |
 |---|---|---|
 | `MEDUSA_BACKEND_URL` | `http://localhost:9000` | Server-side only. |
-| `MEDUSA_PUBLISHABLE_KEY` | from Medusa Admin | Server-side only. Created after the backend first runs, so it can't be filled in before then. |
+| `MEDUSA_PUBLISHABLE_KEY` | logged by `npm run seed` | Server-side only. A new key is created on every reset, so copy it in again afterwards. |
 
 Neither variable uses the `NEXT_PUBLIC_` prefix, because the browser never
 calls Medusa directly (section 7).
@@ -216,15 +216,16 @@ Still requires asking a human first:
 
 ### Commands
 
-These npm scripts are added to `backend/package.json` together with the seed
-script. They are **not written yet**: the scaffold's demo seed (sample
-clothing products) was removed, and the `ProductData.json` seed is its own
-branch.
+These npm scripts live in `backend/package.json`. The seed itself is
+`backend/src/scripts/seed.ts`, with its helpers in `backend/src/lib/seed/`.
 
 | Script | Does |
 |---|---|
-| `db:reset` | Drop `medusa_dev`, run Medusa's migrations, and seed. |
-| `seed` | Load the seed catalogue from [`ProductData.json`](../ProductData.json) as mapped in [`domain-model.md`](domain-model.md). |
+| `db:reset` | Drop and recreate `medusa_dev` in the Compose Postgres container, run Medusa's migrations, and seed. Needs `docker compose up -d` first. |
+| `seed` | Create the store setup (Region, Sales Channel, Stock Location, Shipping Options, publishable key) and load the catalogue from [`ProductData.json`](../ProductData.json) as mapped in [`domain-model.md`](domain-model.md). Logs the publishable key. Refuses to run on a database that is already seeded. |
+
+`db:reset` doesn't use `medusa db:setup`: that command reads `DATABASE_URL`
+only from `.env` and rewrites `backend/.env`.
 
 ---
 
@@ -272,4 +273,4 @@ Done on branch `infra/app-scaffold`:
 9. [x] Build output ignores (`.medusa/`, `.next/`, Playwright output) in each
    app's own `.gitignore`.
 
-Still open: the `seed` and `db:reset` scripts (section 8).
+The `seed` and `db:reset` scripts (section 8) were added in Phase 4.

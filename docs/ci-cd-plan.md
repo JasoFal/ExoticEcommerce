@@ -30,10 +30,10 @@ public GitHub repo. Production deployment is listed as a later decision
 | `backend/` | **Created.** Medusa 2.22.1 from `medusa-starter-default`, npm, own lockfile. Scripts: `lint` (`medusa lint`), `typecheck`, `test` (unit), `build`, `test:integration:http`, `test:integration:modules` |
 | `storefront/` | **Created.** Next.js 16 App Router, no Tailwind, npm, own lockfile. Scripts: `lint`, `typecheck`, `test` (Vitest), `build` |
 | `docker-compose.yml`, `.devcontainer/`, `.nvmrc`, `.env.example` files | **Created** (see [`local-infrastructure.md` §11](local-infrastructure.md#11-next-branch-checklist)) |
-| `.github/` (workflows, Dependabot config) | **CI workflow** (`.github/workflows/ci.yml`, Phases 1–3), with shared setup in `.github/actions/setup-package`. **Dependabot config** (`.github/dependabot.yml`) |
-| Test config and tests | Vitest: one unit test file (`storefront/lib/format-price.test.ts`). Jest: config, the scaffold's HTTP health test, and the Phase 2 integration specs (`inventory`, `guest-checkout`). No backend unit tests yet |
+| `.github/` (workflows, Dependabot config) | **CI workflow** (`.github/workflows/ci.yml`, Phases 1–3), with shared setup in `.github/actions/setup-package`. **E2E workflow** (`.github/workflows/e2e.yml`, Phase 4). **Dependabot config** (`.github/dependabot.yml`) |
+| Test config and tests | Vitest: one unit test file (`storefront/lib/format-price.test.ts`). Jest: config, the scaffold's HTTP health test, the Phase 2 integration specs (`inventory`, `guest-checkout`), and the seed mapping unit tests (`backend/src/lib/seed/__tests__`). Playwright: config and the smoke specs (`storefront/e2e/`) |
 | `.gitignore` | Root file plus one per app covering build output |
-| Seed script, `db:reset` | **Planned only** ([`local-infrastructure.md` §8](local-infrastructure.md#8-migrations-and-resets)). Seed data is [`ProductData.json`](../ProductData.json) |
+| Seed script, `db:reset` | **Created** (Phase 4): `npm run seed` and `npm run db:reset` in `backend/` load [`ProductData.json`](../ProductData.json) ([`local-infrastructure.md` §8](local-infrastructure.md#8-migrations-and-resets)) |
 | Repo visibility | **Public** (`JasoFal/ExoticEcommerce`) |
 | Secret scanning + push protection | **Already enabled** |
 | Dependabot security updates | Disabled |
@@ -130,7 +130,7 @@ run once they do.
 | Test databases | `medusaIntegrationTestRunner` creates and drops its own database per run. The official Postgres image's user is a superuser, so it has `CREATEDB` |
 | Env vars the runner reads | `DB_HOST`, `DB_PORT`, `DB_USERNAME`, `DB_PASSWORD` (confirmed, listed in `backend/.env.example`) |
 | Redis in tests | `backend/medusa-config.ts` moves the event bus, workflow engine, and locking to Redis whenever `REDIS_URL` is set, and the runner loads that config, so CI exercises Redis-backed locking. Without `REDIS_URL` it falls back to in-memory, but boot fails if `NODE_ENV=production`. Caching stays unwired: each test file gets a fresh database but would share one Redis, so a cached read could leak across files |
-| Test data | `backend/integration-tests/fixtures.ts` builds a Region, Sales Channel, Stock Location, publishable key, flat Shipping Option, and one Live Animal and one Supply through Medusa workflows. The real seed waits for Phase 4 |
+| Test data | `backend/integration-tests/fixtures.ts` builds one Live Animal and one Supply with known stock on top of `createStoreSetup` (`backend/src/lib/store-setup.ts`), the same Region, Sales Channel, Stock Location, publishable key, and flat Shipping Option the seed uses |
 | Leftover databases | A final `if: always()` step lists databases named `medusa-%-integration-%` and fails if any remain |
 | Script | `test:integration:http` (Jest, `--runInBand`), confirmed in `backend/package.json` |
 
@@ -167,14 +167,16 @@ One job starts the full stack on the runner:
 8. On failure, upload the trace and screenshots as an artifact, kept for
    7 days.
 
-**Prerequisites the seed must provide (gap):**
+**What the seed provides:**
 
-- A **publishable API key** linked to the storefront Sales Channel. CI must
-  be able to read it and pass it to the storefront as
-  `MEDUSA_PUBLISHABLE_KEY`. Today [`local-infrastructure.md` §6](local-infrastructure.md#6-environment-variables)
-  says the key is created by hand in Admin, which can't happen in CI.
+- A **publishable API key** linked to the storefront Sales Channel. The seed
+  writes it to the file named by `SEED_PUBLISHABLE_KEY_FILE`, and the job
+  puts it in `$GITHUB_ENV` as `MEDUSA_PUBLISHABLE_KEY`.
 - A **Shipping Option on the default Shipping Profile**, so a Supply can be
   checked out.
+- The backend runs from the build output (`backend/.medusa/server`, after its
+  own `npm ci --omit=dev`), because the production server serves the built
+  admin from there.
 - Product images are hotlinked from Wikimedia and some may not resolve
   ([`domain-model.md` §5](domain-model.md#5-open-questions)). E2E must
   **not** assert on images. Otherwise external outages become test flakes.
@@ -194,11 +196,8 @@ Write these first. Don't write tests to raise a coverage number.
 
 ### 3.5 Gaps today
 
-- No backend unit tests: there is no custom backend code yet, so
-  `backend`'s `test` script runs Jest with `--passWithNoTests`. Remove that
-  flag when the first custom helper and its test land.
-- The seed script doesn't exist. It must also create the publishable key and
-  the Supply Shipping Option (3.3).
+- The Playwright happy path (3.4 #4) waits for the storefront's product,
+  cart, checkout, and confirmation pages. Until then, `e2e` runs smoke tests.
 - The Live Animal checkout block (domain-model rule 5) needs a test once the
   cart notice exists. It must assert only on what Medusa returns.
 
@@ -491,7 +490,7 @@ exists yet.
 | Install | `postCreateCommand` | `npm ci` in `backend/` and `storefront/` |
 | Services | `postStartCommand` | `docker compose up -d` (Postgres and Redis) |
 | First-time data | By hand, once per new Codespace | `npm run db:reset` in `backend/` (migrate + seed) |
-| Publishable key | By hand after the first run, until the seed creates it (3.3) | Copy it into `storefront/.env.local` |
+| Publishable key | By hand after each reset | Copy the key `npm run seed` logs into `storefront/.env.local` |
 
 Docker volumes survive stopping a Codespace but not deleting it. Reset and
 seed must always be one command.
@@ -638,13 +637,21 @@ the first grouped Dependabot PR appears, and the settings match 5.1.
 
 ### Phase 4: Playwright
 
-- [ ] Seed creates the publishable key and the Supply Shipping Option (3.3)
-- [ ] `e2e` job on `main`, nightly, and manual dispatch. Browser cache and
-      trace upload on failure
-- [ ] One happy-path test: add a Supply to the cart → check out → see the
-      confirmation
+Split: the storefront has no cart or checkout yet, so the happy-path test
+moves to the branch that builds them.
 
-**Success:** **3 green consecutive runs** on `main` with no retries or flakes.
+- [x] Seed creates the publishable key and the Supply Shipping Option (3.3),
+      and loads the `ProductData.json` catalogue (`npm run seed`,
+      `npm run db:reset`)
+- [x] `e2e` job on `main`, nightly, and manual dispatch
+      (`.github/workflows/e2e.yml`). Browser cache and trace upload on failure
+- [x] Smoke tests: the storefront serves `/`, and the seeded catalogue is
+      reachable with the seeded key
+- [ ] With the cart and checkout pages: one happy-path test, add a Supply to
+      the cart → check out → see the confirmation
+
+**Success:** **3 green consecutive runs** on `main` with no retries or flakes
+(smoke tests now, the happy path once it exists).
 
 ### Phase 5: Smart Tests, recording only
 
@@ -687,9 +694,10 @@ have caught. This feeds the Smart Tests check (4.3).
 
 1. ~~**Package manager and layout.**~~ **Resolved (2026-10-27):** npm with a
    separate lockfile per package. No workspaces.
-2. **Seed bootstrap for CI.** How does the seed create the publishable key
-   and the Supply Shipping Option, and how does it hand the key to the
-   storefront in the E2E job?
+2. ~~**Seed bootstrap for CI.**~~ **Resolved (2026-10-28):** the seed
+   creates both through `createStoreSetup`, logs the key, and writes it to
+   `SEED_PUBLISHABLE_KEY_FILE` when set. The E2E job reads that file into
+   `$GITHUB_ENV`.
 3. **Coverage threshold.** `CLAUDE.md` requires one on custom backend code.
    When is it switched on, and at what level, without chasing numbers?
 4. ~~**CodeQL block level and bypass.**~~ **Resolved (2026-10-28):** High

@@ -198,8 +198,10 @@ Browsing an Animal Type includes Products assigned to its descendants.
 ### Variant exception: e-003
 
 `e-003` (PVC Reptile Enclosure 4'x2'x2') is "available in black or white".
-It gets a **Color** option with two Variants, **Black** and **White**. How
-its stock of 7 is split between them is an open question.
+It gets a **Color** option with two Variants, **Black** and **White**. SKUs
+must be unique, so they are **`e-003-black`** and **`e-003-white`**, the one
+exception to copying `id` as-is. The seed splits its stock of 7 as **4 Black
+/ 3 White**, a placeholder until the split is decided (section 5).
 
 ### Seed corrections
 
@@ -245,7 +247,8 @@ These need a human decision before they are modeled.
 
 - **Live Animal shipping, legal, permit, and age rules.** Until they're
   decided, Live Animals can't be checked out (rule 5).
-- **e-003 stock split** between the Black and White Variants.
+- **e-003 stock split** between the Black and White Variants. The seed uses
+  4 Black / 3 White as a placeholder. Staff can correct it in Admin.
 - **Individual animals.** Will the store ever sell specific animals with
   their own sex, hatch date, or photos? That would mean one Variant per
   animal with stock 1.
