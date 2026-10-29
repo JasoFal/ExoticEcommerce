@@ -624,14 +624,14 @@ left behind in the container after the run.
 
 ### Phase 3: Security
 
-- [ ] CodeQL default setup (JavaScript/TypeScript, GitHub Actions)
-- [ ] Turn on Dependabot alerts and security updates
+- [x] CodeQL default setup (JavaScript/TypeScript, GitHub Actions)
+- [x] Turn on Dependabot alerts and security updates
 - [x] Add `dependabot.yml` (5.2)
-- [ ] Confirm secret scanning and push protection are still on
-- [ ] Actions hardening settings (5.3)
+- [x] Confirm secret scanning and push protection are still on
+- [x] Actions hardening settings (5.3)
 - [x] SHA-pin existing actions, with shared setup moved to
       `.github/actions/setup-package` so each pin appears once per action
-- [ ] Add "Require code scanning results" to the ruleset
+- [x] Add "Require code scanning results" to the ruleset
 
 **Success:** the first CodeQL scan finishes with no High or Critical alerts,
 the first grouped Dependabot PR appears, and the settings match 5.1.
