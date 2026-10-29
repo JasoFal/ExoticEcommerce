@@ -43,4 +43,7 @@ runs:
         smart-tests verify || true
         smart-tests record build --build "$build"
         smart-tests record session --build "$build" --test-suite "$SUITE" > "$session_file"
-        smart-tests record tests "$PROFILE" --session "@$session_file" "$REPORT"
+        # The tests ran before this step recorded the build, so the report
+        # predates it. Without the flag the CLI skips it as "too old".
+        smart-tests record tests "$PROFILE" --session "@$session_file" \
+          --allow-test-before-build "$REPORT"
