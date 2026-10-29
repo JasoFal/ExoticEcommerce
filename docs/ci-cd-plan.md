@@ -311,6 +311,19 @@ wait.
 | Majors | Separate PRs, never auto-merged |
 | Ignored | React majors in `backend/`. Medusa Admin decides that version, so it moves with a Medusa upgrade |
 
+**Dependency overrides** (`overrides` in `backend/package.json`)
+
+These force a patched version of a transitive dependency when the package
+that pulls it in hasn't released a fix yet. `package.json` can't hold
+comments, so the reasons are recorded here. Dependabot doesn't update
+overrides. When the weekly `medusa` group PR arrives, check whether each one
+can be removed.
+
+| Package | Forced version | Alerts | Why | Remove when |
+|---|---|---|---|---|
+| `zod` | 4.6.6 | GHSA-mrhx-c7xc-m3w5 | Medusa 2.22.1 pins 4.2.0, and Medusa uses zod to validate API requests, so storefront traffic reaches it | Medusa's own pin is 4.6.6 or later |
+| `lodash` | 4.18.1 | GHSA-r5fr-rjxr-66jc, GHSA-f23m-r3pf-42rh | `inquirer` (Medusa CLI) and `@graphql-codegen` resolve to 4.17.23, and codegen only accepts 4.17.x | Neither resolves below 4.18.0 without the override |
+
 ### 5.3 GitHub Actions hardening
 
 - [ ] Default workflow `GITHUB_TOKEN` permission is **read-only**. Jobs ask
