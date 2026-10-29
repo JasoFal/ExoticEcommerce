@@ -10,10 +10,29 @@ const publishableKey = process.env.MEDUSA_PUBLISHABLE_KEY ?? "";
 // A seeded Supply (f-001 in ProductData.json).
 const SUPPLY_HANDLE = "small-dubia-roaches-14-50-count";
 
-test("the storefront serves the home page", async ({ page }) => {
-  // Status only: the page's content and design aren't settled yet.
-  const response = await page.goto("/");
-  expect(response?.status()).toBe(200);
+// Every route in docs/site-map.md §1. Dynamic segments use a placeholder.
+const ROUTES = [
+  "/",
+  "/shop",
+  "/shop?q=gecko",
+  "/products/example",
+  "/care-guides",
+  "/cart",
+  "/checkout",
+  "/order/example/confirmed",
+];
+
+for (const route of ROUTES) {
+  test(`the storefront serves ${route}`, async ({ page }) => {
+    // Status only: the page's content and design aren't settled yet.
+    const response = await page.goto(route);
+    expect(response?.status()).toBe(200);
+  });
+}
+
+test("an unknown route returns 404", async ({ page }) => {
+  const response = await page.goto("/this-route-does-not-exist");
+  expect(response?.status()).toBe(404);
 });
 
 test("the seeded catalogue is available with the seeded publishable key", async ({
