@@ -26,6 +26,14 @@ updates:
         update-types: [version-update:semver-major]
       - dependency-name: react-dom
         update-types: [version-update:semver-major]
+      # @medusajs/eslint-plugin 2.22 peers on eslint ^8.57 || ^9. Lift this
+      # when a Medusa release accepts eslint 10.
+      - dependency-name: eslint
+        update-types: [version-update:semver-major]
+      # TypeScript 7 breaks medusa build/lint and typescript-eslint. Lift this
+      # when both support it.
+      - dependency-name: typescript
+        update-types: [version-update:semver-major]
 
   - package-ecosystem: npm
     directory: /storefront
@@ -41,6 +49,11 @@ updates:
       minor-patch:
         patterns: ["*"]
         update-types: [minor, patch]
+    ignore:
+      # typescript-eslint does not support TypeScript 7 yet. Lift this when
+      # it does.
+      - dependency-name: typescript
+        update-types: [version-update:semver-major]
 
   # Covers the workflows and the local composite action's own pins.
   - package-ecosystem: github-actions
