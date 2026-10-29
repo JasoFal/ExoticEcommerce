@@ -1,5 +1,5 @@
-# End-to-end tests (docs/ci-cd-plan.md section 3.3, Phase 4; JUnit report from
-# Phase 5).
+# End-to-end tests (docs/ci-cd-plan.md section 3.3, Phase 4; JUnit report and
+# Smart Tests recording from Phase 5).
 # Starts the whole stack on the runner (seeded backend + production storefront)
 # and runs Playwright against it. Kept off PRs because it's the slowest layer
 # (CLAUDE.md); run it on a branch with "Run workflow" when needed.
@@ -55,10 +55,14 @@ jobs:
       AUTH_CORS: http://localhost:3000,http://localhost:9000
       MEDUSA_BACKEND_URL: http://localhost:9000
       LOG_DIR: ${{ github.workspace }}/e2e-logs
+      # Only whether the token exists, as in ci.yml.
+      HAS_SMART_TESTS_TOKEN: ${{ secrets.SMART_TESTS_TOKEN != '' }}
     steps:
+      # Full history for Smart Tests' commit collection.
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
+          fetch-depth: 0
       - uses: ./.github/actions/setup-package
         with:
           package: backend
@@ -132,6 +136,15 @@ jobs:
           path: storefront/reports/junit/
           if-no-files-found: warn
           retention-days: 7
+      - name: Record in Smart Tests
+        if: ${{ !cancelled() && env.HAS_SMART_TESTS_TOKEN == 'true' }}
+        continue-on-error: true
+        uses: ./.github/actions/smart-tests-record
+        with:
+          profile: playwright
+          test-suite: e2e
+          report: storefront/reports/junit/playwright.xml
+          token: ${{ secrets.SMART_TESTS_TOKEN }}
 
       - name: Upload traces and server logs
         if: failure()

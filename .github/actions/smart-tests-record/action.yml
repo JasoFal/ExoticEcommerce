@@ -1,0 +1,49 @@
+# Records one job's JUnit report in CloudBees Smart Tests (docs/ci-cd-plan.md
+# section 4, Phase 5). Record only: nothing is subset or skipped.
+# Each job records its own build and session, so jobs never coordinate. The
+# build name carries the run attempt so a re-run doesn't reuse a name.
+# Callers check out the repo with full history first, gate this step on the
+# token being present, and set continue-on-error: Smart Tests must never fail
+# a job (section 4.2).
+name: Record in Smart Tests
+description: Record a JUnit report as a Smart Tests build and test session.
+
+inputs:
+  profile:
+    description: Smart Tests test runner profile (jest, vitest, or playwright).
+    required: true
+  test-suite:
+    description: Test suite name, one per job (e.g. unit-backend).
+    required: true
+  report:
+    description: Path to the JUnit XML report, relative to the repo root.
+    required: true
+  token:
+    description: Smart Tests workspace API key.
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
+      with:
+        enable-cache: false
+    # Inputs reach the script through env, never through ${{ }} in run.
+    - shell: bash
+      env:
+        SMART_TESTS_TOKEN: ${{ inputs.token }}
+        PROFILE: ${{ inputs.profile }}
+        SUITE: ${{ inputs.test-suite }}
+        REPORT: ${{ inputs.report }}
+      run: |
+        uv tool install smart-tests-cli==2.16.4
+        export PATH="$(uv tool dir --bin):$PATH"
+        build="${GITHUB_SHA::7}-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}-${SUITE}"
+        session_file="$RUNNER_TEMP/smart-tests-session"
+        smart-tests verify || true
+        smart-tests record build --build "$build"
+        smart-tests record session --build "$build" --test-suite "$SUITE" > "$session_file"
+        # The tests ran before this step recorded the build, so the report
+        # predates it. Without the flag the CLI skips it as "too old".
+        smart-tests record tests "$PROFILE" --session "@$session_file" \
+          --allow-test-before-build "$REPORT"
