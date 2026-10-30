@@ -1,0 +1,27 @@
+.guide {
+  padding: 1rem 1.125rem;
+  border: 1px solid var(--ply-border-color);
+  border-radius: var(--ply-radius-lg);
+  background: var(--ply-bg-surface);
+}
+
+.heading {
+  margin-bottom: 0.75rem;
+  font-size: 1rem;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin: 0;
+  list-style: none;
+}
+
+.description {
+  display: block;
+  margin-top: 0.25rem;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: var(--ply-color-secondary);
+}

@@ -2,10 +2,10 @@ import Link from "next/link";
 
 export default function NotFound() {
   return (
-    <main>
+    <div className="units-container">
       <h1>Page not found</h1>
       {/* TEMP: route scaffold */}
       <Link href="/shop">Back to the shop</Link>
-    </main>
+    </div>
   );
 }

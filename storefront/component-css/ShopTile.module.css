@@ -1,0 +1,53 @@
+.tile {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  border: 1px solid var(--ply-border-color);
+  border-radius: var(--ply-radius-md);
+  background: var(--ply-bg-surface);
+  color: var(--ply-color-body);
+  text-decoration: none;
+}
+
+.tile:hover,
+.tile:focus-visible {
+  border-color: var(--ply-color-accent);
+  color: var(--ply-color-body);
+}
+
+.tile:focus-visible {
+  outline: 2px solid var(--ply-color-focus);
+  outline-offset: 2px;
+}
+
+.body {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  border-top: 1px solid var(--ply-border-color);
+}
+
+.title {
+  display: block;
+  font-family: var(--ply-font-heading);
+  font-size: 1.0625rem;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--ply-color-headings);
+}
+
+.subtitle {
+  display: block;
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  color: var(--ply-color-secondary);
+}
+
+.arrow {
+  flex-shrink: 0;
+  color: var(--ply-color-link);
+}

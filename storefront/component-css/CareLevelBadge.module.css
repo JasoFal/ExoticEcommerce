@@ -1,0 +1,51 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.125rem 0.5rem;
+  border: 1px solid;
+  border-radius: var(--ply-label-radius);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.lg {
+  padding: 0.25rem 0.625rem;
+  font-size: 0.9375rem;
+}
+
+.beginner-friendly {
+  background: var(--sf-care-beginner-bg);
+  color: var(--sf-care-beginner-fg);
+  border-color: var(--sf-care-beginner-border);
+}
+
+.intermediate {
+  background: var(--sf-care-intermediate-bg);
+  color: var(--sf-care-intermediate-fg);
+  border-color: var(--sf-care-intermediate-border);
+}
+
+.advanced {
+  background: var(--sf-care-advanced-bg);
+  color: var(--sf-care-advanced-fg);
+  border-color: var(--sf-care-advanced-border);
+}
+
+/* The 1-, 2-, or 3-pip shape cue, so the level never relies on color. */
+.pips {
+  display: inline-flex;
+  gap: 1px;
+}
+
+.pip {
+  width: 0.3125rem;
+  height: 0.6875rem;
+  border: 1px solid currentColor;
+  border-radius: 1px;
+}
+
+.pip[data-pip="filled"] {
+  background: currentColor;
+}

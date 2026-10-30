@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function Checkout() {
   return (
-    <main>
+    <div className="units-container">
       <h1>Checkout</h1>
       {/* TEMP: route scaffold */}
       <ul>
@@ -10,6 +10,6 @@ export default function Checkout() {
           <Link href="/order/example/confirmed">Place order</Link>
         </li>
       </ul>
-    </main>
+    </div>
   );
 }

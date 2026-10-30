@@ -1,0 +1,200 @@
+/*
+ * Brand theme for ply-css 1.8.0 (docs/design-plan.md §3).
+ *
+ * Imported after ply in app/layout.tsx. Light values sit on :root and dark
+ * values in a prefers-color-scheme block, so ply's automatic dark mode keeps
+ * working. Never set data-theme on <html>: it turns the dark block off.
+ *
+ * Brand: Moss #2E5E3E (main), a warm stone gray ramp, Ochre #9C5416 (accent).
+ * The --font-heading and --font-body variables come from next/font
+ * (app/fonts.ts).
+ */
+
+:root {
+  /* Type */
+  --ply-font-heading: var(--font-heading), "Segoe UI", system-ui, sans-serif;
+  --ply-font-body: var(--font-body), "Segoe UI", system-ui, sans-serif;
+
+  /* Background */
+  --ply-bg-body: #f6f7f4;
+  --ply-bg-surface: #ffffff;
+  --ply-bg-surface-alt: #eceee9;
+  --ply-bg-muted: #e1e5de;
+
+  /* Text */
+  --ply-color-body: #1f2621;
+  --ply-color-headings: #141a16;
+  --ply-color-secondary: #47524a;
+  --ply-color-muted: #56615a;
+  --ply-color-placeholder: #66716a;
+  --ply-color-text-inverse: #ffffff;
+
+  /* Borders */
+  --ply-border-color: #d5dbd2;
+  --ply-border-strong: #9aa59c;
+  --ply-border-radius: 6px;
+
+  /* Interactive */
+  --ply-color-accent: #9c5416;
+  --ply-color-focus: #2e5e3e;
+  --ply-color-link: #2e5e3e;
+  --ply-color-link-hover: #1b3a26;
+
+  /* Buttons */
+  --ply-btn-default-bg: #2e5e3e;
+  --ply-btn-default-bg-hover: #244b31;
+  --ply-btn-default-bg-active: #1b3a26;
+  --ply-btn-default-color: #ffffff;
+  --ply-btn-secondary-bg: #2a322c;
+  --ply-btn-secondary-bg-hover: #1f2621;
+  --ply-btn-secondary-bg-active: #141a16;
+  --ply-btn-secondary-color: #ffffff;
+  --ply-btn-ghost-color: #2e5e3e;
+  --ply-btn-border-radius: 6px;
+
+  /* Forms */
+  --ply-color-input-bg: #ffffff;
+  --ply-color-input-border: #8c978e;
+  --ply-color-error: #a12a1f;
+  --ply-color-success: #23673a;
+
+  /* Navigation */
+  --ply-nav-bg: transparent;
+  --ply-nav-color: #1f2621;
+  --ply-nav-border: #d5dbd2;
+  --ply-nav-hover: #eceee9;
+
+  /* Tables */
+  --ply-color-table-border: #d5dbd2;
+  --ply-color-table-striped: #f0f2ee;
+
+  /* Radius */
+  --ply-radius-sm: 4px;
+  --ply-radius-md: 8px;
+  --ply-radius-lg: 12px;
+  --ply-label-radius: 4px;
+  --ply-badge-radius: 999px;
+
+  /* Status: Care Level and Sold out badges (design-plan §4) */
+  --sf-care-beginner-bg: #e2f0e5;
+  --sf-care-beginner-fg: #1c5a2d;
+  --sf-care-beginner-border: #93c4a0;
+  --sf-care-intermediate-bg: #fbeed6;
+  --sf-care-intermediate-fg: #6f3f05;
+  --sf-care-intermediate-border: #ddb06a;
+  --sf-care-advanced-bg: #fae3e0;
+  --sf-care-advanced-fg: #862317;
+  --sf-care-advanced-border: #df9d94;
+  --sf-soldout-bg: #eceee9;
+  --sf-soldout-fg: #3a443d;
+  --sf-soldout-border: #b7c0b8;
+
+  /* The header's brand bar and the cart count badge */
+  --sf-bar-bg: #2e5e3e;
+  --sf-bar-fg: #ffffff;
+  --sf-count-bg: #9c5416;
+  --sf-count-fg: #ffffff;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --ply-bg-body: #111612;
+    --ply-bg-surface: #182019;
+    --ply-bg-surface-alt: #202922;
+    --ply-bg-muted: #29332b;
+
+    --ply-color-body: #e2e7e1;
+    --ply-color-headings: #f2f5f0;
+    --ply-color-secondary: #b6c0b7;
+    --ply-color-muted: #a5afa6;
+    --ply-color-placeholder: #8f9990;
+    --ply-color-text-inverse: #0f1a12;
+
+    --ply-border-color: #313c33;
+    --ply-border-strong: #5a675d;
+
+    --ply-color-accent: #e2a35e;
+    --ply-color-focus: #8fca9e;
+    --ply-color-link: #8fca9e;
+    --ply-color-link-hover: #b4dec0;
+
+    --ply-btn-default-bg: #7dbb8e;
+    --ply-btn-default-bg-hover: #95cba3;
+    --ply-btn-default-bg-active: #aad7b6;
+    --ply-btn-default-color: #111612;
+    --ply-btn-secondary-bg: #e2e7e1;
+    --ply-btn-secondary-bg-hover: #f2f5f0;
+    --ply-btn-secondary-bg-active: #cbd3cb;
+    --ply-btn-secondary-color: #111612;
+    --ply-btn-ghost-color: #8fca9e;
+
+    --ply-color-input-bg: #182019;
+    --ply-color-input-border: #6c7a6f;
+    --ply-color-error: #f2a197;
+    --ply-color-success: #8fca9e;
+
+    --ply-nav-color: #e2e7e1;
+    --ply-nav-border: #313c33;
+    --ply-nav-hover: #202922;
+
+    --ply-color-table-border: #313c33;
+    --ply-color-table-striped: #151b16;
+
+    --sf-care-beginner-bg: #1b3222;
+    --sf-care-beginner-fg: #a8dcb5;
+    --sf-care-beginner-border: #3d6a4a;
+    --sf-care-intermediate-bg: #372811;
+    --sf-care-intermediate-fg: #f1c88a;
+    --sf-care-intermediate-border: #6d5126;
+    --sf-care-advanced-bg: #3b1d19;
+    --sf-care-advanced-fg: #f3b2a9;
+    --sf-care-advanced-border: #733f39;
+    --sf-soldout-bg: #202922;
+    --sf-soldout-fg: #c8d0c8;
+    --sf-soldout-border: #4a564d;
+
+    --sf-bar-bg: #1b3a26;
+    --sf-bar-fg: #f2f5f0;
+    --sf-count-bg: #e2a35e;
+    --sf-count-fg: #111612;
+  }
+}
+
+/* Type rhythm (design-plan §3.1) */
+body {
+  line-height: 1.7;
+}
+
+h1,
+.h1 {
+  font-size: 2.75rem;
+  font-weight: 700;
+  line-height: 1.12;
+  letter-spacing: -0.025em;
+}
+
+h2,
+.h2 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+}
+
+h3,
+.h3 {
+  font-size: 1.125rem;
+  line-height: 1.3;
+}
+
+@media (max-width: 767px) {
+  h1,
+  .h1 {
+    font-size: 2.125rem;
+  }
+
+  h2,
+  .h2 {
+    font-size: 1.5rem;
+  }
+}

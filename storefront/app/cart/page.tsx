@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function Cart() {
   return (
-    <main>
+    <div className="units-container">
       <h1>Cart</h1>
       {/* TEMP: route scaffold */}
       <ul>
@@ -10,6 +10,6 @@ export default function Cart() {
           <Link href="/checkout">Checkout</Link>
         </li>
       </ul>
-    </main>
+    </div>
   );
 }

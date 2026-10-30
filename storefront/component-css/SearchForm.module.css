@@ -1,0 +1,54 @@
+.form {
+  width: 100%;
+  margin: 0;
+}
+
+.group {
+  margin: 0;
+}
+
+/* Scoped under .group to outrank ply's `.input-groups select`. */
+.group .department {
+  flex: 0 0 auto;
+  width: auto;
+  max-width: 11rem;
+  background-color: var(--ply-bg-surface-alt);
+  color: var(--ply-color-body);
+  font-weight: 600;
+}
+
+.group .query {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  height: 100%;
+  font-weight: 600;
+}
+
+@media (max-width: 767px) {
+  /* The mockup drops the Department select and the button text on phones.
+     The text stays readable to screen readers. */
+  /* !important only to beat ply's `.input-groups select { display: block !important }`. */
+  .group .department {
+    display: none !important;
+  }
+
+  .buttonText {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  .button {
+    min-width: 44px;
+    justify-content: center;
+  }
+}

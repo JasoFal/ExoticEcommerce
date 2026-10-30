@@ -20,9 +20,9 @@ no account, order lookup, About, FAQ, or legal pages.
 Global layout (header + footer on every page)
 │
 ├── /                         Home
-│   ├──→ /shop?q=…            (search bar)
-│   ├──→ /shop?department=…   (Department tiles)
-│   ├──→ /shop?animal_type=…  (Shop by Animal Type)
+│   ├──→ /shop?department=live-animals&animal_type=…
+│   │                         (Animal Type tiles)
+│   ├──→ /shop?department=…   (Department tiles, All Live Animals)
 │   └──→ /products/[handle]   (Beginner-friendly picks)
 │
 ├── /shop                     Shop: search, filter, and sort
@@ -53,14 +53,20 @@ URLs have no country-code prefix, because there is only one Region.
 
 ## 2. Global layout
 
-- **Header**: the logo links to Home. A **mega-menu** shows the four
-  Departments and the full Animal Type tree (Lizard → Gecko → Crested
-  Gecko, and so on). Every menu link goes to `/shop` with that filter set.
-  The header also has a search box that goes to `/shop?q=`, a Care Guides
-  link, and a cart link showing the item count from the Medusa cart.
-- **Mobile**: a hamburger button opens the same tree as an **accordion**
-  that expands one level at a time. The desktop mega-menu and the mobile
-  accordion share one client component.
+- **Header**: the logo links to Home. The **search box** is the store's only
+  search bar. It goes to `/shop?q=`, optionally with a Department
+  (`&department=…`) chosen from an "All Departments" select. The header
+  also has a Care Guides link and a cart link showing the item count from
+  the Medusa cart. A small utility bar holds the Live Animal shipping
+  placeholder and a "New to reptiles? Start here" link to Care Guides.
+- **Brand bar**: an **"All Animal Types" mega-menu** with the full Animal
+  Type tree (Lizard → Gecko → Crested Gecko, and so on), then "Browse all
+  products" (`/shop`), the four Departments, and "Beginner-friendly"
+  (`/shop?care_level=beginner-friendly`). Every menu link goes to `/shop`
+  with that filter set.
+- **Mobile**: a hamburger button opens an **accordion** that expands one
+  level at a time: the Departments, the Animal Type tree, and Care Guides.
+  The desktop mega-menu and the mobile accordion share one client component.
 - **Footer**: links to Care Guides and the four Departments, plus basic
   store information.
 
@@ -70,13 +76,20 @@ URLs have no country-code prefix, because there is only one Region.
 
 ### Home (`/`)
 
-- A **search bar** that submits to `/shop?q=`.
-- **Department tiles**: one tile each for Live Animals, Feeders, Enclosures,
-  and Accessories, linking to `/shop?department=…`.
-- **Shop by Animal Type**: the top-level Animal Types (Lizard, Snake,
-  Amphibian, Invertebrate), linking to `/shop?animal_type=…`.
-- **Beginner-friendly picks**: a row of Live Animals tagged
-  `beginner-friendly`, filtered by Medusa rather than chosen by hand.
+- **Intro**: one sentence on what the store sells, beside a "Care Levels,
+  at a glance" card. No search bar: search lives in the header.
+- **Shop animals and supplies**: one grid of eight tiles.
+  - The top-level Animal Types (Lizards, Snakes, Amphibians,
+    Invertebrates), linking to
+    `/shop?department=live-animals&animal_type=…`, so they show animals
+    only, not the Supplies suited to them.
+  - The Supply Departments (Feeders, Enclosures, Accessories), linking to
+    `/shop?department=…`.
+  - **All Live Animals**, linking to `/shop?department=live-animals`.
+- **Beginner-friendly picks**: up to four Live Animals tagged
+  `beginner-friendly`, newest first, filtered by Medusa rather than chosen
+  by hand. Sold-out animals are left out. If none are in stock, the section
+  is hidden.
 
 ### Shop (`/shop`)
 
@@ -180,3 +193,11 @@ These are tracked in [`domain-model.md` §5](./domain-model.md#5-open-questions)
   depend on the unresolved Live Animal shipping, legal, permit, and age
   rules.
 - **Price sort.** Deferred until Medusa can sort by price on the server.
+- **Best sellers.** Deferred. A Home "Best sellers" row needs a definition
+  first (sales count, a staff pick, or a Tag), and Medusa doesn't rank
+  products by sales out of the box. There are no sales to rank yet.
+- **Home tile photos.** Each tile shows a stand-in: the Medusa image of a
+  fixed product (e.g. Ball Python for Snakes) until real photos are chosen
+  and added to `storefront/public/tiles/`. Many seeded product image URLs
+  don't resolve, so tiles and cards fall back to their icon until real
+  images are uploaded in Admin.

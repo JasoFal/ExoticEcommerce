@@ -164,7 +164,7 @@ There are two ways to install it. The design plan has to pick one.
 | Dialog | Native `<dialog>` with `dialog-header`, `dialog-body`, `dialog-footer`, and `dialog-close`. Sizes: `dialog-sm`, `dialog-lg`, `dialog-full`. `dialog-confirm` is a confirmation layout. |
 | Accordion | Native `<details><summary>`. ply adds a caret that rotates when open. |
 | Toast | `alert alert-green message`, fixed to the top right. See §6.5. |
-| Misc | `flexible-embed` (16:9 iframe or video), `loader`, `spinning`, `fade-in`, `no-link-style` (makes a whole card a plain link), `sr-only`, `skip-link`. |
+| Misc | `flexible-embed` (16:9 iframe or video), `loader`, `spinning`, `fade-in`, `no-link-style` (strips color and underline from `a` elements *inside* it; it does nothing on the link itself), `sr-only`, `skip-link`. |
 
 ### 3.5 Utilities
 
@@ -210,7 +210,7 @@ point for the design plan, not a decision.
 | Mobile menu (accordion) | Nested `<details>`/`<summary>` | Use a real `<button>` for the hamburger, not the docs' `<span class="navigation-toggle">`, which can't receive keyboard focus. |
 | Header search | `<form role="search" class="form">`, `input-groups`, `btn-append`, `input-search` | |
 | Cart link with count | `badge` | Give it an accessible name, e.g. "Cart, 3 items". |
-| Department tiles and product cards | `units-row` + `unit-*` with responsive prefixes, or `container-query`; `layer-1`, `border`, `border-radius`, `no-link-style` | ply has no card or image component. A small custom card is expected. |
+| Department tiles and product cards | `units-row` + `unit-*` with responsive prefixes, or `container-query`; `layer-1`, `border`, `border-radius` | ply has no card or image component. A small custom card is expected. |
 | Care Level badge | `label label-{color}` or palette surface variables | Color alone can't carry meaning: the label text must name the level. Labels render in uppercase. |
 | Sold out | `label` (neutral or black) | Same rule: the text says "Sold out". |
 | `/shop` filters | `.form`, `fieldset`/`legend`, checkboxes, radios, `select` | |

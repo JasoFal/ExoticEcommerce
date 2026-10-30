@@ -1,0 +1,64 @@
+/* Space between sections varies on purpose (design-plan §5). */
+
+.intro {
+  align-items: center;
+  justify-content: space-between;
+  margin: 2.5rem 0 3.5rem;
+}
+
+.heading {
+  margin-bottom: 0.75rem;
+}
+
+.lead {
+  margin: 0;
+  font-size: 1.0625rem;
+  color: var(--ply-color-secondary);
+}
+
+.section {
+  margin-bottom: 4rem;
+}
+
+.section h2 {
+  margin-bottom: 1rem;
+}
+
+.sectionHeader {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  column-gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.sectionHeader h2 {
+  margin-bottom: 0;
+}
+
+.sectionHeader a {
+  font-weight: 600;
+}
+
+@media (max-width: 767px) {
+  .intro {
+    margin: 1.5rem 0 2.5rem;
+  }
+
+  .section {
+    margin-bottom: 3rem;
+  }
+
+  /* The link drops under the heading on phones, as in the mockup. */
+  .sectionHeader {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .sectionHeader a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+}

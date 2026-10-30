@@ -35,8 +35,9 @@ checked against that version's `dist/css/ply.css`.
 | Icons | Inline SVG through one `Icon` component. No icon package. |
 | Fonts | Loaded with `next/font` (built into Next.js). No font package. |
 | Add-to-Cart feedback | Inline status text plus the header cart count. No toast, no dialog. |
-| Home page top | A one-line purpose statement and the search bar. No full-screen hero. |
+| Home page top | A one-sentence `<h1>` and a one-line lead, beside the Care Levels guide card. No Home search bar (search lives in the header). No full-screen hero. |
 | Missing images | A flat neutral panel with an SVG silhouette and the product title. No gradients. |
+| Product images | Stored on the Product in Medusa (`thumbnail` + images). Rendered with `next/image` `unoptimized` until file storage and hosting are decided. |
 | Care Guides | One native `<details>` per top-level Animal Type. |
 | Quality gate | The AI Audit scorecard (§9) runs on every page. To pass, a page needs **≥ 90 overall and no UX failures**. |
 
@@ -159,25 +160,67 @@ constraints. Most come from the audit (§9).
   and sections are flat, with a border instead of a shadow. Don't use
   `layer-*` or `shadow-*` classes.
 
-### 3.2 Token table (fill in when the brand is accepted)
+### 3.2 Token table (frozen)
 
-These are the variables from ply's theme template. Set every one, so ply's
-default blue and gray never show through. Leave the values as `TBD` until
-the proposal is accepted, then freeze them here.
+Accepted from the Claude Design prototype's `theme.css`, which is now
+`storefront/app/theme.css`. Brand: **Moss** `#2E5E3E` (main), a warm stone
+gray ramp, and **Ochre** `#9C5416` (accent). The main text and background
+pairs were checked against WCAG AA in both modes. Input borders are closest
+to the limit, at 3.03:1 in light mode.
 
-| Group | Variables | Light | Dark |
+| Group | Variable | Light | Dark |
 |---|---|---|---|
-| Background | `--ply-bg-body`, `--ply-bg-surface`, `--ply-bg-surface-alt`, `--ply-bg-muted` | TBD | TBD |
-| Text | `--ply-color-body`, `--ply-color-headings`, `--ply-color-secondary`, `--ply-color-muted`, `--ply-color-placeholder`, `--ply-color-text-inverse` | TBD | TBD |
-| Borders | `--ply-border-color`, `--ply-border-strong`, `--ply-border-radius` | TBD | TBD |
-| Interactive | `--ply-color-accent`, `--ply-color-focus`, `--ply-color-link`, `--ply-color-link-hover` | TBD | TBD |
-| Buttons | `--ply-btn-default-bg`, `-color`, `-bg-hover`, `-bg-active`; `--ply-btn-secondary-bg`, `-color`, `-bg-hover`, `-bg-active`; `--ply-btn-border-radius` | TBD | TBD |
-| Forms | `--ply-color-input-bg`, `--ply-color-input-border`, `--ply-color-error`, `--ply-color-success` | TBD | TBD |
-| Navigation | `--ply-nav-bg`, `--ply-nav-color`, `--ply-nav-border`, `--ply-nav-hover` | TBD | TBD |
-| Tables | `--ply-color-table-border`, `--ply-color-table-striped` | TBD | TBD |
-| Type | `--ply-font-body`, `--ply-font-heading` | TBD | (same) |
-| Radius | `--ply-radius-sm`, `--ply-radius-md`, `--ply-radius-lg`, `--ply-label-radius`, `--ply-badge-radius` | TBD | (same) |
-| Status (§4: CareLevelBadge, StockBadge) | `--sf-care-beginner-*`, `--sf-care-intermediate-*`, `--sf-care-advanced-*`, `--sf-soldout-*` (each with `-bg`, `-fg`, `-border`) | TBD | TBD |
+| Background | `--ply-bg-body` | `#F6F7F4` | `#111612` |
+| | `--ply-bg-surface` | `#FFFFFF` | `#182019` |
+| | `--ply-bg-surface-alt` | `#ECEEE9` | `#202922` |
+| | `--ply-bg-muted` | `#E1E5DE` | `#29332B` |
+| Text | `--ply-color-body` | `#1F2621` | `#E2E7E1` |
+| | `--ply-color-headings` | `#141A16` | `#F2F5F0` |
+| | `--ply-color-secondary` | `#47524A` | `#B6C0B7` |
+| | `--ply-color-muted` | `#56615A` | `#A5AFA6` |
+| | `--ply-color-placeholder` | `#66716A` | `#8F9990` |
+| | `--ply-color-text-inverse` | `#FFFFFF` | `#0F1A12` |
+| Borders | `--ply-border-color` | `#D5DBD2` | `#313C33` |
+| | `--ply-border-strong` | `#9AA59C` | `#5A675D` |
+| | `--ply-border-radius` | `6px` | (same) |
+| Interactive | `--ply-color-accent` | `#9C5416` | `#E2A35E` |
+| | `--ply-color-focus` | `#2E5E3E` | `#8FCA9E` |
+| | `--ply-color-link` | `#2E5E3E` | `#8FCA9E` |
+| | `--ply-color-link-hover` | `#1B3A26` | `#B4DEC0` |
+| Buttons | `--ply-btn-default-bg` / `-hover` / `-active` | `#2E5E3E` / `#244B31` / `#1B3A26` | `#7DBB8E` / `#95CBA3` / `#AAD7B6` |
+| | `--ply-btn-default-color` | `#FFFFFF` | `#111612` |
+| | `--ply-btn-secondary-bg` / `-hover` / `-active` | `#2A322C` / `#1F2621` / `#141A16` | `#E2E7E1` / `#F2F5F0` / `#CBD3CB` |
+| | `--ply-btn-secondary-color` | `#FFFFFF` | `#111612` |
+| | `--ply-btn-ghost-color` | `#2E5E3E` | `#8FCA9E` |
+| | `--ply-btn-border-radius` | `6px` | (same) |
+| Forms | `--ply-color-input-bg` | `#FFFFFF` | `#182019` |
+| | `--ply-color-input-border` | `#8C978E` | `#6C7A6F` |
+| | `--ply-color-error` | `#A12A1F` | `#F2A197` |
+| | `--ply-color-success` | `#23673A` | `#8FCA9E` |
+| Navigation | `--ply-nav-bg` | `transparent` | `transparent` |
+| | `--ply-nav-color` | `#1F2621` | `#E2E7E1` |
+| | `--ply-nav-border` | `#D5DBD2` | `#313C33` |
+| | `--ply-nav-hover` | `#ECEEE9` | `#202922` |
+| Tables | `--ply-color-table-border` | `#D5DBD2` | `#313C33` |
+| | `--ply-color-table-striped` | `#F0F2EE` | `#151B16` |
+| Type | `--ply-font-heading` | Bricolage Grotesque (500–800, variable) | (same) |
+| | `--ply-font-body` | Source Sans 3 (400, 600, 700) | (same) |
+| Radius | `--ply-radius-sm` / `-md` / `-lg` | `4px` / `8px` / `12px` | (same) |
+| | `--ply-label-radius` / `--ply-badge-radius` | `4px` / `999px` | (same) |
+| Status: Beginner-friendly | `--sf-care-beginner-bg` / `-fg` / `-border` | `#E2F0E5` / `#1C5A2D` / `#93C4A0` | `#1B3222` / `#A8DCB5` / `#3D6A4A` |
+| Status: Intermediate | `--sf-care-intermediate-*` | `#FBEED6` / `#6F3F05` / `#DDB06A` | `#372811` / `#F1C88A` / `#6D5126` |
+| Status: Advanced | `--sf-care-advanced-*` | `#FAE3E0` / `#862317` / `#DF9D94` | `#3B1D19` / `#F3B2A9` / `#733F39` |
+| Status: Sold out | `--sf-soldout-*` | `#ECEEE9` / `#3A443D` / `#B7C0B8` | `#202922` / `#C8D0C8` / `#4A564D` |
+| Header bar | `--sf-bar-bg` / `--sf-bar-fg` | `#2E5E3E` / `#FFFFFF` | `#1B3A26` / `#F2F5F0` |
+| Cart count | `--sf-count-bg` / `--sf-count-fg` | `#9C5416` / `#FFFFFF` | `#E2A35E` / `#111612` |
+
+Fonts load through `next/font/google` as `--font-heading` and
+`--font-body`. The theme reads them into `--ply-font-heading` and
+`--ply-font-body`, with a `"Segoe UI", system-ui, sans-serif` fallback.
+
+**Type rhythm:** body line-height 1.7. `h1` is 2.75rem / 1.12 / −0.025em,
+`h2` is 1.75rem / 1.2 / −0.015em, and `h3` is 1.125rem / 1.3. At ≤ 767px,
+`h1` drops to 2.125rem and `h2` to 1.5rem.
 
 Set the button `-bg-hover` and `-bg-active` values explicitly. ply's
 `color-mix()` fallback doesn't work in older browsers.
@@ -212,7 +255,12 @@ Set the button `-bg-hover` and `-bg-active` values explicitly. ply's
 component, but it lives next to that page (§5). It moves to
 `components/` when a second page needs it.
 
-Server components are the default. Only the two components marked
+**Folder layout:** `storefront/components/` holds only the components
+(`ProductCard.tsx`). Each one's CSS Module lives in
+`storefront/component-css/` (`ProductCard.module.css`) and its tests in
+`storefront/component-tests/` (`ProductCard.test.tsx`), under the same name.
+
+Server components are the default. Only the components marked
 **client** below need `"use client"`. Page-local client pieces are listed
 in §5.
 
@@ -220,11 +268,14 @@ in §5.
 |---|---|---|---|---|
 | **SiteHeader** | Every page | Server | `skip-link`, `units-container`, `display-flex`, `items-center`, `justify-between`, `badge` | `sf-header` |
 | **CatalogNav** | SiteHeader | **Client** | `navbar`, `btn btn-ghost`, nested `<details>` (mobile) | `sf-megamenu` (§6.1) |
-| **SearchForm** | SiteHeader, Home | Server | `form`, `input-groups`, `input-search`, `btn-append`, `btn btn-primary`, `sr-only` | — |
+| **SearchForm** | SiteHeader | Server | `input-groups`, `btn-append`, `btn btn-primary`, `sr-only` | `sf-search` |
 | **SiteFooter** | Every page | Server | `units-row`, `unit-*`, `text-secondary` | `sf-footer` |
-| **ProductGrid** | Home, Shop | Server | `container-query`, `units-row`, `unit-25` + `container-*` prefixes | — |
-| **ProductCard** | Home, Shop (inside ProductGrid) | Server | `no-link-style`, `border`, `border-radius` | `sf-card` (§6.2) |
-| **ProductImage** | ProductCard, Product detail | Server | — | `sf-image`, fallback (§6.6) |
+| **ProductGrid** | Home, Shop | Server | `container-query`, `units-row`, `flat-list`, `unit-25` + `container-tablet-unit-50` | — |
+| **ProductCard** | Home, Shop (inside ProductGrid) | Server | — (not `no-link-style`; see below) | `sf-card` (§6.2) |
+| **ProductImage** | ProductCard, ShopTile, Product detail | **Client** (load-failure fallback) | — | `sf-image`, fallback (§6.6) |
+| **ShopTile** | Home (inside TileGrid) | Server | — | `sf-tile` |
+| **TileGrid** | Home | Server | `container-query`, `units-row`, `flat-list`, `unit-25` + `container-tablet-unit-50` | — |
+| **CareLevelGuide** | Home, Care Guides | Server | — | `sf-care-guide` |
 | **CareLevelBadge** | ProductCard, Product detail, Care Guides | Server | — (not `.label`, which forces uppercase) | `sf-care` |
 | **StockBadge** | ProductCard, Product detail | Server | — | `sf-stock` |
 | **Price** | ProductCard, Product detail, Cart, Checkout, Confirmation | Server | `font-semibold` | — |
@@ -237,32 +288,54 @@ in §5.
 
 ### Component details
 
-- **SiteHeader** shows a skip link, the logo (links to `/`), CatalogNav,
-  SearchForm, and a Care Guides link. It also has a cart link, labelled
-  "Cart, 3 items", with a `badge` for the count read from the Medusa cart.
-  Desktop has one row. At ≤ 767px, the logo, menu button, and cart link
-  share the first row, and SearchForm spans the full width below it. The
-  header is not sticky.
-- **CatalogNav** is one client component for both the desktop mega-menu and
-  the mobile accordion (site map §2). It shows the four Departments and the
-  full Animal Type tree. Every link goes to `/shop` with that filter set.
-  Behavior is in §6.1.
-- **SearchForm** is `<form role="search" action="/shop">` with a labelled
-  `q` input. On Home it's larger (`input-lg`). It works without JavaScript.
+- **SiteHeader** has three rows. (1) A utility bar, desktop only: the Live
+  Animal shipping `[PLACEHOLDER]` on the left, and "Care Guides" and "New
+  to reptiles? Start here" (→ `/care-guides` for now) on the right. (2) The
+  skip link, the logo (mark, "Reptile Store", and "Reptiles · Amphibians ·
+  Invertebrates"; links to `/`), SearchForm, and icon links for Care Guides
+  and the cart. The cart link is labelled "Cart, 2 items", with a `badge`
+  for the unit count read from the Medusa cart. With no cart there is no
+  badge. (3) A brand bar (`--sf-bar-bg`): the "All Animal Types" CatalogNav
+  button, "Browse all products" → `/shop`, the four Departments, and
+  "Beginner-friendly" → `/shop?care_level=beginner-friendly`. At ≤ 767px the
+  utility bar is hidden, the menu button, logo, and icon links share the
+  first row, SearchForm spans the full width below, and the brand bar
+  scrolls sideways. The header is not sticky.
+- **CatalogNav** is one client component with two variants (site map §2).
+  **Desktop:** the "All Animal Types" button opens a full-width panel with
+  one column per top-level Animal Type. The Departments are already in the
+  brand bar. **Mobile:** the menu button opens an accordion with the
+  Departments (plus "Shop all"), the Animal Type tree ("All lizards", then
+  each child), and Care Guides. Every Animal Type link goes to
+  `/shop?animal_type=…`. Behavior is in §6.1.
+- **SearchForm** is `<form role="search" action="/shop">` with a "Search
+  in" Department `<select name="department">` ("All Departments" sends no
+  filter), a labelled `q` input, and a Search button. It works without
+  JavaScript. At ≤ 767px the select is hidden and the button shows only its
+  icon; the text stays in the accessible name. It appears only in the
+  header. Home has no search bar of its own.
 - **SiteFooter** has links to Care Guides and the four Departments, plus
   store information. No newsletter or social icons: those are out of scope.
 - **ProductGrid** renders a `units-row` and wraps each ProductCard in its own
   `unit-*` div (rule §2.3). It uses container queries, so the same grid works
   in a full-width row on Home and in the 75% results column on Shop:
-  `unit-25 container-small-desktop-unit-33 container-tablet-unit-50 container-phone-unit-100`,
-  with `container-query` on the wrapper. That gives 4, 3, 2, then 1 column
-  as the container narrows past 1024, 767, and 480px.
-- **ProductCard** is one link (`<a class="no-link-style">`) holding
+  `unit-25 container-tablet-unit-50`, with `container-query` on the
+  wrapper. That gives 4 columns, then 2 once the container is ≤ 767px,
+  phones included (as in the Home mockup).
+- **ProductCard** is one link holding
   ProductImage, the title, Price, a CareLevelBadge (Live Animals only), and a
   StockBadge when the product is sold out. It has no buttons inside: Add to
   Cart lives on the product page. It's flat, with a border and no shadow. On
-  hover or focus, the border uses the accent color and the title is
-  underlined.
+  hover or focus, the border uses the accent color. The title and price
+  are underlined. The card's CSS Module removes the link's own underline:
+  ply's `no-link-style` only styles `a` elements *inside* the classed
+  element, so it does nothing when put on the link itself.
+- **ShopTile** is one link into a filtered Shop view: a 3:2 decorative image
+  (`alt=""`, because the title names the tile), the title, a one-line
+  subtitle, and an arrow. The image is a chosen photo, else a stand-in
+  product's Medusa image, else the icon on a flat panel (§6.6).
+- **CareLevelGuide** is the "Care Levels, at a glance" card: each
+  CareLevelBadge with its one-line meaning.
 - **CareLevelBadge** names the level in words: "Beginner-friendly",
   "Intermediate", or "Advanced". It is never color alone. It also shows a
   1-, 2-, or 3-pip marker as a shape cue for people who can't tell the
@@ -313,12 +386,14 @@ before a new topic. Don't use one fixed gap everywhere.
 
 | # | Section | Layout | Notes |
 |---|---|---|---|
-| 1 | Intro and search | `units-row`: `unit-60 tablet-unit-100` holds the `<h1>` (one plain sentence about what the store sells) and SearchForm (`input-lg`) | No full-screen hero, no background image, no second call to action. |
-| 2 | Shop by Department | `units-row` of four tiles: `unit-25 tablet-unit-50` | Text tiles with a Department name, one line describing it, and an icon. Each links to `/shop?department=…`. Flat, with a border. Should be visible in the first viewport on desktop. |
-| 3 | Shop by Animal Type | A wrapping row (`display-flex flex-wrap gap-sm`) of `btn btn-secondary-outline` links | Deliberately looks different from the tiles. Lizard, Snake, Amphibian, Invertebrate → `/shop?animal_type=…`. |
-| 4 | Beginner-friendly picks | Heading row (`display-flex justify-between items-center`) + ProductGrid | A left-aligned heading plus one link: "See all beginner-friendly animals" → `/shop?care_level=beginner-friendly`. Medusa picks the products. |
+| 1 | Intro | `units-row`: `unit-60 tablet-unit-100` holds the `<h1>` ("Reptiles, amphibians, and invertebrates, with the feeders, enclosures, and gear to keep them.") and a one-line lead. `unit-35 tablet-unit-100` holds CareLevelGuide. | No full-screen hero, no background image, and no search bar (it's in the header). |
+| 2 | Shop animals and supplies | TileGrid of 8 ShopTiles: 4 across, 2 on phones | Lizards, Snakes, Amphibians, Invertebrates → `/shop?department=live-animals&animal_type=…` (Live Animals only). Feeders, Enclosures, Accessories → `/shop?department=…`. All Live Animals ("Every animal we carry") → `/shop?department=live-animals`. |
+| 3 | Beginner-friendly picks | Heading row (`justify-between`; the link drops below the heading on phones) + ProductGrid | One link: "See all beginner-friendly animals" → `/shop?care_level=beginner-friendly`. Medusa picks the products: the newest beginner-friendly Live Animals that are in stock, at most 4. Sold-out animals are left out. With none in stock, the whole section, heading included, is hidden. |
 
-Only one section on the page is a product card grid.
+Only one section on the page is a product card grid. Tile photos are
+stand-ins until real ones are chosen (site map §5). Each tile uses a fixed
+product's Medusa image, picked so the same photo doesn't repeat in the
+picks row.
 
 ### Shop (`/shop`)
 
@@ -404,16 +479,19 @@ color schemes and with `prefers-reduced-motion`.
 
 ### 6.1 Mega-menu and mobile accordion (`sf-megamenu`)
 
-- **Desktop (> 767px):** a "Shop" `<button aria-expanded aria-controls>` in
-  the navbar opens a full-width panel under the header. The panel has a
-  Departments column and one column per top-level Animal Type, showing its
-  descendants as nested lists. It opens on **click or Enter/Space, never
+- **Desktop (> 767px):** an "All Animal Types" `<button aria-expanded
+  aria-controls>` in the brand bar opens a full-width panel under the
+  header. The panel has one column per top-level Animal Type, showing its
+  descendants as nested lists. The Departments are links in the brand bar. It opens on **click or Enter/Space, never
   only on hover**. Escape closes it and returns focus to the button. So
   does clicking outside or moving focus out of the panel. The panel is
   one of the two element types allowed a shadow (§3.1).
 - **Mobile (≤ 767px):** a menu `<button>` with the menu or close icon and
-  `aria-expanded` opens the same tree as nested `<details>`, one level at a
-  time. Every `<summary>` and link is at least 44px tall.
+  `aria-expanded` opens the Departments, the tree, and Care Guides as
+  nested `<details>`, one level at a time. Every `<summary>` and link is at
+  least 44px tall.
+- Following a link closes the menu, because the header stays mounted across
+  client-side navigations.
 - One component and one data source (the Animal Type tree and the four
   Departments from Medusa) serve both.
 
