@@ -1,0 +1,56 @@
+.footer {
+  margin-top: 4rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--ply-border-color);
+  font-size: 0.9375rem;
+}
+
+.name {
+  margin: 0 0 0.25rem;
+  font-family: var(--ply-font-heading);
+  font-size: 1.0625rem;
+  font-weight: 700;
+  color: var(--ply-color-headings);
+}
+
+.about {
+  margin: 0;
+  color: var(--ply-color-secondary);
+}
+
+.heading {
+  margin-bottom: 0.75rem;
+  font-family: var(--ply-font-heading);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ply-color-secondary);
+}
+
+.links {
+  margin: 0;
+  list-style: none;
+}
+
+.links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2rem;
+  color: var(--ply-color-body);
+}
+
+.legal {
+  margin: 0;
+  padding: 1rem 0 1.5rem;
+  border-top: 1px solid var(--ply-border-color);
+  font-size: 0.8125rem;
+  color: var(--ply-color-secondary);
+}
+
+@media (max-width: 767px) {
+  /* 44px touch targets on phones (design-plan §7). */
+  .links a {
+    min-height: 44px;
+  }
+}

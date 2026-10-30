@@ -262,10 +262,16 @@ These need a human decision before they are modeled.
   Does the rule need an enforcing hook?
 - **Staff roles.** Does any Staff User need restricted access? Changing that
   touches auth and needs sign-off.
-- **Product images.** Seed `imageUrl`s are hotlinked from Wikimedia, and
-  some look made up and may not resolve. `CLAUDE.md` says file storage is
-  local in development and S3 in production. Should images be rehosted
-  through Medusa's File module?
+- **Product images.** Decided: images belong to the Product in Medusa
+  (`thumbnail` and `ProductImage`), and the storefront only reads them.
+  Still open: seed `imageUrl`s are hotlinked from Wikimedia, and many don't
+  resolve (a 2026-10-29 check found 404s and 400s, including Ball Python,
+  Northern Blue-Tongued Skink, and Red-Eyed Tree Frog). `CLAUDE.md` says
+  file storage is local in development and S3 in production. Should images
+  be rehosted through Medusa's File module?
+- **Best sellers.** Deferred until there are sales. Is a "best seller"
+  ranked by sales count, picked by staff, or marked with a Tag? Medusa
+  doesn't rank products by sales out of the box.
 - **Care content editing.** Care Sheets and Videos live in product metadata,
   which staff edit with Admin's raw metadata editor. Is a dedicated Admin
   widget wanted later?

@@ -1,0 +1,147 @@
+/* design-plan §6.1. Both panels hang from SiteHeader, which is the nearest
+   positioned ancestor, so they span the full header width. */
+
+.root {
+  display: flex;
+}
+
+/* Desktop: the "All Animal Types" button in the brand bar. */
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 2.25rem;
+  padding: 0.25rem 0.75rem;
+  border: 1px solid currentColor;
+  border-radius: var(--ply-radius-sm);
+  background: transparent;
+  color: var(--sf-bar-fg);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.toggle:hover {
+  background: color-mix(in srgb, var(--sf-bar-fg) 12%, transparent);
+}
+
+.toggle:focus-visible {
+  outline: 2px solid var(--sf-bar-fg);
+  outline-offset: 2px;
+}
+
+.chevron,
+.chevronOpen {
+  transition: transform 0.15s ease;
+}
+
+.chevronOpen {
+  transform: rotate(180deg);
+}
+
+/* The one shadowed element besides ply's control states (design-plan §3.1). */
+.panel {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  border-bottom: 1px solid var(--ply-border-color);
+  background: var(--ply-bg-surface);
+  box-shadow: 0 12px 24px color-mix(in srgb, var(--ply-color-headings) 14%, transparent);
+}
+
+.columns {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  gap: 1.5rem;
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+
+.columnHeading {
+  font-family: var(--ply-font-heading);
+  font-size: 1.0625rem;
+  font-weight: 700;
+  color: var(--ply-color-headings);
+}
+
+.links {
+  margin: 0.25rem 0 0 0;
+  list-style: none;
+}
+
+.links .links {
+  margin-left: 0.875rem;
+}
+
+.links a {
+  display: inline-block;
+  padding: 0.125rem 0;
+  color: var(--ply-color-body);
+}
+
+/* Mobile: the menu button and the accordion. */
+.menuButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--ply-color-headings);
+  font-size: 1.25rem;
+  cursor: pointer;
+}
+
+.accordion {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  max-height: 80vh;
+  overflow-y: auto;
+  padding: 0.75rem;
+  border-bottom: 1px solid var(--ply-border-color);
+  background: var(--ply-bg-body);
+}
+
+.accordionList {
+  margin: 0;
+  list-style: none;
+}
+
+.accordion > .accordionList > li {
+  margin-bottom: 0.5rem;
+}
+
+.accordion > .accordionList > li > details {
+  border: 1px solid var(--ply-border-color);
+  border-radius: var(--ply-radius-sm);
+  background: var(--ply-bg-surface);
+}
+
+.accordion details .accordionList {
+  padding-left: 0.875rem;
+}
+
+/* Every summary and link is at least 44px tall (design-plan §7). */
+.accordion summary,
+.accordion a {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 0.75rem;
+}
+
+.accordion summary {
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.accordion a {
+  color: var(--ply-color-body);
+}

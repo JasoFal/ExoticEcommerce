@@ -1,0 +1,16 @@
+.badge {
+  display: inline-block;
+  padding: 0.125rem 0.5rem;
+  border: 1px solid var(--sf-soldout-border);
+  border-radius: var(--ply-label-radius);
+  background: var(--sf-soldout-bg);
+  color: var(--sf-soldout-fg);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.inStock {
+  color: var(--ply-color-success);
+  font-weight: 600;
+}

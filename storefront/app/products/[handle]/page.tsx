@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function ProductDetail() {
   return (
-    <main>
+    <div className="units-container">
       <h1>Product detail</h1>
       {/* TEMP: route scaffold */}
       <ul>
@@ -15,6 +15,6 @@ export default function ProductDetail() {
           </Link>
         </li>
       </ul>
-    </main>
+    </div>
   );
 }

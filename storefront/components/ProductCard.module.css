@@ -1,0 +1,54 @@
+/* design-plan §6.2: flat, bordered, one focus target. */
+.card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  border: 1px solid var(--ply-border-color);
+  border-radius: var(--ply-radius-md);
+  background: var(--ply-bg-surface);
+  color: var(--ply-color-body);
+  text-decoration: none;
+}
+
+.card:hover,
+.card:focus-visible {
+  border-color: var(--ply-color-accent);
+  color: var(--ply-color-body);
+}
+
+.card:focus-visible {
+  outline: 2px solid var(--ply-color-focus);
+  outline-offset: 2px;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.375rem;
+  padding: 0.75rem 0.75rem 0.875rem;
+}
+
+.title {
+  display: -webkit-box;
+  margin: 0;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  font-size: 1.0625rem;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.price {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+}

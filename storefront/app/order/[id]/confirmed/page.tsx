@@ -1,7 +1,7 @@
 export default function OrderConfirmed() {
   return (
-    <main>
+    <div className="units-container">
       <h1>Order confirmation</h1>
-    </main>
+    </div>
   );
 }

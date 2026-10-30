@@ -1,0 +1,41 @@
+.frame {
+  position: relative;
+  overflow: hidden;
+  background: var(--ply-bg-surface-alt);
+}
+
+.ratio43 {
+  aspect-ratio: 4 / 3;
+}
+
+.ratio32 {
+  aspect-ratio: 3 / 2;
+}
+
+.image {
+  object-fit: cover;
+}
+
+/* design-plan §6.6: a flat panel, never a gradient or shimmer. */
+.fallback {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  color: var(--ply-color-secondary);
+  text-align: center;
+}
+
+.fallbackIcon {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.fallbackLabel {
+  font-size: 0.8125rem;
+  line-height: 1.3;
+}

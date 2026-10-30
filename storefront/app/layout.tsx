@@ -1,33 +1,30 @@
+import "ply-css/dist/css/ply.min.css";
+import "./theme.css";
+
 import type { Metadata } from "next";
-import Link from "next/link";
+
+import { SiteFooter } from "../components/SiteFooter";
+import { SiteHeader } from "../components/SiteHeader";
+import { getAnimalTypeTree } from "../lib/data/animal-types";
+import { getCartItemCount } from "../lib/data/cart";
+import { bodyFont, headingFont } from "./fonts";
 
 export const metadata: Metadata = {
   title: "Reptile Store",
   description: "Live reptiles, feeders, enclosures, and accessories.",
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default async function RootLayout({ children }: LayoutProps<"/">) {
+  const [tree, cartCount] = await Promise.all([getAnimalTypeTree(), getCartItemCount()]);
+
+  // No data-theme on <html>: it would turn off automatic dark mode
+  // (design-plan §3.3).
   return (
-    <html lang="en">
+    <html lang="en" className={`${headingFont.variable} ${bodyFont.variable}`}>
       <body>
-        {/* TEMP: route scaffold. Stands in for SiteHeader (docs/site-map.md §2). */}
-        <nav aria-label="Temporary">
-          <ul>
-            <li>
-              <Link href="/">Home</Link>
-            </li>
-            <li>
-              <Link href="/shop">Shop</Link>
-            </li>
-            <li>
-              <Link href="/care-guides">Care Guides</Link>
-            </li>
-            <li>
-              <Link href="/cart">Cart</Link>
-            </li>
-          </ul>
-        </nav>
-        {children}
+        <SiteHeader tree={tree} cartCount={cartCount} />
+        <main id="main">{children}</main>
+        <SiteFooter />
       </body>
     </html>
   );
