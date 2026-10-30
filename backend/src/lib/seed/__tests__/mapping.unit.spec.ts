@@ -1,3 +1,5 @@
+import { existsSync } from "fs"
+import path from "path"
 import { toHandle } from "@medusajs/framework/utils"
 import { animalTypesByDepth } from "../animal-types"
 import {
@@ -9,7 +11,12 @@ import {
   uniqueTags,
   variantsFor,
 } from "../mapping"
-import { loadProductData, ProductDataEntry } from "../product-data"
+import {
+  loadProductData,
+  ProductDataEntry,
+  SEED_IMAGES_DIR,
+  seedImageNames,
+} from "../product-data"
 
 const data = loadProductData()
 const entry = (id: string): ProductDataEntry => {
@@ -34,6 +41,9 @@ const refs: CatalogueRefs = {
     animalTypesByDepth()
       .flat()
       .map(({ name }) => [name, `cat_${name}`])
+  ),
+  imageUrls: new Map(
+    seedImageNames(data).map((name) => [name, `https://files.test/${name}`])
   ),
 }
 
@@ -154,6 +164,20 @@ describe("Seed mapping", () => {
       }
     })
 
+    it("uses the uploaded seed image as the thumbnail and first image", () => {
+      const input = toProductInput(entry("la-007"), refs)
+      expect(input.thumbnail).toEqual("https://files.test/ball-python.jpg")
+      expect(input.images).toEqual([
+        { url: "https://files.test/ball-python.jpg" },
+      ])
+    })
+
+    it("leaves out images when there's no seed image", () => {
+      const input = toProductInput(entry("a-001"), refs)
+      expect(input.thumbnail).toBeUndefined()
+      expect(input.images).toBeUndefined()
+    })
+
     it("gives e-003 a Color option", () => {
       expect(toProductInput(entry("e-003"), refs).options).toEqual([
         { title: "Color", values: ["Black", "White"] },
@@ -188,6 +212,15 @@ describe("ProductData.json", () => {
     for (const e of corrected.filter((e) => e.category === "live-animals")) {
       const levels = e.tags.filter((t) => careLevels.includes(t))
       expect([e.id, levels.length]).toEqual([e.id, 1])
+    }
+  })
+
+  it("names only seed images that exist", () => {
+    for (const name of seedImageNames(data)) {
+      expect([name, existsSync(path.join(SEED_IMAGES_DIR, name))]).toEqual([
+        name,
+        true,
+      ])
     }
   })
 })

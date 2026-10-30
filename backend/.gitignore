@@ -27,3 +27,4 @@ build
 
 # JUnit reports from CI runs
 /reports/
+/static

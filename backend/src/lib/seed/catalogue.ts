@@ -1,3 +1,5 @@
+import { readFileSync } from "fs"
+import path from "path"
 import type { MedusaContainer } from "@medusajs/framework/types"
 import { ContainerRegistrationKeys } from "@medusajs/framework/utils"
 import {
@@ -6,6 +8,7 @@ import {
   createProductsWorkflow,
   createProductTagsWorkflow,
   createProductTypesWorkflow,
+  uploadFilesWorkflow,
 } from "@medusajs/medusa/core-flows"
 import type { StoreSetup } from "../store-setup"
 import { animalTypesByDepth } from "./animal-types"
@@ -15,7 +18,12 @@ import {
   uniqueTags,
   variantsFor,
 } from "./mapping"
-import type { Department, ProductDataEntry } from "./product-data"
+import {
+  SEED_IMAGES_DIR,
+  seedImageNames,
+  type Department,
+  type ProductDataEntry,
+} from "./product-data"
 
 const DEPARTMENTS: Department[] = [
   "live-animals",
@@ -69,6 +77,33 @@ async function createAnimalTypes(
   return idByName
 }
 
+/**
+ * Uploads each seed image through the File module, so it's stored and served
+ * like an image staff upload in Admin (local in development, S3 later).
+ */
+async function uploadSeedImages(
+  container: MedusaContainer,
+  entries: ProductDataEntry[]
+): Promise<Map<string, string>> {
+  const names = seedImageNames(entries)
+  if (names.length === 0) return new Map()
+
+  const { result } = await uploadFilesWorkflow(container).run({
+    input: {
+      files: names.map((filename) => ({
+        filename,
+        mimeType: "image/jpeg",
+        content: readFileSync(path.join(SEED_IMAGES_DIR, filename)).toString(
+          "base64"
+        ),
+        access: "public" as const,
+      })),
+    },
+  })
+  // Uploads come back in input order.
+  return new Map(names.map((name, i) => [name, result[i].url]))
+}
+
 async function stockProducts(
   container: MedusaContainer,
   stockLocationId: string,
@@ -98,7 +133,7 @@ async function stockProducts(
 
 /**
  * Loads the catalogue into the store built by createStoreSetup: Departments,
- * Tags, the Animal Type tree, every Product, and its Stock
+ * Tags, the Animal Type tree, seed images, every Product, and its Stock
  * (docs/domain-model.md §3).
  */
 export async function seedCatalogue(
@@ -115,6 +150,7 @@ export async function seedCatalogue(
     departmentIds: await createDepartments(container),
     tagIds: await createTags(container, uniqueTags(entries)),
     animalTypeIds: await createAnimalTypes(container),
+    imageUrls: await uploadSeedImages(container, entries),
   }
 
   await createProductsWorkflow(container).run({
