@@ -4,6 +4,7 @@ import { cache } from "react";
 import { careLevelOf, type CareLevel } from "../catalog";
 import { animalTypeRoots, getAnimalTypeTree } from "./animal-types";
 import { sdk } from "./client";
+import { medusaFileUrl } from "./files";
 import { getRegion } from "./regions";
 
 /** The silhouette a missing product image falls back to (design-plan §6.6). */
@@ -89,7 +90,7 @@ function toSummary(
     id: product.id,
     handle: product.handle,
     title: product.title,
-    thumbnail: product.thumbnail,
+    thumbnail: medusaFileUrl(product.thumbnail),
     price:
       price?.calculated_amount != null && price.currency_code
         ? { amount: price.calculated_amount, currencyCode: price.currency_code }

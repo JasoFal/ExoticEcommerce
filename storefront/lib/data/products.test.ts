@@ -15,7 +15,7 @@ function liveAnimal(handle: string, variants: VariantFixture[] = [{ inventory_qu
     id: `prod_${handle}`,
     handle,
     title: handle,
-    thumbnail: `https://img.test/${handle}.jpg`,
+    thumbnail: `${BACKEND_URL}/static/${handle}.jpg`,
     type: { id: "ptyp_live", value: "live-animals" },
     tags: [
       { id: "ptag_beginner", value: "beginner-friendly" },
@@ -110,12 +110,25 @@ describe("listBeginnerPicks", () => {
       id: "prod_crested-gecko",
       handle: "crested-gecko",
       title: "crested-gecko",
-      thumbnail: "https://img.test/crested-gecko.jpg",
+      thumbnail: `${BACKEND_URL}/static/crested-gecko.jpg`,
       price: { amount: 59.99, currencyCode: "usd" },
       careLevel: "beginner-friendly",
       soldOut: false,
       silhouette: "lizard",
     });
+  });
+
+  it("drops a thumbnail Medusa doesn't serve, so the card shows its silhouette", async () => {
+    serveCatalogue([
+      {
+        ...liveAnimal("crested-gecko"),
+        thumbnail: "https://upload.wikimedia.org/crested-gecko.jpg",
+      },
+    ]);
+
+    const [pick] = await listBeginnerPicks();
+
+    expect(pick.thumbnail).toBeNull();
   });
 
   it("leaves out sold-out animals and keeps the first four in stock", async () => {
