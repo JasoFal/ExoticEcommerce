@@ -177,9 +177,10 @@ One job starts the full stack on the runner:
 - The backend runs from the build output (`backend/.medusa/server`, after its
   own `npm ci --omit=dev`), because the production server serves the built
   admin from there.
-- Product images are hotlinked from Wikimedia and some may not resolve
-  ([`domain-model.md` §5](domain-model.md#5-open-questions)). E2E must
-  **not** assert on images. Otherwise external outages become test flakes.
+- Product images are seed photos uploaded through Medusa's File module
+  ([`local-infrastructure.md` §8](local-infrastructure.md#8-migrations-and-resets)).
+  E2E must **not** assert on images: staff can replace or remove them, and
+  the cards fall back to a silhouette.
 
 ### 3.4 Test priorities
 
