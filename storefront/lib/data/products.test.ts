@@ -2,7 +2,7 @@ import { http, HttpResponse } from "msw";
 import { beforeEach, describe, expect, it } from "vitest";
 
 import { BACKEND_URL, server } from "../../test/msw-server";
-import { getThumbnailsByHandle, listBeginnerPicks } from "./products";
+import { listBeginnerPicks } from "./products";
 
 type VariantFixture = {
   inventory_quantity: number;
@@ -144,31 +144,6 @@ describe("listBeginnerPicks", () => {
     serveCatalogue([liveAnimal("crested-gecko")], { beginnerTagExists: false });
 
     expect(await listBeginnerPicks()).toEqual([]);
-    expect(productRequests).toHaveLength(0);
-  });
-});
-
-describe("getThumbnailsByHandle", () => {
-  it("maps each handle to the thumbnail Medusa stores for it", async () => {
-    serveCatalogue([
-      { ...liveAnimal("ball-python") },
-      { ...liveAnimal("axolotl"), thumbnail: null },
-    ]);
-
-    const thumbnails = await getThumbnailsByHandle(["ball-python", "axolotl"]);
-
-    expect(thumbnails).toEqual(
-      new Map([["ball-python", "https://img.test/ball-python.jpg"]]),
-    );
-    expect(productRequests[0].searchParams.getAll("handle[0]")).toEqual([
-      "ball-python",
-    ]);
-  });
-
-  it("doesn't call Medusa for an empty list", async () => {
-    serveCatalogue([]);
-
-    expect(await getThumbnailsByHandle([])).toEqual(new Map());
     expect(productRequests).toHaveLength(0);
   });
 });

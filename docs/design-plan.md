@@ -332,8 +332,9 @@ in §5.
   element, so it does nothing when put on the link itself.
 - **ShopTile** is one link into a filtered Shop view: a 3:2 decorative image
   (`alt=""`, because the title names the tile), the title, a one-line
-  subtitle, and an arrow. The image is a chosen photo, else a stand-in
-  product's Medusa image, else the icon on a flat panel (§6.6).
+  subtitle, and an arrow. The image is a photo committed to
+  `storefront/public/tiles/`; if it fails to load, the icon shows on a flat
+  panel (§6.6).
 - **CareLevelGuide** is the "Care Levels, at a glance" card: each
   CareLevelBadge with its one-line meaning.
 - **CareLevelBadge** names the level in words: "Beginner-friendly",
@@ -391,9 +392,9 @@ before a new topic. Don't use one fixed gap everywhere.
 | 3 | Beginner-friendly picks | Heading row (`justify-between`; the link drops below the heading on phones) + ProductGrid | One link: "See all beginner-friendly animals" → `/shop?care_level=beginner-friendly`. Medusa picks the products: the newest beginner-friendly Live Animals that are in stock, at most 4. Sold-out animals are left out. With none in stock, the whole section, heading included, is hidden. |
 
 Only one section on the page is a product card grid. Tile photos are
-stand-ins until real ones are chosen (site map §5). Each tile uses a fixed
-product's Medusa image, picked so the same photo doesn't repeat in the
-picks row.
+royalty-free Pixabay photos committed to `storefront/public/tiles/` (sources
+in `CREDITS.md` there), never hotlinked. They aren't product images, so
+they never repeat a photo in the picks row.
 
 ### Shop (`/shop`)
 
