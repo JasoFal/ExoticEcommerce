@@ -21,7 +21,7 @@ type ProductImageProps = {
 /**
  * A product image at a fixed ratio, falling back to a flat panel with a
  * silhouette (design-plan §6.6). Client-side only so it can catch a failed
- * load: seeded images are hotlinked and some don't resolve.
+ * load, such as an image staff removed in Medusa Admin.
  */
 export function ProductImage({
   src,
@@ -37,16 +37,13 @@ export function ProductImage({
   return (
     <div className={`${styles.frame} ${ratioClass}`}>
       {src && !failed ? (
-        // Unoptimized: images live wherever staff upload them (Wikimedia
-        // seeds, Medusa's local file storage, S3 later), and the optimizer
-        // rejects unlisted and local hosts. Revisit once file storage and
-        // hosting are decided.
+        // Served through the optimizer, so the browser never calls Medusa
+        // directly. Allowed hosts are in next.config.ts.
         <Image
           src={src}
           alt={alt}
           fill
           sizes={sizes}
-          unoptimized
           className={styles.image}
           onError={() => setFailed(true)}
         />

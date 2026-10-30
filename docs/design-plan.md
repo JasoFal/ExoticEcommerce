@@ -37,7 +37,7 @@ checked against that version's `dist/css/ply.css`.
 | Add-to-Cart feedback | Inline status text plus the header cart count. No toast, no dialog. |
 | Home page top | A one-sentence `<h1>` and a one-line lead, beside the Care Levels guide card. No Home search bar (search lives in the header). No full-screen hero. |
 | Missing images | A flat neutral panel with an SVG silhouette and the product title. No gradients. |
-| Product images | Stored on the Product in Medusa (`thumbnail` + images). Rendered with `next/image` `unoptimized` until file storage and hosting are decided. |
+| Product images | Stored on the Product in Medusa (`thumbnail` + images). Rendered with `next/image` through the storefront's image optimizer, so the browser never calls Medusa directly. Allowed hosts are in `storefront/next.config.ts`; add the S3 host once production file storage is decided. |
 | Care Guides | One native `<details>` per top-level Animal Type. |
 | Quality gate | The AI Audit scorecard (§9) runs on every page. To pass, a page needs **≥ 90 overall and no UX failures**. |
 

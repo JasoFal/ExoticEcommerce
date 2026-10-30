@@ -225,7 +225,9 @@ These npm scripts live in `backend/package.json`. The seed itself is
 | `seed` | Create the store setup (Region, Stock Location, Shipping Options; it reuses the Sales Channel, publishable key, and default Shipping Profile Medusa creates itself) and load the catalogue from [`ProductData.json`](../ProductData.json) as mapped in [`domain-model.md`](domain-model.md), uploading the placeholder photos in [`seed-images/`](../seed-images/CREDITS.md) through Medusa's File module. Logs the publishable key. Refuses to run on a database that is already seeded. |
 
 The File module's default local provider writes uploads to `backend/static/`
-(git-ignored) and serves them at `http://localhost:9000/static/…`. A reset
+(git-ignored) and serves them at `http://localhost:9000/static/…`. The
+browser never loads that URL itself: the storefront's image optimizer fetches
+it server-side and serves it from `/_next/image` (section 7). A reset
 leaves old uploads there; delete the folder to clear them. A database seeded
 before `seed-images/` existed has broken image URLs: run `db:reset` to pick
 up the photos.
