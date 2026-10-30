@@ -1,7 +1,7 @@
 import { render, screen, within } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
-import { SiteHeader } from "./SiteHeader";
+import { SiteHeader } from "../components/SiteHeader";
 
 const tree = [{ name: "Lizard", handle: "lizard", children: [] }];
 

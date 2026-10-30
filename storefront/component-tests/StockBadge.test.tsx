@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
-import { StockBadge } from "./StockBadge";
+import { StockBadge } from "../components/StockBadge";
 
 describe("StockBadge", () => {
   it("says Sold out in words", () => {

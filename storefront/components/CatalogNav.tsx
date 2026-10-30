@@ -7,7 +7,7 @@ import { DEPARTMENTS } from "../lib/catalog";
 import type { AnimalTypeNode } from "../lib/data/animal-types";
 import { shopHref } from "../lib/shop-href";
 import { Icon } from "./Icon";
-import styles from "./CatalogNav.module.css";
+import styles from "../component-css/CatalogNav.module.css";
 
 type CatalogNavProps = {
   tree: AnimalTypeNode[];

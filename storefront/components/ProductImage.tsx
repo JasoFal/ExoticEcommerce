@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useState } from "react";
 
 import { Icon, type IconName } from "./Icon";
-import styles from "./ProductImage.module.css";
+import styles from "../component-css/ProductImage.module.css";
 
 type ProductImageProps = {
   src: string | null;

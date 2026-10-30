@@ -2,7 +2,7 @@ import { useId } from "react";
 
 import { DEPARTMENTS } from "../lib/catalog";
 import { Icon } from "./Icon";
-import styles from "./SearchForm.module.css";
+import styles from "../component-css/SearchForm.module.css";
 
 /**
  * The header search. A plain GET form to /shop, so it works without

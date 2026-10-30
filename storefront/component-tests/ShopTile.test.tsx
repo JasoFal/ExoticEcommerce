@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
-import { ShopTile } from "./ShopTile";
+import { ShopTile } from "../components/ShopTile";
 
 describe("ShopTile", () => {
   it("is one link named by its title, with the subtitle as text", () => {

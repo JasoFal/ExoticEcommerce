@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
 import type { ProductSummary } from "../lib/data/products";
-import { ProductCard } from "./ProductCard";
+import { ProductCard } from "../components/ProductCard";
 
 const gecko: ProductSummary = {
   id: "prod_1",

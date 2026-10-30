@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
-import { ProductImage } from "./ProductImage";
+import { ProductImage } from "../components/ProductImage";
 
 describe("ProductImage", () => {
   it("shows the image with the product title as alt text", () => {

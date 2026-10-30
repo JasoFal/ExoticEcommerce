@@ -6,7 +6,7 @@ import { shopHref } from "../lib/shop-href";
 import { CatalogNav } from "./CatalogNav";
 import { Icon } from "./Icon";
 import { SearchForm } from "./SearchForm";
-import styles from "./SiteHeader.module.css";
+import styles from "../component-css/SiteHeader.module.css";
 
 type SiteHeaderProps = {
   tree: AnimalTypeNode[];

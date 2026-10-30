@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
-import { CareLevelBadge } from "./CareLevelBadge";
+import { CareLevelBadge } from "../components/CareLevelBadge";
 
 describe("CareLevelBadge", () => {
   it.each([

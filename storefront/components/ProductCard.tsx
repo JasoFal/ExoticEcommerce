@@ -5,7 +5,7 @@ import { CareLevelBadge } from "./CareLevelBadge";
 import { Price } from "./Price";
 import { ProductImage } from "./ProductImage";
 import { StockBadge } from "./StockBadge";
-import styles from "./ProductCard.module.css";
+import styles from "../component-css/ProductCard.module.css";
 
 /**
  * One product in a grid: a single link with no buttons inside. Add to Cart

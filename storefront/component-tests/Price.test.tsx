@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
-import { Price } from "./Price";
+import { Price } from "../components/Price";
 
 describe("Price", () => {
   it("shows the amount Medusa returns, formatted", () => {

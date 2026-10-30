@@ -2,7 +2,7 @@ import Link from "next/link";
 
 import { DEPARTMENTS } from "../lib/catalog";
 import { shopHref } from "../lib/shop-href";
-import styles from "./SiteFooter.module.css";
+import styles from "../component-css/SiteFooter.module.css";
 
 /**
  * The global footer (design-plan §4): store information plus links to the

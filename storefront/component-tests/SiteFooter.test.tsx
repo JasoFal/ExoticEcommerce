@@ -1,7 +1,7 @@
 import { render, screen, within } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
-import { SiteFooter } from "./SiteFooter";
+import { SiteFooter } from "../components/SiteFooter";
 
 describe("SiteFooter", () => {
   it("links the four Departments", () => {

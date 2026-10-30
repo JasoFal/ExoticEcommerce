@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
-import { Icon } from "./Icon";
+import { Icon } from "../components/Icon";
 
 describe("Icon", () => {
   it("is hidden from assistive tech by default", () => {

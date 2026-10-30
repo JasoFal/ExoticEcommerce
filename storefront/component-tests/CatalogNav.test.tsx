@@ -2,7 +2,7 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
 import type { AnimalTypeNode } from "../lib/data/animal-types";
-import { CatalogNav } from "./CatalogNav";
+import { CatalogNav } from "../components/CatalogNav";
 
 const tree: AnimalTypeNode[] = [
   {

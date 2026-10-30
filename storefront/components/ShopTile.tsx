@@ -2,7 +2,7 @@ import Link from "next/link";
 
 import { Icon, type IconName } from "./Icon";
 import { ProductImage } from "./ProductImage";
-import styles from "./ShopTile.module.css";
+import styles from "../component-css/ShopTile.module.css";
 
 export type ShopTileProps = {
   title: string;

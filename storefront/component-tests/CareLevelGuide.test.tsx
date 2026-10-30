@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
-import { CareLevelGuide } from "./CareLevelGuide";
+import { CareLevelGuide } from "../components/CareLevelGuide";
 
 describe("CareLevelGuide", () => {
   it("explains each Care Level next to its badge", () => {

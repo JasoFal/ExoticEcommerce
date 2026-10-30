@@ -255,6 +255,11 @@ Set the button `-bg-hover` and `-bg-active` values explicitly. ply's
 component, but it lives next to that page (§5). It moves to
 `components/` when a second page needs it.
 
+**Folder layout:** `storefront/components/` holds only the components
+(`ProductCard.tsx`). Each one's CSS Module lives in
+`storefront/component-css/` (`ProductCard.module.css`) and its tests in
+`storefront/component-tests/` (`ProductCard.test.tsx`), under the same name.
+
 Server components are the default. Only the components marked
 **client** below need `"use client"`. Page-local client pieces are listed
 in §5.

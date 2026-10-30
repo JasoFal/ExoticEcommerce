@@ -1,7 +1,7 @@
 import { render, screen, within } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
-import { SearchForm } from "./SearchForm";
+import { SearchForm } from "../components/SearchForm";
 
 describe("SearchForm", () => {
   it("submits a GET to /shop, so it works without JavaScript", () => {

@@ -1,5 +1,5 @@
 import { CARE_LEVELS, type CareLevel } from "../lib/catalog";
-import styles from "./CareLevelBadge.module.css";
+import styles from "../component-css/CareLevelBadge.module.css";
 
 type CareLevelBadgeProps = {
   level: CareLevel;

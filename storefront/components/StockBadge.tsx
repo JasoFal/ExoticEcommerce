@@ -1,4 +1,4 @@
-import styles from "./StockBadge.module.css";
+import styles from "../component-css/StockBadge.module.css";
 
 type StockBadgeProps = {
   soldOut: boolean;

@@ -1,6 +1,6 @@
 import { CARE_LEVELS } from "../lib/catalog";
 import { CareLevelBadge } from "./CareLevelBadge";
-import styles from "./CareLevelGuide.module.css";
+import styles from "../component-css/CareLevelGuide.module.css";
 
 /** "Care Levels, at a glance": each Care Level's badge and what it means. */
 export function CareLevelGuide({ headingLevel = 2 }: { headingLevel?: 2 | 3 }) {
