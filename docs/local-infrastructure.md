@@ -222,7 +222,13 @@ These npm scripts live in `backend/package.json`. The seed itself is
 | Script | Does |
 |---|---|
 | `db:reset` | Drop and recreate `medusa_dev` in the Compose Postgres container, run Medusa's migrations, and seed. Needs `docker compose up -d` first. |
-| `seed` | Create the store setup (Region, Stock Location, Shipping Options; it reuses the Sales Channel, publishable key, and default Shipping Profile Medusa creates itself) and load the catalogue from [`ProductData.json`](../ProductData.json) as mapped in [`domain-model.md`](domain-model.md). Logs the publishable key. Refuses to run on a database that is already seeded. |
+| `seed` | Create the store setup (Region, Stock Location, Shipping Options; it reuses the Sales Channel, publishable key, and default Shipping Profile Medusa creates itself) and load the catalogue from [`ProductData.json`](../ProductData.json) as mapped in [`domain-model.md`](domain-model.md), uploading the placeholder photos in [`seed-images/`](../seed-images/CREDITS.md) through Medusa's File module. Logs the publishable key. Refuses to run on a database that is already seeded. |
+
+The File module's default local provider writes uploads to `backend/static/`
+(git-ignored) and serves them at `http://localhost:9000/static/…`. A reset
+leaves old uploads there; delete the folder to clear them. A database seeded
+before `seed-images/` existed has broken image URLs: run `db:reset` to pick
+up the photos.
 
 `db:reset` doesn't use `medusa db:setup`: that command reads `DATABASE_URL`
 only from `.env` and rewrites `backend/.env`.

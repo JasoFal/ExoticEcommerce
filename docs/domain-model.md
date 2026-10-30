@@ -171,7 +171,7 @@ exception is described below the table.
 | `animalCategory` | `Product.categories` (Animal Types) | Apply the **most-specific-node rule** below. |
 | `price` | `Price` on the Variant's price set | One USD price, in major units (Medusa v2 stores amounts this way: `199.99` is $199.99). |
 | `stock` | `InventoryLevel.stocked_quantity` | At the single Stock Location. |
-| `imageUrl` | `Product.thumbnail` and the first `ProductImage` | |
+| `image` | `Product.thumbnail` and the first `ProductImage` | Optional. A file in [`seed-images/`](../seed-images/CREDITS.md), uploaded through Medusa's File module during the seed. Products without a matching photo have none and show their silhouette. |
 | `careSheet` | `Product.metadata.care_sheet_url` | Present on Live Animals only. |
 | `video` | `Product.metadata.video_urls` | An array. Present on Live Animals only. |
 | `tags` | `Product.tags` | Normalized to lowercase-kebab (`UVB` → `uvb`, `New-Caledonia` → `new-caledonia`, `BSFL` → `bsfl`). |
@@ -262,13 +262,6 @@ These need a human decision before they are modeled.
   Does the rule need an enforcing hook?
 - **Staff roles.** Does any Staff User need restricted access? Changing that
   touches auth and needs sign-off.
-- **Product images.** Decided: images belong to the Product in Medusa
-  (`thumbnail` and `ProductImage`), and the storefront only reads them.
-  Still open: seed `imageUrl`s are hotlinked from Wikimedia, and many don't
-  resolve (a 2026-10-29 check found 404s and 400s, including Ball Python,
-  Northern Blue-Tongued Skink, and Red-Eyed Tree Frog). `CLAUDE.md` says
-  file storage is local in development and S3 in production. Should images
-  be rehosted through Medusa's File module?
 - **Best sellers.** Deferred until there are sales. Is a "best seller"
   ranked by sales count, picked by staff, or marked with a Tag? Medusa
   doesn't rank products by sales out of the box.

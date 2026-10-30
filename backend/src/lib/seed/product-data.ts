@@ -11,7 +11,9 @@ export type ProductDataEntry = {
   category: Department
   animalCategory: string[]
   price: number
-  imageUrl: string
+  // A file in seed-images/. Absent when there's no matching photo, so the
+  // storefront shows its silhouette.
+  image?: string
   stock: number
   tags: string[]
   // Present on Live Animals only.
@@ -23,6 +25,14 @@ export type ProductDataEntry = {
 // read at runtime rather than imported so it stays out of `medusa build`.
 const PRODUCT_DATA_PATH = path.resolve(__dirname, "../../../../ProductData.json")
 
+// Placeholder photos beside it, credited in seed-images/CREDITS.md.
+export const SEED_IMAGES_DIR = path.resolve(__dirname, "../../../../seed-images")
+
 export function loadProductData(): ProductDataEntry[] {
   return JSON.parse(readFileSync(PRODUCT_DATA_PATH, "utf8"))
+}
+
+/** Every distinct seed image the catalogue references. */
+export function seedImageNames(entries: ProductDataEntry[]): string[] {
+  return [...new Set(entries.flatMap((e) => (e.image ? [e.image] : [])))]
 }

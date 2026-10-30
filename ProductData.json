@@ -6,7 +6,7 @@
     "category": "live-animals",
     "animalCategory": ["lizard", "skink", "blue-tongued skink"],
     "price": 199.99,
-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Tiliqua_scincoides_scincoides_2.jpg/1280px-Tiliqua_scincoides_scincoides_2.jpg",
+    "image": "northern-blue-tongued-skink.jpg",
     "stock": 7,
     "video": ["https://www.youtube.com/watch?v=XxMnRe3oGxQ"],
     "careSheet": "https://reptilesmagazine.com/blue-tongued-skink-care-sheet/",
@@ -19,7 +19,7 @@
     "category": "live-animals",
     "animalCategory": ["lizard", "skink", "blue-tongued skink"],
     "price": 349.99,
-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Tiliqua_sp._Irian_Jaya.jpg/1280px-Tiliqua_sp._Irian_Jaya.jpg",
+    "image": "irian-jaya-blue-tongued-skink.jpg",
     "stock": 4,
     "video": ["https://www.youtube.com/watch?v=XxMnRe3oGxQ"],
     "careSheet": "https://reptilesmagazine.com/blue-tongued-skink-care-sheet/",
@@ -32,7 +32,7 @@
     "category": "live-animals",
     "animalCategory": ["lizard", "gecko", "crested gecko"],
     "price": 59.99,
-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Correlophus_ciliatus_2013.jpg/1280px-Correlophus_ciliatus_2013.jpg",
+    "image": "crested-gecko.jpg",
     "stock": 22,
     "video": ["https://www.youtube.com/watch?v=8o5pq5-T5mQ"],
     "careSheet": "https://www.reptilesmagazine.com/crested-gecko-care-sheet/",
@@ -45,7 +45,7 @@
     "category": "live-animals",
     "animalCategory": ["lizard", "gecko", "gargoyle gecko"],
     "price": 99.99,
-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Gargoyle_gecko_%28Rhacodactylus_auriculatus%29.jpg/1280px-Gargoyle_gecko_%28Rhacodactylus_auriculatus%29.jpg",
+    "image": "gargoyle-gecko.jpg",
     "stock": 14,
     "video": ["https://www.youtube.com/watch?v=2n2Nn-lxlYo"],
     "careSheet": "https://www.reptilesmagazine.com/gargoyle-gecko-care-sheet/",
@@ -58,7 +58,7 @@
     "category": "live-animals",
     "animalCategory": ["lizard", "tegu", "Argentine black and white tegu"],
     "price": 149.99,
-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Salvator_merianae_2.jpg/1280px-Salvator_merianae_2.jpg",
+    "image": "argentine-black-and-white-tegu.jpg",
     "stock": 9,
     "video": ["https://www.youtube.com/watch?v=LLdbpJY6GCY"],
     "careSheet": "https://reptilesmagazine.com/argentine-black-and-white-tegu-care/",
@@ -71,7 +71,7 @@
     "category": "live-animals",
     "animalCategory": ["lizard", "tegu", "red tegu"],
     "price": 199.99,
-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Red_tegu.jpg/1280px-Red_tegu.jpg",
+    "image": "red-tegu.jpg",
     "stock": 5,
     "video": ["https://www.youtube.com/watch?v=LLdbpJY6GCY"],
     "careSheet": "https://reptilesmagazine.com/argentine-black-and-white-tegu-care/",
@@ -84,7 +84,7 @@
     "category": "live-animals",
     "animalCategory": ["snake", "python", "ball python"],
     "price": 79.99,
-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Ball_python_lucy.JPG/1280px-Ball_python_lucy.JPG",
+    "image": "ball-python.jpg",
     "stock": 18,
     "video": ["https://www.youtube.com/watch?v=AwOjGaujXYY"],
     "careSheet": "https://reptilesmagazine.com/ball-python-care-sheet/",
@@ -97,7 +97,7 @@
     "category": "live-animals",
     "animalCategory": ["snake", "python", "ball python"],
     "price": 124.99,
-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Pastel_ball_python.jpg/1280px-Pastel_ball_python.jpg",
+    "image": "pastel-ball-python.jpg",
     "stock": 12,
     "video": ["https://www.youtube.com/watch?v=AwOjGaujXYY"],
     "careSheet": "https://reptilesmagazine.com/ball-python-care-sheet/",
@@ -110,7 +110,7 @@
     "category": "live-animals",
     "animalCategory": ["snake", "colubrid", "corn snake"],
     "price": 49.99,
-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Corn_snake.jpg/1280px-Corn_snake.jpg",
+    "image": "corn-snake.jpg",
     "stock": 27,
     "video": ["https://www.youtube.com/watch?v=xGXijO0nD9I"],
     "careSheet": "https://reptilesmagazine.com/corn-snake-care-sheet/",
@@ -123,7 +123,7 @@
     "category": "live-animals",
     "animalCategory": ["snake", "colubrid", "corn snake"],
     "price": 74.99,
-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Okeetee_corn_snake.jpg/1280px-Okeetee_corn_snake.jpg",
+    "image": "okeetee-corn-snake.jpg",
     "stock": 11,
     "video": ["https://www.youtube.com/watch?v=xGXijO0nD9I"],
     "careSheet": "https://reptilesmagazine.com/corn-snake-care-sheet/",
@@ -136,7 +136,7 @@
     "category": "live-animals",
     "animalCategory": ["snake", "colubrid", "hognose snake"],
     "price": 149.99,
-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Heterodon_nasicus.jpg/1280px-Heterodon_nasicus.jpg",
+    "image": "hognose-snake.jpg",
     "stock": 15,
     "video": ["https://www.youtube.com/watch?v=fGl0hAQCcFc"],
     "careSheet": "https://reptilesmagazine.com/western-hognose-snake-care-sheet/",
@@ -149,7 +149,6 @@
     "category": "live-animals",
     "animalCategory": ["snake", "colubrid", "hognose snake"],
     "price": 274.99,
-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Heterodon_nasicus.jpg/1280px-Heterodon_nasicus.jpg",
     "stock": 6,
     "video": ["https://www.youtube.com/watch?v=fGl0hAQCcFc"],
     "careSheet": "https://reptilesmagazine.com/western-hognose-snake-care-sheet/",
@@ -162,7 +161,7 @@
     "category": "live-animals",
     "animalCategory": ["amphibian", "frog", "tree frog"],
     "price": 34.99,
-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Litoria_caerulea_white%27s_tree_frog.jpg/1280px-Litoria_caerulea_white%27s_tree_frog.jpg",
+    "image": "whites-tree-frog.jpg",
     "stock": 21,
     "video": ["https://www.youtube.com/watch?v=K9mEQWcKJhE"],
     "careSheet": "https://joshs-frogs.com/pages/whites-tree-frog-care-sheet",
@@ -175,7 +174,7 @@
     "category": "live-animals",
     "animalCategory": ["amphibian", "frog", "tree frog"],
     "price": 49.99,
-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Agalychnis_callidryas.jpg/1280px-Agalychnis_callidryas.jpg",
+    "image": "red-eyed-tree-frog.jpg",
     "stock": 16,
     "video": ["https://www.youtube.com/watch?v=Aa24G_XWVP4"],
     "careSheet": "https://joshs-frogs.com/pages/red-eyed-tree-frog-care-sheet",
@@ -188,7 +187,7 @@
     "category": "live-animals",
     "animalCategory": ["amphibian", "frog", "horned frog"],
     "price": 39.99,
-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Pacman_Frog_%28Ceratophrys_ornata%29.jpg/1280px-Pacman_Frog_%28Ceratophrys_ornata%29.jpg",
+    "image": "pacman-frog.jpg",
     "stock": 19,
     "video": ["https://www.youtube.com/watch?v=8-5V4G7Gmis"],
     "careSheet": "https://joshs-frogs.com/pages/pacman-frog-care-sheet",
@@ -201,7 +200,7 @@
     "category": "live-animals",
     "animalCategory": ["amphibian", "frog", "horned frog"],
     "price": 59.99,
-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Pacman_Frog_%28Ceratophrys_ornata%29.jpg/1280px-Pacman_Frog_%28Ceratophrys_ornata%29.jpg",
+    "image": "albino-pacman-frog.jpg",
     "stock": 8,
     "video": ["https://www.youtube.com/watch?v=8-5V4G7Gmis"],
     "careSheet": "https://joshs-frogs.com/pages/pacman-frog-care-sheet",
@@ -214,7 +213,7 @@
     "category": "live-animals",
     "animalCategory": ["amphibian", "salamander", "axolotl"],
     "price": 44.99,
-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Axolotl_ganz.jpg/1280px-Axolotl_ganz.jpg",
+    "image": "axolotl.jpg",
     "stock": 13,
     "video": ["https://www.youtube.com/watch?v=UBZuL5uuvVs"],
     "careSheet": "https://www.thesprucepets.com/axolotl-care-sheet-5216929",
@@ -227,7 +226,7 @@
     "category": "live-animals",
     "animalCategory": ["invertebrate", "arachnid", "tarantula"],
     "price": 59.99,
-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d8/Grammostola_pulchripes_-_chaco_golden_knee.jpg/1280px-Grammostola_pulchripes_-_chaco_golden_knee.jpg",
+    "image": "chaco-golden-knee-tarantula.jpg",
     "stock": 17,
     "video": ["https://www.youtube.com/watch?v=ZLl5LYFLKXM"],
     "careSheet": "https://www.tarantulaguide.com/tarantula-species/grammostola-pulchripes/",
@@ -240,7 +239,7 @@
     "category": "live-animals",
     "animalCategory": ["invertebrate", "arachnid", "tarantula"],
     "price": 119.99,
-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Grammostola_pulchra.jpg/1280px-Grammostola_pulchra.jpg",
+    "image": "brazilian-black-tarantula.jpg",
     "stock": 5,
     "video": ["https://www.youtube.com/watch?v=ZLl5LYFLKXM"],
     "careSheet": "https://www.tarantulaguide.com/tarantula-species/grammostola-pulchra/",
@@ -253,7 +252,7 @@
     "category": "live-animals",
     "animalCategory": ["invertebrate", "arachnid", "scorpion"],
     "price": 34.99,
-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Pandinus_imperator_2.jpg/1280px-Pandinus_imperator_2.jpg",
+    "image": "emperor-scorpion.jpg",
     "stock": 11,
     "video": ["https://www.youtube.com/watch?v=pXK5V4C7t3Y"],
     "careSheet": "https://www.thesprucepets.com/emperor-scorpion-care-4797491",
@@ -266,7 +265,6 @@
     "category": "accessories",
     "animalCategory": ["amphibian", "frog", "tree frog", "horned frog", "salamander", "axolotl", "lizard", "skink", "tegu", "snake", "colubrid", "corn snake", "hognose snake"],
     "price": 12.99,
-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Coco_peat.jpg/1280px-Coco_peat.jpg",
     "stock": 43,
     "tags": ["substrate", "tropical", "humidity", "bioactive-compatible"]
   },
@@ -277,7 +275,6 @@
     "category": "accessories",
     "animalCategory": ["snake", "python", "ball python", "colubrid", "corn snake", "hognose snake"],
     "price": 18.99,
-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Aspen_wood_shavings.jpg/1280px-Aspen_wood_shavings.jpg",
     "stock": 36,
     "tags": ["substrate", "dry", "burrowing", "spot-clean"]
   },
@@ -288,7 +285,6 @@
     "category": "accessories",
     "animalCategory": ["lizard", "skink", "blue-tongued skink", "tegu", "Argentine black and white tegu", "red tegu", "snake", "colubrid", "hognose snake"],
     "price": 22.99,
-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Soil_profile.jpg/800px-Soil_profile.jpg",
     "stock": 28,
     "tags": ["substrate", "burrowing", "arid", "semi-arid", "bioactive-compatible"]
   },
@@ -299,7 +295,6 @@
     "category": "accessories",
     "animalCategory": ["lizard", "gecko", "crested gecko", "gargoyle gecko", "amphibian", "frog", "tree frog"],
     "price": 14.99,
-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9b/Orchid_bark_substrate.jpg/1280px-Orchid_bark_substrate.jpg",
     "stock": 31,
     "tags": ["substrate", "arboreal", "tropical", "bioactive-compatible"]
   },
@@ -310,7 +305,6 @@
     "category": "accessories",
     "animalCategory": ["amphibian", "salamander", "axolotl"],
     "price": 9.99,
-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/Aquarium_gravel.jpg/1280px-Aquarium_gravel.jpg",
     "stock": 22,
     "tags": ["substrate", "aquatic", "axolotl", "gravel"]
   },
@@ -321,7 +315,6 @@
     "category": "accessories",
     "animalCategory": ["lizard", "skink", "blue-tongued skink", "gecko", "crested gecko", "gargoyle gecko", "tegu", "Argentine black and white tegu", "red tegu"],
     "price": 19.99,
-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/Compact_fluorescent_light_bulb.jpg/800px-Compact_fluorescent_light_bulb.jpg",
     "stock": 39,
     "tags": ["lighting", "UVB", "5.0", "compact-fluorescent"]
   },
@@ -332,7 +325,6 @@
     "category": "accessories",
     "animalCategory": ["lizard", "skink", "blue-tongued skink", "tegu", "Argentine black and white tegu", "red tegu"],
     "price": 34.99,
-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/T5_fluorescent_tube.jpg/1280px-T5_fluorescent_tube.jpg",
     "stock": 17,
     "tags": ["lighting", "UVB", "10.0", "T5-HO", "desert"]
   },
@@ -343,7 +335,6 @@
     "category": "accessories",
     "animalCategory": ["lizard", "skink", "blue-tongued skink", "tegu", "Argentine black and white tegu", "red tegu", "snake", "python", "ball python"],
     "price": 9.99,
-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Incandescent_light_bulb.jpg/800px-Incandescent_light_bulb.jpg",
     "stock": 48,
     "tags": ["lighting", "heating", "basking", "incandescent"]
   },
@@ -354,7 +345,6 @@
     "category": "accessories",
     "animalCategory": ["lizard", "skink", "blue-tongued skink", "gecko", "crested gecko", "gargoyle gecko", "tegu", "Argentine black and white tegu", "red tegu", "snake", "python", "ball python"],
     "price": 24.99,
-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Clamp_lamp.jpg/800px-Clamp_lamp.jpg",
     "stock": 33,
     "tags": ["lighting", "fixture", "dome", "ceramic-socket"]
   },
@@ -365,7 +355,6 @@
     "category": "accessories",
     "animalCategory": ["snake", "python", "ball python", "colubrid", "corn snake", "hognose snake", "lizard", "skink", "blue-tongued skink"],
     "price": 16.99,
-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Ceramic_heat_emitter.jpg/800px-Ceramic_heat_emitter.jpg",
     "stock": 41,
     "tags": ["heating", "CHE", "nocturnal-safe", "infrared"]
   },
@@ -376,7 +365,6 @@
     "category": "accessories",
     "animalCategory": ["snake", "python", "ball python", "colubrid", "corn snake", "hognose snake", "amphibian", "frog", "horned frog"],
     "price": 21.99,
-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Under_tank_heater.jpg/800px-Under_tank_heater.jpg",
     "stock": 26,
     "tags": ["heating", "belly-heat", "UTH", "thermostat-required"]
   },
@@ -387,7 +375,6 @@
     "category": "accessories",
     "animalCategory": ["lizard", "skink", "blue-tongued skink", "tegu", "Argentine black and white tegu", "red tegu", "snake", "python", "ball python", "colubrid", "corn snake", "hognose snake"],
     "price": 54.99,
-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Digital_thermostat.jpg/800px-Digital_thermostat.jpg",
     "stock": 20,
     "tags": ["heating", "thermostat", "essential", "pulse", "dimmer"]
   },
@@ -398,7 +385,6 @@
     "category": "accessories",
     "animalCategory": ["amphibian", "salamander", "axolotl"],
     "price": 179.99,
-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/Aquarium_chiller.jpg/800px-Aquarium_chiller.jpg",
     "stock": 7,
     "tags": ["heating", "cooling", "aquatic", "axolotl", "essential"]
   },
@@ -409,7 +395,6 @@
     "category": "accessories",
     "animalCategory": ["lizard", "gecko", "crested gecko", "gargoyle gecko", "skink", "blue-tongued skink", "snake", "colubrid", "corn snake", "hognose snake", "amphibian", "frog", "tree frog"],
     "price": 14.99,
-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/Cork_bark.jpg/800px-Cork_bark.jpg",
     "stock": 38,
     "tags": ["hide", "cork", "naturalistic", "small"]
   },
@@ -420,7 +405,6 @@
     "category": "accessories",
     "animalCategory": ["lizard", "skink", "blue-tongued skink", "tegu", "Argentine black and white tegu", "snake", "python", "ball python", "colubrid", "corn snake"],
     "price": 29.99,
-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/Cork_bark.jpg/800px-Cork_bark.jpg",
     "stock": 15,
     "tags": ["hide", "cork", "naturalistic", "large"]
   },
@@ -431,7 +415,6 @@
     "category": "accessories",
     "animalCategory": ["lizard", "gecko", "crested gecko", "gargoyle gecko", "amphibian", "frog", "tree frog"],
     "price": 18.99,
-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Reptile_magnetic_hide.jpg/800px-Reptile_magnetic_hide.jpg",
     "stock": 29,
     "tags": ["hide", "arboreal", "magnetic", "acrylic", "gecko", "frog"]
   },
@@ -442,7 +425,6 @@
     "category": "accessories",
     "animalCategory": ["snake", "python", "ball python", "colubrid", "hognose snake", "lizard", "skink", "blue-tongued skink"],
     "price": 22.99,
-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Reptile_humid_hide.jpg/800px-Reptile_humid_hide.jpg",
     "stock": 24,
     "tags": ["hide", "humidity", "shedding", "moss"]
   },
@@ -453,7 +435,6 @@
     "category": "accessories",
     "animalCategory": ["invertebrate", "arachnid", "tarantula", "scorpion"],
     "price": 8.99,
-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Deli_cup_enclosure.jpg/800px-Deli_cup_enclosure.jpg",
     "stock": 46,
     "tags": ["enclosure", "tarantula", "scorpion", "starter", "vented"]
   },
@@ -464,7 +445,6 @@
     "category": "accessories",
     "animalCategory": ["lizard", "skink", "blue-tongued skink", "gecko", "crested gecko", "gargoyle gecko", "tegu", "Argentine black and white tegu", "red tegu", "snake", "python", "ball python", "colubrid", "corn snake", "hognose snake", "amphibian", "frog", "tree frog", "horned frog", "salamander", "axolotl"],
     "price": 17.99,
-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Digital_hygrometer.jpg/800px-Digital_hygrometer.jpg",
     "stock": 44,
     "tags": ["monitoring", "thermometer", "hygrometer", "essential", "dual-probe"]
   },
@@ -475,7 +455,6 @@
     "category": "accessories",
     "animalCategory": ["lizard", "skink", "blue-tongued skink", "gecko", "tegu", "Argentine black and white tegu", "red tegu", "snake", "python", "ball python", "colubrid", "corn snake"],
     "price": 21.99,
-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/Infrared_thermometer.jpg/800px-Infrared_thermometer.jpg",
     "stock": 35,
     "tags": ["monitoring", "temperature", "infrared", "essential", "instant-read"]
   },
@@ -486,7 +465,6 @@
     "category": "accessories",
     "animalCategory": ["amphibian", "salamander", "axolotl"],
     "price": 11.99,
-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Aquarium_thermometer.jpg/800px-Aquarium_thermometer.jpg",
     "stock": 30,
     "tags": ["monitoring", "aquatic", "axolotl", "temperature", "submersible"]
   },
@@ -497,7 +475,6 @@
     "category": "accessories",
     "animalCategory": ["lizard", "skink", "blue-tongued skink", "snake", "python", "ball python", "colubrid", "corn snake", "hognose snake"],
     "price": 12.99,
-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Reptile_water_dish.jpg/800px-Reptile_water_dish.jpg",
     "stock": 40,
     "tags": ["water-dish", "soaking", "resin", "flat", "medium"]
   },
@@ -508,7 +485,6 @@
     "category": "accessories",
     "animalCategory": ["lizard", "skink", "blue-tongued skink", "tegu", "Argentine black and white tegu", "red tegu"],
     "price": 24.99,
-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Reptile_water_dish.jpg/800px-Reptile_water_dish.jpg",
     "stock": 18,
     "tags": ["water-dish", "soaking", "large", "tegu", "skink"]
   },
@@ -519,7 +495,6 @@
     "category": "accessories",
     "animalCategory": ["amphibian", "salamander", "axolotl"],
     "price": 64.99,
-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Canister_filter_aquarium.jpg/800px-Canister_filter_aquarium.jpg",
     "stock": 12,
     "tags": ["aquatic", "filtration", "canister", "axolotl", "essential"]
   },
@@ -530,7 +505,6 @@
     "category": "accessories",
     "animalCategory": ["snake", "python", "ball python", "colubrid", "corn snake", "hognose snake", "amphibian", "frog", "horned frog", "lizard", "skink", "blue-tongued skink", "tegu"],
     "price": 9.99,
-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Feeding_tongs_reptile.jpg/800px-Feeding_tongs_reptile.jpg",
     "stock": 49,
     "tags": ["feeding", "tongs", "safety", "essential", "stainless"]
   },
@@ -541,7 +515,6 @@
     "category": "accessories",
     "animalCategory": ["lizard", "gecko", "crested gecko", "gargoyle gecko", "amphibian", "frog", "tree frog"],
     "price": 49.99,
-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/Reptile_mister.jpg/800px-Reptile_mister.jpg",
     "stock": 21,
     "tags": ["humidity", "misting", "automatic", "arboreal", "tropical"]
   },
@@ -552,7 +525,6 @@
     "category": "accessories",
     "animalCategory": ["snake", "python", "ball python", "colubrid", "corn snake", "hognose snake", "lizard", "skink", "blue-tongued skink", "amphibian", "frog", "horned frog", "tree frog"],
     "price": 13.99,
-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Sphagnum_moss.jpg/1280px-Sphagnum_moss.jpg",
     "stock": 42,
     "tags": ["substrate", "moss", "humidity", "shedding", "versatile"]
   },
@@ -563,7 +535,6 @@
     "category": "accessories",
     "animalCategory": ["lizard", "gecko", "crested gecko", "gargoyle gecko", "amphibian", "frog", "tree frog"],
     "price": 11.99,
-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/Artificial_vine_reptile.jpg/800px-Artificial_vine_reptile.jpg",
     "stock": 37,
     "tags": ["decor", "enrichment", "arboreal", "climbing", "artificial"]
   },
@@ -574,7 +545,6 @@
     "category": "accessories",
     "animalCategory": ["lizard", "skink", "blue-tongued skink", "gecko", "crested gecko", "gargoyle gecko", "tegu", "Argentine black and white tegu", "red tegu", "amphibian", "frog", "tree frog", "horned frog", "salamander", "axolotl"],
     "price": 8.99,
-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Calcium_powder_reptile.jpg/800px-Calcium_powder_reptile.jpg",
     "stock": 50,
     "tags": ["supplement", "calcium", "D3", "essential", "dusting"]
   },
@@ -585,7 +555,6 @@
     "category": "accessories",
     "animalCategory": ["lizard", "skink", "blue-tongued skink", "gecko", "crested gecko", "gargoyle gecko", "tegu", "Argentine black and white tegu", "red tegu", "amphibian", "frog", "tree frog", "horned frog"],
     "price": 11.99,
-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Calcium_powder_reptile.jpg/800px-Calcium_powder_reptile.jpg",
     "stock": 45,
     "tags": ["supplement", "multivitamin", "essential", "dusting", "omnivore"]
   },
@@ -596,7 +565,7 @@
     "category": "feeders",
     "animalCategory": ["lizard", "gecko", "crested gecko", "gargoyle gecko", "skink", "blue-tongued skink", "tegu", "Argentine black and white tegu", "red tegu", "amphibian", "frog", "tree frog", "horned frog", "invertebrate", "arachnid", "tarantula", "scorpion"],
     "price": 12.99,
-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Blaptica_dubia.jpg/1280px-Blaptica_dubia.jpg",
+    "image": "dubia-roaches.jpg",
     "stock": 34,
     "tags": ["feeder-insect", "roach", "dubia", "small", "juvenile", "high-protein"]
   },
@@ -607,7 +576,7 @@
     "category": "feeders",
     "animalCategory": ["lizard", "skink", "blue-tongued skink", "tegu", "Argentine black and white tegu", "red tegu", "amphibian", "frog", "horned frog", "invertebrate", "arachnid", "tarantula", "scorpion"],
     "price": 14.99,
-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Blaptica_dubia.jpg/1280px-Blaptica_dubia.jpg",
+    "image": "dubia-roaches.jpg",
     "stock": 22,
     "tags": ["feeder-insect", "roach", "dubia", "large", "adult", "staple"]
   },
@@ -618,7 +587,7 @@
     "category": "feeders",
     "animalCategory": ["lizard", "gecko", "crested gecko", "gargoyle gecko", "skink", "blue-tongued skink", "amphibian", "frog", "tree frog", "horned frog", "invertebrate", "arachnid", "tarantula"],
     "price": 8.99,
-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Acheta_domesticus_pe.jpg/1280px-Acheta_domesticus_pe.jpg",
+    "image": "crickets.jpg",
     "stock": 47,
     "tags": ["feeder-insect", "cricket", "small", "versatile", "widely-accepted"]
   },
@@ -629,7 +598,7 @@
     "category": "feeders",
     "animalCategory": ["lizard", "skink", "blue-tongued skink", "tegu", "Argentine black and white tegu", "red tegu", "amphibian", "frog", "tree frog", "horned frog", "invertebrate", "arachnid", "scorpion"],
     "price": 10.99,
-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Acheta_domesticus_pe.jpg/1280px-Acheta_domesticus_pe.jpg",
+    "image": "crickets.jpg",
     "stock": 41,
     "tags": ["feeder-insect", "cricket", "large", "adult", "staple"]
   },
@@ -640,7 +609,7 @@
     "category": "feeders",
     "animalCategory": ["snake", "python", "ball python", "colubrid", "corn snake", "hognose snake"],
     "price": 9.99,
-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Mus_musculus_new_born.JPG/1280px-Mus_musculus_new_born.JPG",
+    "image": "pinky-mice.jpg",
     "stock": 29,
     "tags": ["feeder-rodent", "pinky", "frozen", "juvenile-snake", "frozen-thawed"]
   },
@@ -651,7 +620,7 @@
     "category": "feeders",
     "animalCategory": ["snake", "python", "ball python", "colubrid", "corn snake", "hognose snake", "lizard", "skink", "blue-tongued skink", "tegu", "Argentine black and white tegu", "red tegu"],
     "price": 14.99,
-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Mus_musculus_laboratory_mouse.jpg/1280px-Mus_musculus_laboratory_mouse.jpg",
+    "image": "mice.jpg",
     "stock": 25,
     "tags": ["feeder-rodent", "adult-mouse", "frozen", "staple", "frozen-thawed"]
   },
@@ -662,7 +631,7 @@
     "category": "feeders",
     "animalCategory": ["snake", "python", "ball python", "lizard", "tegu", "Argentine black and white tegu", "red tegu"],
     "price": 19.99,
-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Rattus_norvegicus_domestica.jpg/1280px-Rattus_norvegicus_domestica.jpg",
+    "image": "rats.jpg",
     "stock": 16,
     "tags": ["feeder-rodent", "rat", "jumbo", "frozen", "large-snake", "tegu"]
   },
@@ -673,7 +642,7 @@
     "category": "feeders",
     "animalCategory": ["lizard", "gecko", "crested gecko", "gargoyle gecko", "skink", "blue-tongued skink", "amphibian", "frog", "tree frog"],
     "price": 7.99,
-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Galleria_mellonella.jpg/1280px-Galleria_mellonella.jpg",
+    "image": "waxworms.jpg",
     "stock": 38,
     "tags": ["feeder-insect", "waxworm", "treat", "high-fat", "picky-eaters"]
   },
@@ -684,7 +653,7 @@
     "category": "feeders",
     "animalCategory": ["lizard", "gecko", "crested gecko", "gargoyle gecko", "skink", "blue-tongued skink", "amphibian", "frog", "tree frog", "horned frog"],
     "price": 11.99,
-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Hermetia_illucens_larvae.jpg/1280px-Hermetia_illucens_larvae.jpg",
+    "image": "black-soldier-fly-larvae.jpg",
     "stock": 43,
     "tags": ["feeder-insect", "BSFL", "high-calcium", "no-dusting-required", "soft-bodied"]
   },
@@ -695,7 +664,6 @@
     "category": "feeders",
     "animalCategory": ["lizard", "gecko", "crested gecko", "gargoyle gecko"],
     "price": 16.99,
-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Repashy_MRP_powder.jpg/800px-Repashy_MRP_powder.jpg",
     "stock": 32,
     "tags": ["prepared-diet", "MRP", "gecko", "complete-diet", "Repashy"]
   },
@@ -706,7 +674,6 @@
     "category": "enclosures",
     "animalCategory": ["snake", "colubrid", "corn snake", "hognose snake", "python", "ball python"],
     "price": 74.99,
-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Glass_terrarium.jpg/1280px-Glass_terrarium.jpg",
     "stock": 18,
     "tags": ["glass", "terrarium", "starter", "juvenile", "20-gallon", "snake"]
   },
@@ -717,7 +684,6 @@
     "category": "enclosures",
     "animalCategory": ["snake", "python", "ball python", "colubrid", "corn snake", "hognose snake", "lizard", "gecko", "crested gecko", "gargoyle gecko"],
     "price": 139.99,
-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Glass_terrarium.jpg/1280px-Glass_terrarium.jpg",
     "stock": 12,
     "tags": ["glass", "terrarium", "40-gallon", "breeder", "adult", "snake", "gecko"]
   },
@@ -728,7 +694,6 @@
     "category": "enclosures",
     "animalCategory": ["snake", "python", "ball python", "colubrid", "corn snake", "hognose snake", "lizard", "skink", "blue-tongued skink"],
     "price": 349.99,
-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/PVC_reptile_enclosure.jpg/1280px-PVC_reptile_enclosure.jpg",
     "stock": 7,
     "tags": ["PVC", "front-opening", "insulated", "adult", "4x2x2", "ball-python", "skink"]
   },
@@ -739,7 +704,6 @@
     "category": "enclosures",
     "animalCategory": ["lizard", "tegu", "Argentine black and white tegu", "red tegu"],
     "price": 649.99,
-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/PVC_reptile_enclosure.jpg/1280px-PVC_reptile_enclosure.jpg",
     "stock": 4,
     "tags": ["PVC", "front-opening", "XL", "tegu", "6x3x2", "large-lizard"]
   },
@@ -750,7 +714,6 @@
     "category": "enclosures",
     "animalCategory": ["lizard", "gecko", "crested gecko", "gargoyle gecko", "amphibian", "frog", "tree frog"],
     "price": 219.99,
-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Vivarium_tall_arboreal.jpg/800px-Vivarium_tall_arboreal.jpg",
     "stock": 14,
     "tags": ["glass", "arboreal", "tall", "vivarium", "gecko", "tree-frog", "bioactive"]
   },
@@ -761,7 +724,6 @@
     "category": "enclosures",
     "animalCategory": ["lizard", "gecko", "crested gecko", "gargoyle gecko", "amphibian", "frog", "tree frog"],
     "price": 129.99,
-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Vivarium_tall_arboreal.jpg/800px-Vivarium_tall_arboreal.jpg",
     "stock": 19,
     "tags": ["glass", "bioactive", "nano", "starter-kit", "gecko", "tree-frog", "compact"]
   },
@@ -772,7 +734,6 @@
     "category": "enclosures",
     "animalCategory": ["amphibian", "salamander", "axolotl"],
     "price": 84.99,
-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Aquarium_glass_tank.jpg/1280px-Aquarium_glass_tank.jpg",
     "stock": 11,
     "tags": ["aquarium", "aquatic", "glass", "axolotl", "20-gallon", "fish-tank"]
   },
@@ -783,7 +744,6 @@
     "category": "enclosures",
     "animalCategory": ["amphibian", "frog", "horned frog"],
     "price": 89.99,
-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Glass_terrarium.jpg/1280px-Glass_terrarium.jpg",
     "stock": 23,
     "tags": ["glass", "terrarium", "pacman", "horned-frog", "compact", "starter-kit"]
   },
@@ -794,7 +754,6 @@
     "category": "enclosures",
     "animalCategory": ["invertebrate", "arachnid", "tarantula", "scorpion"],
     "price": 44.99,
-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Acrylic_tarantula_enclosure.jpg/800px-Acrylic_tarantula_enclosure.jpg",
     "stock": 27,
     "tags": ["acrylic", "tarantula", "scorpion", "terrestrial", "burrowing", "display"]
   },
@@ -805,7 +764,6 @@
     "category": "enclosures",
     "animalCategory": ["lizard", "skink", "blue-tongued skink"],
     "price": 299.99,
-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/PVC_reptile_enclosure.jpg/1280px-PVC_reptile_enclosure.jpg",
     "stock": 9,
     "tags": ["PVC", "front-opening", "low-profile", "skink", "blue-tongued-skink", "terrestrial"]
   }

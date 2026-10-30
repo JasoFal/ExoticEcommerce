@@ -80,6 +80,8 @@ export type CatalogueRefs = {
   departmentIds: Map<Department, string>
   tagIds: Map<string, string>
   animalTypeIds: Map<string, string>
+  /** Each seed image's URL once uploaded through the File module. */
+  imageUrls: Map<string, string>
 }
 
 export function toProductInput(
@@ -89,14 +91,15 @@ export function toProductInput(
   const isLiveAnimal = entry.category === "live-animals"
   const variants = variantsFor(entry)
   const optionTitle = Object.keys(variants[0].options)[0]
+  const imageUrl = entry.image ? refs.imageUrls.get(entry.image) : undefined
 
   return {
     title: entry.name,
     handle: toHandle(entry.name),
     description: entry.description,
     status: "published",
-    thumbnail: entry.imageUrl,
-    images: [{ url: entry.imageUrl }],
+    // No image: the storefront shows the silhouette (design-plan §6.6).
+    ...(imageUrl && { thumbnail: imageUrl, images: [{ url: imageUrl }] }),
     type_id: refs.departmentIds.get(entry.category),
     tag_ids: entry.tags.map((t) => refs.tagIds.get(normalizeTag(t))!),
     category_ids: mostSpecificAnimalTypes(entry.animalCategory).map(
