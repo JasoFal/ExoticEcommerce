@@ -196,8 +196,8 @@ These are tracked in [`domain-model.md` §5](./domain-model.md#5-open-questions)
 - **Best sellers.** Deferred. A Home "Best sellers" row needs a definition
   first (sales count, a staff pick, or a Tag), and Medusa doesn't rank
   products by sales out of the box. There are no sales to rank yet.
-- **Home tile photos.** Each tile shows a stand-in: the Medusa image of a
-  fixed product (e.g. Ball Python for Snakes) until real photos are chosen
-  and added to `storefront/public/tiles/`. Many seeded product image URLs
-  don't resolve, so tiles and cards fall back to their icon until real
-  images are uploaded in Admin.
+- **Home tile photos.** Resolved: each tile shows a royalty-free Pixabay
+  photo committed to `storefront/public/tiles/` (sources in `CREDITS.md`
+  there). Nothing calls Pixabay at runtime, and tiles no longer borrow
+  product images. Product cards still fall back to their icon when a
+  product's Medusa image doesn't resolve.

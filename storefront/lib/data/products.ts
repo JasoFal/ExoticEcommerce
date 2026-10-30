@@ -127,22 +127,3 @@ export async function listBeginnerPicks(): Promise<ProductSummary[]> {
     .filter((summary) => !summary.soldOut)
     .slice(0, PICKS_SHOWN);
 }
-
-/** Each handle's thumbnail, as stored on the Product in Medusa. */
-export async function getThumbnailsByHandle(
-  handles: string[],
-): Promise<Map<string, string>> {
-  if (handles.length === 0) return new Map();
-
-  const { products } = await sdk.store.product.list({
-    handle: handles,
-    fields: "handle,thumbnail",
-    limit: handles.length,
-  });
-
-  return new Map(
-    products.flatMap((product) =>
-      product.thumbnail ? [[product.handle, product.thumbnail] as const] : [],
-    ),
-  );
-}

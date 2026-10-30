@@ -3,16 +3,13 @@ import Link from "next/link";
 import { CareLevelGuide } from "../components/CareLevelGuide";
 import { ProductGrid } from "../components/ProductGrid";
 import { TileGrid } from "../components/TileGrid";
-import { getThumbnailsByHandle, listBeginnerPicks } from "../lib/data/products";
+import { listBeginnerPicks } from "../lib/data/products";
 import { shopHref } from "../lib/shop-href";
-import { homeTiles, standInHandles } from "./home-tiles";
+import { homeTiles } from "./home-tiles";
 import styles from "./page.module.css";
 
 export default async function Home() {
-  const [thumbnails, picks] = await Promise.all([
-    getThumbnailsByHandle(standInHandles()),
-    listBeginnerPicks(),
-  ]);
+  const picks = await listBeginnerPicks();
 
   return (
     <div className="units-container">
@@ -34,7 +31,7 @@ export default async function Home() {
 
       <section className={styles.section} aria-labelledby="shop-heading">
         <h2 id="shop-heading">Shop animals and supplies</h2>
-        <TileGrid tiles={homeTiles(thumbnails)} />
+        <TileGrid tiles={homeTiles()} />
       </section>
 
       {/* Hidden, heading and all, when no beginner-friendly animal is in stock. */}
