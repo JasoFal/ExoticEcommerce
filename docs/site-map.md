@@ -104,7 +104,7 @@ bookmarked. A param with several values repeats its key
 | `department` | Department | One or more Departments. |
 | `animal_type` | Animal Type | Pick one. Includes descendants, so choosing Gecko also shows Crested Gecko and Gargoyle Gecko. With no Department chosen, Live Animals and the Supplies suited to them share one grid. |
 | `care_level` | Care Level | Pick one: `beginner-friendly`, `intermediate`, or `advanced`. |
-| `tag` | Tags | Pick several. A product matches if it has **any** of them (OR). With a Care Level as well, a product needs the Care Level **and** one of the Tags. |
+| `tag` | Tags | Pick several (at most 10; extras are ignored). A product matches if it has **any** of them (OR). With a Care Level as well, a product needs the Care Level **and** one of the Tags. |
 | `sort` | Order | `newest` (the default, left out of the URL) or `name` (Name A–Z). |
 | `page` | Results page | 24 products a page. Page 1 is left out of the URL. |
 

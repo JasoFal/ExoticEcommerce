@@ -1,7 +1,13 @@
 import { describe, expect, it } from "vitest";
 
 import { shopHref } from "./shop-href";
-import { activeFilterCount, parseShopParams, toShopParams, type ShopQuery } from "./shop-params";
+import {
+  activeFilterCount,
+  MAX_TAGS,
+  parseShopParams,
+  toShopParams,
+  type ShopQuery,
+} from "./shop-params";
 
 const EMPTY: ShopQuery = {
   q: null,
@@ -73,6 +79,14 @@ describe("parseShopParams", () => {
   it("removes repeated values", () => {
     expect(parseShopParams({ department: ["feeders", "feeders"], tag: ["large", "large"] })).toEqual(
       { ...EMPTY, departments: ["feeders"], tags: ["large"] },
+    );
+  });
+
+  it("keeps at most MAX_TAGS distinct Tags, so a URL can't fan out into many lookups", () => {
+    const tag = Array.from({ length: 50 }, (_, i) => `tag-${i % 25}`);
+
+    expect(parseShopParams({ tag }).tags).toEqual(
+      Array.from({ length: MAX_TAGS }, (_, i) => `tag-${i}`),
     );
   });
 

@@ -11,6 +11,12 @@ import type { ShopParams } from "./shop-href";
 /** How many products one Shop page shows. */
 export const SHOP_PAGE_SIZE = 24;
 
+/**
+ * Most Tags one view filters by. Each Tag is a lookup against Medusa, so a
+ * hand-built URL can't fan out into hundreds of requests.
+ */
+export const MAX_TAGS = 10;
+
 /** A Shop view, read from its URL. Every field is already validated. */
 export type ShopQuery = {
   q: string | null;
@@ -51,7 +57,7 @@ export function parseShopParams(params: SearchParams): ShopQuery {
     departments: [...new Set(departments)],
     animalType: first(params.animal_type),
     careLevel: oneOf(CARE_LEVELS, first(params.care_level)),
-    tags: [...new Set(values(params.tag))],
+    tags: [...new Set(values(params.tag))].slice(0, MAX_TAGS),
     sort: oneOf(SORTS, first(params.sort)) ?? "newest",
     page: Number.isInteger(page) && page > 1 ? page : 1,
   };
