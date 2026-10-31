@@ -1,0 +1,43 @@
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+  margin-bottom: 1.5rem;
+  padding: 0.75rem 0;
+  border-top: 1px solid var(--ply-border-color);
+  border-bottom: 1px solid var(--ply-border-color);
+}
+
+.count {
+  margin: 0;
+  color: var(--ply-color-secondary);
+}
+
+.sort {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  margin: 0;
+}
+
+.sort label {
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* Surface colours, so the select follows dark mode like the header's. */
+.select {
+  width: auto;
+  min-height: 2.5rem;
+  border-color: var(--ply-color-input-border);
+  background-color: var(--ply-bg-surface);
+  color: var(--ply-color-body);
+}
+
+@media (max-width: 767px) {
+  .select {
+    min-height: 44px;
+  }
+}

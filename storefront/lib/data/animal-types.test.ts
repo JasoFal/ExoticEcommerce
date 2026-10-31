@@ -2,7 +2,12 @@ import { http, HttpResponse } from "msw";
 import { describe, expect, it } from "vitest";
 
 import { BACKEND_URL, server } from "../../test/msw-server";
-import { animalTypeRoots, getAnimalTypeTree } from "./animal-types";
+import {
+  animalTypeRoots,
+  descendantIds,
+  findAnimalTypePath,
+  getAnimalTypeTree,
+} from "./animal-types";
 
 // Shaped like GET /store/product-categories?include_descendants_tree=true:
 // every category comes back at the top level, each with its own subtree.
@@ -10,6 +15,7 @@ const gecko = {
   id: "pcat_gecko",
   name: "Gecko",
   handle: "gecko",
+  description: "Small lizards, most with sticky toe pads.",
   rank: 1,
   parent_category_id: "pcat_lizard",
   category_children: [
@@ -72,20 +78,30 @@ describe("getAnimalTypeTree", () => {
 
     expect(tree).toEqual([
       {
+        id: "pcat_lizard",
         name: "Lizard",
         handle: "lizard",
+        description: "",
         children: [
-          { name: "Skink", handle: "skink", children: [] },
+          { id: "pcat_skink", name: "Skink", handle: "skink", description: "", children: [] },
           {
+            id: "pcat_gecko",
             name: "Gecko",
             handle: "gecko",
+            description: "Small lizards, most with sticky toe pads.",
             children: [
-              { name: "Crested Gecko", handle: "crested-gecko", children: [] },
+              {
+                id: "pcat_crested",
+                name: "Crested Gecko",
+                handle: "crested-gecko",
+                description: "",
+                children: [],
+              },
             ],
           },
         ],
       },
-      { name: "Snake", handle: "snake", children: [] },
+      { id: "pcat_snake", name: "Snake", handle: "snake", description: "", children: [] },
     ]);
     expect(requests[0].searchParams.get("include_descendants_tree")).toBe("true");
   });
@@ -102,5 +118,40 @@ describe("animalTypeRoots", () => {
     expect(roots.get("lizard")).toBe("lizard");
     expect(roots.get("snake")).toBe("snake");
     expect(roots.get("tarantula")).toBeUndefined();
+  });
+});
+
+describe("findAnimalTypePath", () => {
+  it("runs from the top-level Animal Type down to the one asked for", async () => {
+    serveCategories([lizard, snake]);
+    const tree = await getAnimalTypeTree();
+
+    expect(findAnimalTypePath(tree, "crested-gecko").map((node) => node.handle)).toEqual([
+      "lizard",
+      "gecko",
+      "crested-gecko",
+    ]);
+    expect(findAnimalTypePath(tree, "snake").map((node) => node.handle)).toEqual(["snake"]);
+  });
+
+  it("is empty for a handle that isn't in the tree", async () => {
+    serveCategories([lizard, snake]);
+
+    expect(findAnimalTypePath(await getAnimalTypeTree(), "tarantula")).toEqual([]);
+  });
+});
+
+describe("descendantIds", () => {
+  it("lists an Animal Type and everything under it", async () => {
+    serveCategories([lizard, snake]);
+    const [lizardNode, snakeNode] = await getAnimalTypeTree();
+
+    expect(descendantIds(lizardNode)).toEqual([
+      "pcat_lizard",
+      "pcat_skink",
+      "pcat_gecko",
+      "pcat_crested",
+    ]);
+    expect(descendantIds(snakeNode)).toEqual(["pcat_snake"]);
   });
 });

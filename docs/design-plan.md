@@ -363,10 +363,11 @@ in §5.
 - **Notice** wraps ply's `alert`. Information notices use `role="status"`
   and errors use `role="alert"`. The text always explains the problem, not
   just the color.
-- **EmptyState** has a heading, one sentence, and one button-style link
-  (usually back to `/shop`).
+- **EmptyState** has a heading, one sentence, and one or two button-style
+  links (usually back to `/shop`). Its heading level follows the page:
+  `<h2>` under a page `<h1>`, `<h3>` inside the Shop results.
 - **Icon** draws inline SVG from a small fixed set: search, cart, menu,
-  close, chevron, plus, minus, external link, and one silhouette per
+  close, chevron, filter, plus, minus, external link, and one silhouette per
   top-level Animal Type (lizard, snake, frog, spider) plus a generic Supply
   silhouette. Icons are `aria-hidden="true"` unless they're the only label,
   in which case the button carries an `aria-label`. **No emoji as icons.**
@@ -400,18 +401,25 @@ they never repeat a photo in the picks row.
 
 | Area | Layout | Notes |
 |---|---|---|
-| Heading | `<h1>` reflects the active filter or search ("Geckos", "Results for 'uvb'", "Shop all") | |
-| Toolbar | `display-flex justify-between items-center`: result count and sort `<select>` (Name A–Z, Newest) | No price sort (site map §3). |
+| Header | Page-local **ShopHeader**: breadcrumb `nav[aria-label="Breadcrumb"].breadcrumbs > ul` with "›" separators, then the `<h1>`, then the intro, then a "Narrow to" row of pill links to the child Animal Types | The `<h1>` reflects the search or filters ("Results for 'uvb'", "Geckos", "Shop all"). Breadcrumb, intro, and "Narrow to" appear only with an Animal Type chosen; the intro is the Animal Type's Admin description, hidden when blank. Staff should keep that description to one sentence (§8). No banner image. |
 | Filters | `unit-25 tablet-unit-100` → page-local **FilterPanel** (client) | |
-| Results | `unit-75 tablet-unit-100` → ProductGrid, then `nav[aria-label="Pagination"] > ul.pagination` | No results → EmptyState with a "Clear filters" link. |
+| Results | `unit-75 tablet-unit-100`: a `section` labelled by a visually hidden `<h2>` "Products", holding ActiveFilters, the toolbar, ProductGrid, and pagination | The hidden `<h2>` keeps the card `<h3>`s in order. |
+| Active filters | The search and each filter as a removable pill link ("Gecko ×", `aria-label="Remove filter: Animal Type Gecko"`), then "Clear all" | Hidden when nothing is set. "Clear all" keeps the sort. |
+| Toolbar | `display-flex justify-between items-center` between top and bottom borders: result count ("Showing 1–24 of 31 products", `role="status"`) and sort `<select>` (Newest, Name A–Z) | No price sort (site map §3). The sort is hidden when there are no results. |
+| Pagination | `nav[aria-label="Pagination"] > ul.pagination`: Previous, the first and last pages, the current page ±1 with "…" gaps, Next | 44px targets. Phones show the arrows without the words. Hidden when everything fits on one page. |
+| No results | EmptyState (`<h3>`) that says why, with a way out | Filters on: "No products match these filters" → "Clear filters" (keeps the search), plus "Browse all products" when there's a search. Search only: "No products match 'uvb'" → "Browse all products". A page past the end → "Go to page 1". |
 
 **FilterPanel** (page-local, client) is a `.form` with one `fieldset` and
-`legend` per filter: Department (checkboxes), Animal Type (nested
-checkboxes following the tree), Care Level (radios with "Any"), and Tags
-(checkboxes). Each change updates the URL. Active filters show as removable
-chips at the top of the results, and there's a "Clear all" link. At ≤ 767px,
-the panel folds behind a full-width `<button aria-expanded>` that reads
-"Filters (2 active)". It is open by default on desktop.
+`legend` per filter: Department (checkboxes), Animal Type (a single-select
+tree of radios, starting with "All animal types"; only the branch holding
+the chosen Animal Type is open), Care Level (radios with "Any", each
+showing its CareLevelBadge), and Tags (checkboxes, from the fixed list in
+site map §3). Each change updates the URL and goes back to page 1. The
+inputs change straight away while the results load. Without JavaScript
+it's a GET form to `/shop` with an "Apply filters" button. At ≤ 767px, the
+panel folds behind a full-width `<button aria-expanded>` that reads
+"Filters (2 active)", and the open panel ends with a "Show 31 products"
+button that closes it. It is always open on wider screens.
 
 ### Product detail (`/products/[handle]`)
 

@@ -1,0 +1,114 @@
+.header {
+  margin-top: 1.5rem;
+}
+
+/* The ply breadcrumb, with the mockup's "›" and a current page that reads
+   as text, not a muted link. */
+.crumbs {
+  margin-bottom: 0.75rem;
+}
+
+.crumbs ul li + li::before {
+  content: "›";
+  top: 0;
+  margin: 0 0.5rem 0 0.25rem;
+  font-size: 1em;
+}
+
+.crumbs ul a {
+  color: var(--ply-color-link);
+  text-decoration: underline;
+}
+
+.crumbs ul a:hover {
+  color: var(--ply-color-link-hover);
+}
+
+.crumbs ul [aria-current] {
+  color: var(--ply-color-body);
+  font-weight: 600;
+}
+
+.heading {
+  margin: 0;
+}
+
+.intro {
+  max-width: 46rem;
+  margin: 0.75rem 0 0;
+  font-size: 1.0625rem;
+  color: var(--ply-color-secondary);
+}
+
+.narrow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.75rem;
+  margin-top: 1.25rem;
+}
+
+/* A real heading for screen readers, styled as a label. */
+.narrowHeading {
+  margin: 0;
+  font-family: var(--ply-font-body);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--ply-color-secondary);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0;
+  list-style: none;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.25rem;
+  padding: 0 1rem;
+  border: 1px solid var(--ply-border-strong);
+  border-radius: var(--ply-badge-radius);
+  background: var(--ply-bg-surface);
+  color: var(--ply-color-body);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.chip:hover {
+  border-color: var(--ply-color-link);
+  color: var(--ply-color-link);
+}
+
+.chip:focus-visible {
+  outline: 2px solid var(--ply-color-focus);
+  outline-offset: 2px;
+}
+
+@media (max-width: 767px) {
+  .header {
+    margin-top: 1rem;
+  }
+
+  .chip {
+    min-height: 44px;
+  }
+
+  /* 44px targets (design-plan §7), with the current crumb and separators
+     centred on the taller links. */
+  .crumbs ul {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .crumbs ul a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    min-width: 44px;
+  }
+}

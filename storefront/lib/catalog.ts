@@ -46,3 +46,23 @@ function isCareLevel(tag: string): tag is CareLevel {
 export function careLevelOf(tags: readonly string[]): CareLevel | null {
   return tags.find(isCareLevel) ?? null;
 }
+
+/**
+ * The Tags the Shop filter lists (docs/site-map.md §3). Other Tags still
+ * filter when they arrive in the URL, for example from a product page.
+ */
+export const FILTER_TAGS = [
+  { value: "arboreal", label: "Arboreal" },
+  { value: "terrestrial", label: "Terrestrial" },
+  { value: "aquatic", label: "Aquatic" },
+  { value: "nocturnal", label: "Nocturnal" },
+  { value: "large", label: "Large" },
+] as const;
+
+/** The Shop's sort orders. Newest is the default (docs/site-map.md §3). */
+export const SORTS = [
+  { value: "newest", label: "Newest" },
+  { value: "name", label: "Name A–Z" },
+] as const;
+
+export type ShopSort = (typeof SORTS)[number]["value"];

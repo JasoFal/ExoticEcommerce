@@ -5,8 +5,11 @@ import { sdk } from "./client";
 
 /** A node in the Animal Type tree (a Medusa ProductCategory). */
 export type AnimalTypeNode = {
+  id: string;
   name: string;
   handle: string;
+  /** Staff write it in Admin. Empty when they haven't. */
+  description: string;
   children: AnimalTypeNode[];
 };
 
@@ -18,8 +21,10 @@ const byRank = (
 
 function toNode(category: HttpTypes.StoreProductCategory): AnimalTypeNode {
   return {
+    id: category.id,
     name: category.name,
     handle: category.handle,
+    description: category.description ?? "",
     children: [...(category.category_children ?? [])]
       .sort(byRank)
       .map(toNode),
@@ -52,4 +57,29 @@ export function animalTypeRoots(tree: AnimalTypeNode[]): Map<string, string> {
   };
   tree.forEach((root) => visit(root, root.handle));
   return roots;
+}
+
+/**
+ * The Animal Types from the top level down to the one with this handle, for
+ * a breadcrumb. Empty when no Animal Type has the handle.
+ */
+export function findAnimalTypePath(
+  tree: AnimalTypeNode[],
+  handle: string,
+): AnimalTypeNode[] {
+  for (const node of tree) {
+    if (node.handle === handle) return [node];
+    const path = findAnimalTypePath(node.children, handle);
+    if (path.length > 0) return [node, ...path];
+  }
+  return [];
+}
+
+/**
+ * The ids of an Animal Type and everything under it. Medusa's `category_id`
+ * filter matches only the ids it's given, and choosing Gecko must also
+ * show Crested Geckos (docs/site-map.md §3).
+ */
+export function descendantIds(node: AnimalTypeNode): string[] {
+  return [node.id, ...node.children.flatMap(descendantIds)];
 }

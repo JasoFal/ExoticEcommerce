@@ -37,3 +37,15 @@ describe("shopHref", () => {
     expect(shopHref({ q: "", department: undefined, tag: [] })).toBe("/shop");
   });
 });
+
+describe("shopHref page", () => {
+  it("adds the page number last", () => {
+    expect(shopHref({ animal_type: "gecko", sort: "name", page: 3 })).toBe(
+      "/shop?animal_type=gecko&sort=name&page=3",
+    );
+  });
+
+  it("leaves page 1 out, so the first page has one URL", () => {
+    expect(shopHref({ animal_type: "gecko", page: 1 })).toBe("/shop?animal_type=gecko");
+  });
+});

@@ -1,0 +1,172 @@
+/* design-plan §5. Selectors sit under .panel to outrank ply's `.form label`. */
+
+/* The phone toggle; hidden on wider screens, where the panel is always open. */
+.toggle {
+  display: none;
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1.375rem;
+  margin: 0;
+}
+
+.panel .fieldset {
+  min-width: 0;
+  margin: 0;
+  padding: 0 0 1.375rem;
+  border: 0;
+  border-bottom: 1px solid var(--ply-border-color);
+  border-radius: 0;
+  background: none;
+}
+
+.panel .fieldset:last-of-type {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+.panel .legend {
+  margin: 0 0 0.5rem;
+  padding: 0;
+  font-family: var(--ply-font-heading);
+  font-size: 1.0625rem;
+  font-weight: 700;
+  color: var(--ply-color-headings);
+}
+
+.panel .options {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.panel .tree .tree {
+  padding-left: 1.75rem;
+}
+
+.panel .choice {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  min-height: 2rem;
+  margin: 0 -0.5rem;
+  padding: 0 0.5rem;
+  border-radius: var(--ply-border-radius);
+}
+
+.panel .choice input {
+  flex: none;
+  width: 1.125rem;
+  height: 1.125rem;
+  margin: 0;
+  accent-color: var(--ply-color-link);
+}
+
+.panel .choice:hover {
+  background: var(--ply-bg-surface-alt);
+}
+
+.panel .choice:has(> input:checked) {
+  font-weight: 700;
+  color: var(--ply-color-headings);
+}
+
+/* The chosen Animal Type stands out in the tree, as in the mockup. */
+.panel .tree .choice:has(> input:checked) {
+  background: var(--ply-bg-surface-alt);
+}
+
+.panel .done {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    min-height: 48px;
+    padding: 0 1rem;
+    border: 1px solid var(--ply-border-strong);
+    border-radius: var(--ply-btn-border-radius);
+    background: var(--ply-bg-surface);
+    color: var(--ply-color-headings);
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  .toggle[aria-expanded="true"] {
+    border-color: var(--ply-btn-default-bg);
+    border-radius: var(--ply-btn-border-radius) var(--ply-btn-border-radius) 0 0;
+    background: var(--ply-btn-default-bg);
+    color: var(--ply-btn-default-color);
+  }
+
+  .toggle:focus-visible {
+    outline: 2px solid var(--ply-color-focus);
+    outline-offset: 2px;
+  }
+
+  .toggleLabel {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.625rem;
+  }
+
+  .chevron,
+  .chevronOpen {
+    transition: transform 0.15s ease;
+  }
+
+  .chevronOpen {
+    transform: rotate(180deg);
+  }
+
+  .panel {
+    padding: 0.5rem 1rem 1rem;
+    border: 1px solid var(--ply-border-strong);
+    border-top: 0;
+    border-radius: 0 0 var(--ply-btn-border-radius) var(--ply-btn-border-radius);
+    background: var(--ply-bg-surface);
+  }
+
+  .panel[data-open="false"] {
+    display: none;
+  }
+
+  .panel .fieldset:first-of-type {
+    padding-top: 0.75rem;
+  }
+
+  /* 44px rows (design-plan §7). */
+  .panel .choice {
+    gap: 0.75rem;
+    min-height: 44px;
+  }
+
+  .panel .choice input {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  .panel .tree .tree {
+    padding-left: 2rem;
+  }
+
+  .panel .done {
+    display: block;
+    width: 100%;
+    min-height: 48px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chevron,
+  .chevronOpen {
+    transition: none;
+  }
+}

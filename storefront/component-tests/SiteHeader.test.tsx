@@ -2,8 +2,9 @@ import { render, screen, within } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
 import { SiteHeader } from "../components/SiteHeader";
+import { animalType } from "../test/animal-type-fixture";
 
-const tree = [{ name: "Lizard", handle: "lizard", children: [] }];
+const tree = [animalType("Lizard", "lizard")];
 
 describe("SiteHeader", () => {
   it("starts with a skip link to the main content", () => {

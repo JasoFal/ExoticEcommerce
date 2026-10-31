@@ -47,6 +47,12 @@
     white-space: nowrap;
   }
 
+  /* 44px targets (design-plan §7). */
+  .group .query,
+  .button {
+    min-height: 44px;
+  }
+
   .button {
     min-width: 44px;
     justify-content: center;

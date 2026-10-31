@@ -3,20 +3,13 @@ import { describe, expect, it } from "vitest";
 
 import type { AnimalTypeNode } from "../lib/data/animal-types";
 import { CatalogNav } from "../components/CatalogNav";
+import { animalType } from "../test/animal-type-fixture";
 
 const tree: AnimalTypeNode[] = [
-  {
-    name: "Lizard",
-    handle: "lizard",
-    children: [
-      {
-        name: "Gecko",
-        handle: "gecko",
-        children: [{ name: "Crested Gecko", handle: "crested-gecko", children: [] }],
-      },
-    ],
-  },
-  { name: "Snake", handle: "snake", children: [] },
+  animalType("Lizard", "lizard", [
+    animalType("Gecko", "gecko", [animalType("Crested Gecko", "crested-gecko")]),
+  ]),
+  animalType("Snake", "snake"),
 ];
 
 function renderDesktop() {

@@ -1,0 +1,65 @@
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--ply-color-secondary);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0;
+  list-style: none;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 2rem;
+  padding: 0 0.625rem 0 0.75rem;
+  border: 1px solid var(--ply-border-color);
+  border-radius: var(--ply-badge-radius);
+  background: var(--ply-bg-surface-alt);
+  color: var(--ply-color-body);
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.chip:hover {
+  border-color: var(--ply-border-strong);
+  color: var(--ply-color-headings);
+}
+
+.chip:focus-visible {
+  outline: 2px solid var(--ply-color-focus);
+  outline-offset: 2px;
+}
+
+.remove {
+  font-size: 0.875rem;
+}
+
+.clear {
+  margin-left: 0.25rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+@media (max-width: 767px) {
+  .chip,
+  .clear {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+}

@@ -1,8 +1,14 @@
 import type { HttpTypes } from "@medusajs/types";
 import { cache } from "react";
 
-import { careLevelOf, type CareLevel } from "../catalog";
-import { animalTypeRoots, getAnimalTypeTree } from "./animal-types";
+import { careLevelOf, type CareLevel, type ShopSort } from "../catalog";
+import { SHOP_PAGE_SIZE, type ShopQuery } from "../shop-params";
+import {
+  animalTypeRoots,
+  descendantIds,
+  findAnimalTypePath,
+  getAnimalTypeTree,
+} from "./animal-types";
 import { sdk } from "./client";
 import { medusaFileUrl } from "./files";
 import { getRegion } from "./regions";
@@ -41,6 +47,11 @@ const SUMMARY_FIELDS = [
   "*variants.calculated_price",
   "+variants.inventory_quantity",
 ].join(",");
+
+const SHOP_ORDER: Record<ShopSort, string> = {
+  newest: "-created_at",
+  name: "title",
+};
 
 /** How many beginner-friendly picks Home shows. */
 const PICKS_SHOWN = 4;
@@ -127,4 +138,66 @@ export async function listBeginnerPicks(): Promise<ProductSummary[]> {
     .map((product) => toSummary(product, roots))
     .filter((summary) => !summary.soldOut)
     .slice(0, PICKS_SHOWN);
+}
+
+/** One page of Shop results, and how many match in all. */
+export type ProductPage = { products: ProductSummary[]; count: number };
+
+const NO_PRODUCTS: ProductPage = { products: [], count: 0 };
+
+/** The ids for these values, leaving out values Medusa doesn't have. */
+async function idsOf(
+  values: readonly string[],
+  find: (value: string) => Promise<string | null>,
+): Promise<string[]> {
+  const ids = await Promise.all(values.map(find));
+  return ids.filter((id) => id !== null);
+}
+
+/**
+ * One page of the Shop (docs/site-map.md §3). Medusa does the searching,
+ * filtering, sorting, and counting. A filter that names something Medusa
+ * doesn't have matches nothing, rather than being ignored.
+ */
+export async function listProducts(query: ShopQuery): Promise<ProductPage> {
+  const [region, tree, typeIds, careTagIds, tagIds] = await Promise.all([
+    getRegion(),
+    getAnimalTypeTree(),
+    idsOf(query.departments, findTypeId),
+    idsOf(query.careLevel ? [query.careLevel] : [], findTagId),
+    idsOf(query.tags, findTagId),
+  ]);
+
+  const animalType = query.animalType
+    ? findAnimalTypePath(tree, query.animalType).at(-1)
+    : undefined;
+
+  if (
+    (query.departments.length > 0 && typeIds.length === 0) ||
+    (query.animalType && !animalType) ||
+    (query.careLevel && careTagIds.length === 0) ||
+    (query.tags.length > 0 && tagIds.length === 0)
+  ) {
+    return NO_PRODUCTS;
+  }
+
+  // A product needs the Care Level AND any one of the Tags, so the two
+  // groups are separate `tag_id` filters joined with `$and`.
+  const tagGroups = [careTagIds, tagIds].filter((ids) => ids.length > 0);
+
+  const { products, count } = await sdk.store.product.list({
+    q: query.q ?? undefined,
+    type_id: typeIds.length > 0 ? typeIds : undefined,
+    category_id: animalType ? descendantIds(animalType) : undefined,
+    ...(tagGroups.length === 1 && { tag_id: tagGroups[0] }),
+    ...(tagGroups.length === 2 && { $and: tagGroups.map((ids) => ({ tag_id: ids })) }),
+    region_id: region.id,
+    order: SHOP_ORDER[query.sort],
+    limit: SHOP_PAGE_SIZE,
+    offset: (query.page - 1) * SHOP_PAGE_SIZE,
+    fields: SUMMARY_FIELDS,
+  });
+
+  const roots = animalTypeRoots(tree);
+  return { products: products.map((product) => toSummary(product, roots)), count };
 }
