@@ -9,6 +9,8 @@ export type ShopParams = {
   care_level?: string;
   tag?: string | string[];
   sort?: string;
+  /** 1-based results page. Page 1 is left out of the URL. */
+  page?: number;
 };
 
 const PARAM_ORDER = [
@@ -18,6 +20,7 @@ const PARAM_ORDER = [
   "care_level",
   "tag",
   "sort",
+  "page",
 ] as const satisfies readonly (keyof ShopParams)[];
 
 /** Builds a link to the Shop page with the given filters set. */
@@ -27,7 +30,8 @@ export function shopHref(params: ShopParams = {}): string {
   for (const key of PARAM_ORDER) {
     const values = [params[key] ?? []].flat();
     for (const value of values) {
-      if (value) search.append(key, value);
+      if (key === "page" && value === 1) continue;
+      if (value) search.append(key, String(value));
     }
   }
 

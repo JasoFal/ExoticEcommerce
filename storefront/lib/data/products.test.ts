@@ -2,7 +2,8 @@ import { http, HttpResponse } from "msw";
 import { beforeEach, describe, expect, it } from "vitest";
 
 import { BACKEND_URL, server } from "../../test/msw-server";
-import { listBeginnerPicks } from "./products";
+import type { ShopQuery } from "../shop-params";
+import { listBeginnerPicks, listProducts } from "./products";
 
 type VariantFixture = {
   inventory_quantity: number;
@@ -157,6 +158,198 @@ describe("listBeginnerPicks", () => {
     serveCatalogue([liveAnimal("crested-gecko")], { beginnerTagExists: false });
 
     expect(await listBeginnerPicks()).toEqual([]);
+    expect(productRequests).toHaveLength(0);
+  });
+});
+
+const SHOP_TAGS: Record<string, string> = {
+  "beginner-friendly": "ptag_beginner",
+  advanced: "ptag_advanced",
+  arboreal: "ptag_arboreal",
+  nocturnal: "ptag_nocturnal",
+};
+const SHOP_TYPES: Record<string, string> = {
+  "live-animals": "ptyp_live",
+  feeders: "ptyp_feeders",
+};
+
+/** A Shop catalogue: Lizard › Gecko › Crested Gecko, plus Snake. */
+function serveShop(products: unknown[], count = products.length) {
+  productRequests = [];
+  server.use(
+    http.get(`${BACKEND_URL}/store/regions`, () =>
+      list("regions", [{ id: "reg_us", currency_code: "usd" }]),
+    ),
+    http.get(`${BACKEND_URL}/store/product-tags`, ({ request }) => {
+      const value = new URL(request.url).searchParams.get("value") ?? "";
+      return list("product_tags", SHOP_TAGS[value] ? [{ id: SHOP_TAGS[value], value }] : []);
+    }),
+    http.get(`${BACKEND_URL}/store/product-types`, ({ request }) => {
+      const value = new URL(request.url).searchParams.get("value") ?? "";
+      return list("product_types", SHOP_TYPES[value] ? [{ id: SHOP_TYPES[value], value }] : []);
+    }),
+    http.get(`${BACKEND_URL}/store/product-categories`, () => {
+      const crested = {
+        id: "pcat_crested",
+        name: "Crested Gecko",
+        handle: "crested-gecko",
+        parent_category_id: "pcat_gecko",
+        category_children: [],
+      };
+      const gecko = {
+        id: "pcat_gecko",
+        name: "Gecko",
+        handle: "gecko",
+        parent_category_id: "pcat_lizard",
+        category_children: [crested],
+      };
+      return list("product_categories", [
+        {
+          id: "pcat_lizard",
+          name: "Lizard",
+          handle: "lizard",
+          parent_category_id: null,
+          category_children: [gecko],
+        },
+        { id: "pcat_snake", name: "Snake", handle: "snake", parent_category_id: null, category_children: [] },
+      ]);
+    }),
+    http.get(`${BACKEND_URL}/store/products`, ({ request }) => {
+      productRequests.push(new URL(request.url));
+      return HttpResponse.json({ products, count, offset: 0, limit: 24 });
+    }),
+  );
+}
+
+const SHOP: ShopQuery = {
+  q: null,
+  departments: [],
+  animalType: null,
+  careLevel: null,
+  tags: [],
+  sort: "newest",
+  page: 1,
+};
+
+/** Every value sent for a filter, however the SDK spells array keys. */
+function sent(params: URLSearchParams, key: string): string[] {
+  return [...params.entries()]
+    .filter(([k]) => k === key || (k.startsWith(key) && /^\[\d*\]$/.test(k.slice(key.length))))
+    .map(([, v]) => v);
+}
+
+describe("listProducts", () => {
+  it("asks for the first page of everything, newest first, with stock and prices", async () => {
+    serveShop([liveAnimal("crested-gecko")], 31);
+
+    const page = await listProducts(SHOP);
+
+    const params = productRequests[0].searchParams;
+    expect(params.get("order")).toBe("-created_at");
+    expect(params.get("limit")).toBe("24");
+    expect(params.get("offset")).toBe("0");
+    expect(params.get("region_id")).toBe("reg_us");
+    expect(params.get("fields")).toContain("+variants.inventory_quantity");
+    expect(sent(params, "type_id")).toEqual([]);
+    expect(sent(params, "category_id")).toEqual([]);
+    expect(sent(params, "tag_id")).toEqual([]);
+    expect(page.count).toBe(31);
+    expect(page.products.map((p) => p.handle)).toEqual(["crested-gecko"]);
+  });
+
+  it("keeps sold-out products in the results", async () => {
+    serveShop([liveAnimal("sold-out", [{ inventory_quantity: 0 }])]);
+
+    const { products } = await listProducts(SHOP);
+
+    expect(products).toHaveLength(1);
+    expect(products[0].soldOut).toBe(true);
+  });
+
+  it("passes the keyword to Medusa's search", async () => {
+    serveShop([]);
+
+    await listProducts({ ...SHOP, q: "uvb" });
+
+    expect(productRequests[0].searchParams.get("q")).toBe("uvb");
+  });
+
+  it("sorts by name and pages by offset", async () => {
+    serveShop([]);
+
+    await listProducts({ ...SHOP, sort: "name", page: 3 });
+
+    const params = productRequests[0].searchParams;
+    expect(params.get("order")).toBe("title");
+    expect(params.get("offset")).toBe("48");
+  });
+
+  it("filters by every chosen Department", async () => {
+    serveShop([]);
+
+    await listProducts({ ...SHOP, departments: ["live-animals", "feeders"] });
+
+    expect(sent(productRequests[0].searchParams, "type_id")).toEqual(["ptyp_live", "ptyp_feeders"]);
+  });
+
+  it("includes the descendants of the chosen Animal Type", async () => {
+    serveShop([]);
+
+    await listProducts({ ...SHOP, animalType: "lizard" });
+
+    expect(sent(productRequests[0].searchParams, "category_id")).toEqual([
+      "pcat_lizard",
+      "pcat_gecko",
+      "pcat_crested",
+    ]);
+  });
+
+  it("matches any one of the Tags", async () => {
+    serveShop([]);
+
+    await listProducts({ ...SHOP, tags: ["arboreal", "nocturnal"] });
+
+    expect(sent(productRequests[0].searchParams, "tag_id")).toEqual([
+      "ptag_arboreal",
+      "ptag_nocturnal",
+    ]);
+  });
+
+  it("filters by the Care Level on its own", async () => {
+    serveShop([]);
+
+    await listProducts({ ...SHOP, careLevel: "advanced" });
+
+    expect(sent(productRequests[0].searchParams, "tag_id")).toEqual(["ptag_advanced"]);
+  });
+
+  it("needs the Care Level and any one of the Tags when both are set", async () => {
+    serveShop([]);
+
+    await listProducts({ ...SHOP, careLevel: "beginner-friendly", tags: ["arboreal", "nocturnal"] });
+
+    const params = productRequests[0].searchParams;
+    expect(sent(params, "tag_id")).toEqual([]);
+    expect(sent(params, "$and[0][tag_id]")).toEqual(["ptag_beginner"]);
+    expect(sent(params, "$and[1][tag_id]")).toEqual(["ptag_arboreal", "ptag_nocturnal"]);
+  });
+
+  it("ignores a Tag Medusa doesn't have when another one exists", async () => {
+    serveShop([]);
+
+    await listProducts({ ...SHOP, tags: ["arboreal", "sparkly"] });
+
+    expect(sent(productRequests[0].searchParams, "tag_id")).toEqual(["ptag_arboreal"]);
+  });
+
+  it.each<[string, Partial<ShopQuery>]>([
+    ["an unknown Animal Type", { animalType: "dragon" }],
+    ["only unknown Tags", { tags: ["sparkly"] }],
+    ["a Department with no ProductType", { departments: ["enclosures"] }],
+  ])("returns no products, without listing any, for %s", async (_, filter) => {
+    serveShop([liveAnimal("crested-gecko")]);
+
+    expect(await listProducts({ ...SHOP, ...filter })).toEqual({ products: [], count: 0 });
     expect(productRequests).toHaveLength(0);
   });
 });

@@ -1,5 +1,7 @@
 import Link from "next/link";
 
+import { shopHref } from "../../../lib/shop-href";
+
 export default function ProductDetail() {
   return (
     <div className="units-container">
@@ -10,7 +12,12 @@ export default function ProductDetail() {
           <Link href="/cart">Add to Cart</Link>
         </li>
         <li>
-          <Link href="/shop?animal_type=lizard&department=feeders,enclosures,accessories">
+          <Link
+            href={shopHref({
+              animal_type: "lizard",
+              department: ["feeders", "enclosures", "accessories"],
+            })}
+          >
             Shop supplies for this Animal Type
           </Link>
         </li>

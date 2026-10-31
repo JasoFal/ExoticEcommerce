@@ -15,6 +15,7 @@ const ROUTES = [
   "/",
   "/shop",
   "/shop?q=gecko",
+  "/shop?animal_type=gecko",
   "/products/example",
   "/care-guides",
   "/cart",
@@ -29,6 +30,23 @@ for (const route of ROUTES) {
     expect(response?.status()).toBe(200);
   });
 }
+
+test("the Shop shows a seeded Animal Type with its breadcrumb and products", async ({
+  page,
+}) => {
+  await page.goto("/shop?animal_type=gecko");
+
+  await expect(page.getByRole("heading", { level: 1, name: "Geckos" })).toBeVisible();
+  const crumbs = page.getByRole("navigation", { name: "Breadcrumb" });
+  await expect(crumbs.getByRole("link", { name: "Lizard" })).toBeVisible();
+  await expect(crumbs.getByText("Gecko", { exact: true })).toHaveAttribute(
+    "aria-current",
+    "page",
+  );
+  // Choosing Gecko includes its descendants (docs/site-map.md §3).
+  const results = page.getByRole("region", { name: "Products" });
+  await expect(results.getByRole("link", { name: /Crested Gecko/ }).first()).toBeVisible();
+});
 
 test("an unknown route returns 404", async ({ page }) => {
   const response = await page.goto("/this-route-does-not-exist");

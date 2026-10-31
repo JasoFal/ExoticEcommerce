@@ -19,6 +19,7 @@ const PATHS = {
   menu: <path d="M4 6h16M4 12h16M4 18h16" />,
   close: <path d="M6 6l12 12M18 6 6 18" />,
   chevron: <path d="m6 9 6 6 6-6" />,
+  filter: <path d="M4 6h16M7 12h10M10 18h4" />,
   "arrow-right": <path d="M5 12h14m-6-6 6 6-6 6" />,
   book: (
     <>

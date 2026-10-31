@@ -30,7 +30,7 @@ Global layout (header + footer on every page)
 │
 ├── /products/[handle]        Product detail
 │   ├──→ /cart                (Add to Cart)
-│   └──→ /shop?animal_type=…&department=feeders,enclosures,accessories
+│   └──→ /shop?animal_type=…&department=feeders&department=enclosures&department=accessories
 │                             ("Shop supplies for X", Live Animals only)
 │
 ├── /care-guides              Care Guides
@@ -93,24 +93,44 @@ URLs have no country-code prefix, because there is only one Region.
 
 ### Shop (`/shop`)
 
-This one listing page handles both browsing and search. Every filter lives
-in the URL, so any view can be linked or bookmarked.
+This one listing page handles browsing by Department or Animal Type, and
+keyword search. Every filter lives in the URL, so any view can be linked or
+bookmarked. A param with several values repeats its key
+(`department=feeders&department=enclosures`).
 
 | Param | Filters by | Notes |
 |---|---|---|
 | `q` | Keyword | Passed to the Medusa Store API's `q` search. |
 | `department` | Department | One or more Departments. |
-| `animal_type` | Animal Type | Includes descendants, so choosing Gecko also shows Crested Gecko and Gargoyle Gecko. |
+| `animal_type` | Animal Type | Pick one. Includes descendants, so choosing Gecko also shows Crested Gecko and Gargoyle Gecko. With no Department chosen, Live Animals and the Supplies suited to them share one grid. |
 | `care_level` | Care Level | Pick one: `beginner-friendly`, `intermediate`, or `advanced`. |
-| `tag` | Tags | Pick several. A product matches if it has **any** of them (OR). |
-| `sort` | Order | **Name A–Z** or **Newest**. |
+| `tag` | Tags | Pick several. A product matches if it has **any** of them (OR). With a Care Level as well, a product needs the Care Level **and** one of the Tags. |
+| `sort` | Order | `newest` (the default, left out of the URL) or `name` (Name A–Z). |
+| `page` | Results page | 24 products a page. Page 1 is left out of the URL. |
 
+Unknown Departments, Care Levels, sorts, and page numbers are ignored. An
+Animal Type or Tag that Medusa doesn't have matches nothing.
+
+- **The heading** says what the view is: "Results for 'uvb'", "Geckos",
+  "Feeders", "Beginner-friendly animals", or "Shop all".
+- **With an Animal Type chosen**, the header adds a breadcrumb (Shop ›
+  Lizard › Gecko), the Animal Type's description from Admin when it has
+  one, and "Narrow to" links for its children. These links swap the Animal
+  Type and keep the other filters.
+- **The Tags filter lists a fixed set:** Arboreal, Terrestrial, Aquatic,
+  Nocturnal, and Large. Any other Tag still filters when it's in the URL
+  (for example from a product page's Tag links), and it shows in the list
+  while it's on.
 - **Product cards** show the image, title, price, and, for Live Animals,
   the Care Level badge. A **Sold out** badge appears when Available Stock
   is 0. Sold-out products stay in the list.
-- **Pagination** uses the Store API's limit and offset.
+- **Pagination** uses the Store API's limit and offset, shown as numbered
+  pages.
 - **No price sort.** The Store API can't sort by price directly, and
   sorting in the browser would mean computing commerce data on the frontend.
+- **No "In stock only" filter.** The Store API can't filter by Available
+  Stock, and filtering in the browser would mean computing inventory on the
+  frontend.
 
 ### Product detail (`/products/[handle]`)
 

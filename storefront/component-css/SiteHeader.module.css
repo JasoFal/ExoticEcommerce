@@ -209,8 +209,10 @@
     grid-area: menu;
   }
 
+  /* 44px targets (design-plan §7). */
   .logo {
     grid-area: logo;
+    min-height: 44px;
   }
 
   .logoMark {
